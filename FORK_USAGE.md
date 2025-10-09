@@ -23,8 +23,8 @@
 git clone https://github.com/MarkShawn2020/code-inspector.git
 cd code-inspector
 
-# 2. 切换到功能分支
-git checkout feat/mode-switching
+# 2. 切换到增强分支
+git checkout enhanced
 
 # 3. 安装依赖并构建
 pnpm install
@@ -63,10 +63,10 @@ git push
 npm install code-inspector-plugin
 
 # 2. 下载并替换编译后的客户端文件
-curl -L https://github.com/MarkShawn2020/code-inspector/raw/feat/mode-switching/packages/core/dist/client.iife.js \
+curl -L https://github.com/MarkShawn2020/code-inspector/raw/enhanced/packages/core/dist/client.iife.js \
   -o node_modules/@code-inspector/core/dist/client.iife.js
 
-curl -L https://github.com/MarkShawn2020/code-inspector/raw/feat/mode-switching/packages/core/dist/client.umd.js \
+curl -L https://github.com/MarkShawn2020/code-inspector/raw/enhanced/packages/core/dist/client.umd.js \
   -o node_modules/@code-inspector/core/dist/client.umd.js
 
 # 3. 重启开发服务器
@@ -127,7 +127,7 @@ npm run dev
 如果遇到类型错误，更新类型定义：
 
 ```bash
-curl -L https://github.com/MarkShawn2020/code-inspector/raw/feat/mode-switching/packages/core/types/client/index.d.ts \
+curl -L https://github.com/MarkShawn2020/code-inspector/raw/enhanced/packages/core/types/client/index.d.ts \
   -o node_modules/@code-inspector/core/types/client/index.d.ts
 ```
 
