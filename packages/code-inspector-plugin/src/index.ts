@@ -1,8 +1,8 @@
-import { ViteCodeInspectorPlugin } from '@code-inspector/vite';
-import WebpackCodeInspectorPlugin from '@code-inspector/webpack';
-import { EsbuildCodeInspectorPlugin } from '@code-inspector/esbuild';
-import { TurbopackCodeInspectorPlugin } from '@code-inspector/turbopack';
-import { MakoCodeInspectorPlugin } from '@code-inspector/mako';
+import { ViteCodeInspectorPlugin } from '@markshawn/code-inspector-vite';
+import WebpackCodeInspectorPlugin from '@markshawn/code-inspector-webpack';
+import { EsbuildCodeInspectorPlugin } from '@markshawn/code-inspector-esbuild';
+import { TurbopackCodeInspectorPlugin } from '@markshawn/code-inspector-turbopack';
+import { MakoCodeInspectorPlugin } from '@markshawn/code-inspector-mako';
 import {
   CodeOptions,
   fileURLToPath,

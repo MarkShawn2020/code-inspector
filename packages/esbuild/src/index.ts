@@ -8,7 +8,7 @@ import {
   isDev,
   getMappingFilePath,
   isExcludedFile,
-} from '@code-inspector/core';
+} from '@markshawn/code-inspector-core';
 import fs from 'fs';
 import path from 'path';
 

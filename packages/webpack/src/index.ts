@@ -5,7 +5,7 @@ import {
   getCodeWithWebComponent,
   isDev,
   isNextjsProject,
-} from '@code-inspector/core';
+} from '@markshawn/code-inspector-core';
 import path, { dirname } from 'path';
 import { getWebpackEntrys } from './entry';
 

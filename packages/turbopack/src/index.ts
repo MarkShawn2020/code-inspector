@@ -1,4 +1,4 @@
-import { CodeOptions, RecordInfo, isDev } from '@code-inspector/core';
+import { CodeOptions, RecordInfo, isDev } from '@markshawn/code-inspector-core';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -25,11 +25,11 @@ export function TurbopackCodeInspectorPlugin(
 
   let WebpackEntry = null;
   if (typeof require !== 'undefined' && typeof require.resolve === 'function') {
-    WebpackEntry = require.resolve('@code-inspector/webpack');
+    WebpackEntry = require.resolve('@markshawn/code-inspector-webpack');
   }
   if (typeof import.meta.resolve === 'function') {
     const dir = import.meta.resolve(
-      '@code-inspector/webpack'
+      '@markshawn/code-inspector-webpack'
     ) as unknown as string;
     WebpackEntry = fileURLToPath(dir);
   }

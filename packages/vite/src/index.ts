@@ -8,7 +8,7 @@ import {
   isDev,
   getMappingFilePath,
   isExcludedFile,
-} from '@code-inspector/core';
+} from '@markshawn/code-inspector-core';
 import chalk from 'chalk';
 
 const PluginName = '@code-inspector/vite';

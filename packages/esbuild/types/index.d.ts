@@ -1,4 +1,4 @@
-import { CodeOptions } from '@code-inspector/core';
+import { CodeOptions } from '@markshawn/code-inspector-core';
 interface Options extends CodeOptions {
     close?: boolean;
     output: string;

@@ -1,14 +1,14 @@
 {
-  "name": "@code-inspector/turbopack",
-  "version": "1.2.10",
+  "name": "@markshawn/code-inspector-turbopack",
+  "version": "1.2.10-enhanced.1",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "typings": "./types/index.d.ts",
-  "repository": "git@github.com:zh-lx/code-inspector.git",
-  "author": "zh-lx <18366276315@163.com>",
+  "repository": "git@github.com:MarkShawn2020/code-inspector.git",
+  "author": "MarkShawn2020 (enhanced), zh-lx <18366276315@163.com> (original)",
   "license": "MIT",
-  "homepage": "https://inspector.fe-dev.cn/en",
-  "description": "Click the dom on the page, it will open your IDE and position the cursor to the source code location of the dom.",
+  "homepage": "https://github.com/MarkShawn2020/code-inspector",
+  "description": "Enhanced code-inspector turbopack plugin with mode switching: Click DOM to open IDE or copy path. Press Shift+Alt+C to toggle modes.",
   "files": [
     "dist",
     "types"
@@ -31,14 +31,21 @@
     "plugin",
     "vscode",
     "inspector",
-    "inspect"
+    "inspect",
+    "enhanced",
+    "mode-switching",
+    "copy-path"
   ],
   "bugs": {
-    "url": "https://github.com/zh-lx/code-inspector/issues"
+    "url": "https://github.com/MarkShawn2020/code-inspector/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@code-inspector/core": "workspace:*",
-    "@code-inspector/webpack": "workspace:*"
+    "@markshawn/code-inspector-core": "workspace:*",
+    "@markshawn/code-inspector-webpack": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^16.0.1",

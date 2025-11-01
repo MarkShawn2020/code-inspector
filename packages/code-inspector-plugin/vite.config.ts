@@ -13,12 +13,12 @@ export default defineConfig({
     emptyOutDir: false,
     rollupOptions: {
       external: [
-        '@code-inspector/core',
-        '@code-inspector/vite',
-        '@code-inspector/webpack',
-        '@code-inspector/esbuild',
-        '@code-inspector/turbopack',
-        '@code-inspector/mako',
+        '@markshawn/code-inspector-core',
+        '@markshawn/code-inspector-vite',
+        '@markshawn/code-inspector-webpack',
+        '@markshawn/code-inspector-esbuild',
+        '@markshawn/code-inspector-turbopack',
+        '@markshawn/code-inspector-mako',
         'chalk',
         'path',
       ],

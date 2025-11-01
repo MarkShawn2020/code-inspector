@@ -11,7 +11,7 @@ export default defineConfig({
     minify: true,
     emptyOutDir: false,
     rollupOptions: {
-      external: ['@code-inspector/core', '@vue/compiler-sfc', 'path'],
+      external: ['@markshawn/code-inspector-core', '@vue/compiler-sfc', 'path'],
       output: {
         exports: 'default', // 设置默认导出
       },

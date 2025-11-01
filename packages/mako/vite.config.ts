@@ -12,7 +12,7 @@ export default defineConfig({
     minify: true,
     emptyOutDir: false,
     rollupOptions: {
-      external: ['@code-inspector/core', 'path', 'fs'],
+      external: ['@markshawn/code-inspector-core', 'path', 'fs'],
     },
     target: ['node8', 'es2015'],
   },

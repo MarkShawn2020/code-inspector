@@ -8,7 +8,7 @@ import {
   isJsTypeFile,
   normalizePath,
   transformCode,
-} from '@code-inspector/core';
+} from '@markshawn/code-inspector-core';
 import path from 'path';
 
 interface Options extends CodeOptions {

@@ -13,8 +13,8 @@ export default defineConfig({
     emptyOutDir: false,
     rollupOptions: {
       external: [
-        '@code-inspector/core',
-        '@code-inspector/webpack',
+        '@markshawn/code-inspector-core',
+        '@markshawn/code-inspector-webpack',
         'path',
         'fs',
         'url',

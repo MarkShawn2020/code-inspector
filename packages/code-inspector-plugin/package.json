@@ -1,6 +1,6 @@
 {
   "name": "@markshawn/code-inspector-plugin",
-  "version": "1.2.10-enhanced.2",
+  "version": "1.2.10-enhanced.1",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "typings": "./types/index.d.ts",
@@ -54,14 +54,18 @@
   "bugs": {
     "url": "https://github.com/MarkShawn2020/code-inspector/issues"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "dependencies": {
     "chalk": "4.1.1",
-    "@markshawn/code-inspector-core": "1.2.10-enhanced.1",
-    "@code-inspector/vite": "^1.2.10",
-    "@code-inspector/webpack": "^1.2.10",
-    "@code-inspector/esbuild": "^1.2.10",
-    "@code-inspector/turbopack": "^1.2.10",
-    "@code-inspector/mako": "^1.2.10"
+    "@markshawn/code-inspector-core": "workspace:*",
+    "@markshawn/code-inspector-vite": "workspace:*",
+    "@markshawn/code-inspector-webpack": "workspace:*",
+    "@markshawn/code-inspector-esbuild": "workspace:*",
+    "@markshawn/code-inspector-turbopack": "workspace:*",
+    "@markshawn/code-inspector-mako": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^16.0.1",

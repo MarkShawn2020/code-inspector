@@ -1,7 +1,8 @@
 packages:
   - packages/*
-  - demos/*
-  - docs/*
+  # Temporarily exclude demos and docs for build/publish
+  # - demos/*
+  # - docs/*
 
 onlyBuiltDependencies:
   - '@swc/core'
@@ -19,5 +20,5 @@ onlyBuiltDependencies:
   - vue-demi
   - yorkie
 
-overrides:
-  '@code-inspector/core': link:packages/core
+# overrides:
+#   '@code-inspector/core': link:packages/core

@@ -32,10 +32,17 @@
     "vue",
     "vscode",
     "inspector",
-    "inspect"
+    "inspect",
+    "enhanced",
+    "mode-switching",
+    "copy-path"
   ],
   "bugs": {
-    "url": "https://github.com/zh-lx/code-inspector/issues"
+    "url": "https://github.com/MarkShawn2020/code-inspector/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "dev": "vite",
