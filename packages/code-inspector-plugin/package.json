@@ -1,6 +1,6 @@
 {
-  "name": "code-inspector-plugin-enhanced",
-  "version": "1.2.10-enhanced.1",
+  "name": "@markshawn/code-inspector-plugin",
+  "version": "1.2.10-enhanced.2",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "typings": "./types/index.d.ts",
@@ -56,12 +56,12 @@
   },
   "dependencies": {
     "chalk": "4.1.1",
-    "@code-inspector/core": "workspace:*",
-    "@code-inspector/vite": "workspace:*",
-    "@code-inspector/webpack": "workspace:*",
-    "@code-inspector/esbuild": "workspace:*",
-    "@code-inspector/turbopack": "workspace:*",
-    "@code-inspector/mako": "workspace:*"
+    "@markshawn/code-inspector-core": "1.2.10-enhanced.1",
+    "@code-inspector/vite": "^1.2.10",
+    "@code-inspector/webpack": "^1.2.10",
+    "@code-inspector/esbuild": "^1.2.10",
+    "@code-inspector/turbopack": "^1.2.10",
+    "@code-inspector/mako": "^1.2.10"
   },
   "devDependencies": {
     "@types/node": "^16.0.1",

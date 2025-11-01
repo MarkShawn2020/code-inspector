@@ -8,7 +8,7 @@ import {
   fileURLToPath,
   getEnvVariable,
   resetFileRecord,
-} from '@code-inspector/core';
+} from '@markshawn/code-inspector-core';
 import chalk from 'chalk';
 import path, { dirname } from 'path';
 
