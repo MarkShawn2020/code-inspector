@@ -47,5 +47,8 @@
   "volta": {
     "node": "18.20.8",
     "pnpm": "9.15.9"
+  },
+  "dependencies": {
+    "@code-inspector/core": "link:packages/core"
   }
 }

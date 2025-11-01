@@ -2,6 +2,7 @@ packages:
   - packages/*
   - demos/*
   - docs/*
+
 onlyBuiltDependencies:
   - '@swc/core'
   - bufferutil
@@ -17,3 +18,6 @@ onlyBuiltDependencies:
   - utf-8-validate
   - vue-demi
   - yorkie
+
+overrides:
+  '@code-inspector/core': link:packages/core
