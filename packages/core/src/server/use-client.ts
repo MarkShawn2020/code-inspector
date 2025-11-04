@@ -379,10 +379,12 @@ function writeWebComponentFile(
   port: number
 ) {
   const webComponentFileName = `append-code-${port}.js`;
-  const webComponentNpmPath = `code-inspector-plugin/dist/${webComponentFileName}`;
   const webComponentFilePath = path.resolve(targetPath, webComponentFileName);
   fs.writeFileSync(webComponentFilePath, content, 'utf-8');
-  return webComponentNpmPath;
+
+  // Use absolute path for compatibility with pnpm link, npm link, and yarn link
+  // This ensures the file can be resolved regardless of symlink configurations
+  return normalizePath(webComponentFilePath);
 }
 
 export function isNextjsProject() {
