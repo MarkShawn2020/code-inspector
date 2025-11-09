@@ -47,25 +47,25 @@ The original plugin is excellent for traditional IDE workflows (click → open i
 
 Since this is a fork, you need to install from our private registry (Cloudsmith) instead of npm.
 
-### Option 1: Direct URL (Recommended)
+### Step 1: Configure Registry for Scoped Packages
+
+Create or update `.npmrc` in your project root:
+
+```ini
+@code-inspector:registry=https://npm.cloudsmith.io/mark/code-inspector/
+```
+
+This tells npm/pnpm to fetch `@code-inspector/*` packages from Cloudsmith instead of npm.
+
+### Step 2: Install Main Package
 
 ```bash
 pnpm add code-inspector-plugin@https://npm.cloudsmith.io/mark/code-inspector/code-inspector-plugin/-/code-inspector-plugin-1.2.12.tgz
 ```
 
-### Option 2: Configure Registry
+> **Why both steps?** The main package `code-inspector-plugin` uses direct URL. But it depends on scoped packages like `@code-inspector/core`, `@code-inspector/vite`, etc. The `.npmrc` config ensures these dependencies are also fetched from Cloudsmith.
 
-Create or update `.npmrc` in your project root:
-
-```ini
-# For scoped packages only (recommended)
-@code-inspector:registry=https://npm.cloudsmith.io/mark/code-inspector/
-
-# Then install with full URL
-pnpm add code-inspector-plugin@https://npm.cloudsmith.io/mark/code-inspector/code-inspector-plugin/-/code-inspector-plugin-1.2.12.tgz
-```
-
-> **Why Cloudsmith?** We use the same package name as upstream, so we need a private registry. Cloudsmith automatically proxies other dependencies from npm, so you don't need to change anything else.
+> **Why Cloudsmith?** We use the same package name as upstream, so we need a private registry. Cloudsmith automatically proxies other npm packages, so only `code-inspector` related packages come from our registry.
 
 ## 🎮 Usage
 
