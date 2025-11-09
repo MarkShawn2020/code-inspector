@@ -22,6 +22,17 @@ Click the element on the page, it can automatically open the code editor and pos
 
 ![code-inspector](https://cdn.jsdelivr.net/gh/zh-lx/static-img/code-inspector/demo.gif)
 
+### ✨ Latest Features (v1.2.12)
+
+- **📋 Copy Notification**: Visual feedback when copying file paths with elegant toast notifications
+- **🔄 Dynamic Layer Panel**: Right-click context menu reflects current action mode
+- **🎯 Unified Actions**: Right-click and left-click now respect the same default mode setting
+- **⌨️ Mode Switching**: Press `Shift+Alt+C` (Windows) or `Shift+Opt+C` (Mac) to cycle through modes:
+  - Copy Path
+  - Open in IDE
+  - Open Target Link
+  - Copy + Open
+
 ## 💻 Try it out online
 
 - [vue online demo](https://stackblitz.com/edit/vitejs-vite-4pseos?file=vite.config.ts)
@@ -370,133 +381,19 @@ Please check here for more usage information: [code-inspector-plugin configurati
 
   <img src="https://cdn.jsdelivr.net/gh/zh-lx/static-img/code-inspector/console-success.png" width="700px" />
 
-## 📦 Publishing to Private Registry (Cloudsmith)
-
-If you want to publish this package to a private npm registry like Cloudsmith, follow these steps:
-
-### Prerequisites
-
-1. **Install Cloudsmith CLI**:
-   ```bash
-   pip3 install --user cloudsmith-cli
-   ```
-
-2. **Get your Cloudsmith API Key**:
-   - Login to [Cloudsmith](https://cloudsmith.io/)
-   - Navigate to Settings → API Keys
-   - Create or copy your API key
-
-### Publishing Packages
-
-**1. Build all packages:**
-
-```bash
-cd packages
-for dir in core vite webpack esbuild turbopack mako code-inspector-plugin; do
-  echo "Building $dir..."
-  cd $dir && pnpm build && cd ..
-done
-```
-
-**2. Pack packages (this resolves `workspace:*` dependencies):**
-
-```bash
-for dir in core vite webpack esbuild turbopack mako code-inspector-plugin; do
-  echo "Packing $dir..."
-  cd $dir && pnpm pack && cd ..
-done
-```
-
-**3. Publish to Cloudsmith:**
-
-```bash
-export CLOUDSMITH_API_KEY=your_api_key_here
-
-for tarball in \
-  packages/core/code-inspector-core-*.tgz \
-  packages/vite/code-inspector-vite-*.tgz \
-  packages/webpack/code-inspector-webpack-*.tgz \
-  packages/esbuild/code-inspector-esbuild-*.tgz \
-  packages/turbopack/code-inspector-turbopack-*.tgz \
-  packages/mako/code-inspector-mako-*.tgz \
-  packages/code-inspector-plugin/code-inspector-plugin-*.tgz; do
-  echo "Publishing $(basename $tarball)..."
-  cloudsmith push npm mark/code-inspector $tarball --republish
-done
-```
-
-**4. Clean up:**
-
-```bash
-find packages -name "*.tgz" -delete
-```
-
-### Installing from Private Registry
-
-**Method 1: Using tarball URL (Recommended)**
-
-In your project's `package.json`:
-
-```json
-{
-  "devDependencies": {
-    "code-inspector-plugin": "https://npm.cloudsmith.io/mark/code-inspector/code-inspector-plugin/-/code-inspector-plugin-1.2.12.tgz"
-  }
-}
-```
-
-**Method 2: Using registry configuration**
-
-Create `.npmrc` in your project root:
-
-```ini
-@code-inspector:registry=https://npm.cloudsmith.io/mark/code-inspector/
-//npm.cloudsmith.io/mark/code-inspector/:_authToken=YOUR_API_KEY
-//npm.cloudsmith.io/mark/code-inspector/:always-auth=true
-```
-
-Then in `package.json`:
-
-```json
-{
-  "devDependencies": {
-    "code-inspector-plugin": "1.2.12"
-  }
-}
-```
-
-### Important Notes
-
-- **Security**: Never commit `.npmrc` with API keys to git. Add it to `.gitignore`
-- **Workspace Dependencies**: Always use `pnpm pack` before publishing - it automatically resolves `workspace:*` dependencies to actual versions
-- **Version Consistency**: Ensure all packages are at the same version before publishing
-- **Republish**: Use `--republish` flag to overwrite existing versions if needed
-
-### Next.js Integration Example
-
-For Next.js 16 projects, use CommonJS config to avoid ESM compatibility issues:
-
-```javascript
-// next.config.js
-const { codeInspectorPlugin } = require('code-inspector-plugin');
-
-module.exports = {
-  reactStrictMode: true,
-  turbopack: {},
-  webpack: (config, { dev }) => {
-    if (dev) {
-      config.plugins.push(codeInspectorPlugin({ bundler: 'webpack' }));
-    }
-    return config;
-  },
-};
-```
-
 ## 👨‍💻 Contributors
 
 Special thanks to the contributors of this project:<br />
 
 <img src="https://contrib.rocks/image?repo=zh-lx/code-inspector" height="40" />
+
+## 🔧 For Maintainers
+
+If you're a contributor or maintainer, see the [Maintenance Guide](./docs/MAINTENANCE.md) for:
+- Publishing to private registries (Cloudsmith)
+- Release workflows
+- Development setup
+- Testing procedures
 
 ## 📧 Communication and Feedback
 
