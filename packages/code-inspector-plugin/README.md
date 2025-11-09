@@ -18,20 +18,37 @@
 
 ## 📖 Introduction
 
-Click the element on the page, it can automatically open the code editor and position the cursor to the source code of the element.
+**Stop guessing where the code is. Just click.**
+
+Click any element on the page, instantly open your IDE with the cursor at the exact source code location. No more searching through files, no more "which component renders this button" detective work.
 
 ![code-inspector](https://cdn.jsdelivr.net/gh/zh-lx/static-img/code-inspector/demo.gif)
 
+### 🎯 The Problem It Solves
+
+You know that feeling when you see a bug on the page and think "where the hell is this in the code?" You inspect the element, see some cryptic class names, grep through files, and 10 minutes later you finally find it.
+
+**This plugin ends that nonsense.**
+
+Hold `Option + Shift` (Mac) or `Alt + Shift` (Windows), hover over any element, and boom - you see exactly where it comes from. Click once, your IDE opens to that exact file and line. That's it.
+
 ### ✨ Latest Features (v1.2.12)
 
-- **📋 Copy Notification**: Visual feedback when copying file paths with elegant toast notifications
-- **🔄 Dynamic Layer Panel**: Right-click context menu reflects current action mode
-- **🎯 Unified Actions**: Right-click and left-click now respect the same default mode setting
-- **⌨️ Mode Switching**: Press `Shift+Alt+C` (Windows) or `Shift+Opt+C` (Mac) to cycle through modes:
-  - Copy Path
-  - Open in IDE
-  - Open Target Link
-  - Copy + Open
+For the **Vibe Coding** crowd (you know who you are - Claude Code, Cursor Composer, living in AI chat):
+
+- **📋 Copy Mode**: Don't want to open IDE? Just copy the file path and paste it to your AI assistant
+  - Visual feedback with toast notifications
+  - Perfect for `@`-mentioning files in AI chats
+
+- **⌨️ Mode Switching**: Press `Shift+Alt+C` / `Shift+Opt+C` to cycle through:
+  - **Copy Path** → `src/components/Button.tsx:42:10` → paste to Claude
+  - **Open in IDE** → traditional workflow for Cursor/VSCode users
+  - **Open Target** → custom URL template (for your internal tools)
+  - **Copy + Open** → do both at once
+
+- **🔄 Smart Context Menu**: Right-click any element for a layer panel showing the component hierarchy. Click any layer, it respects your current mode (copy or open).
+
+**Why this matters**: In 2025, we have AI that can fix any code issue instantly. But we're still taking screenshots and describing bugs like it's 2010. This plugin gives AI your exact context in 3 seconds, not 3 minutes.
 
 ## 💻 Try it out online
 
@@ -66,19 +83,70 @@ The following are which compilers, web frameworks and editors we supported now:
 - The following code editors are currently supported:<br />
   [VSCode](https://code.visualstudio.com/) | [Cursor](https://www.cursor.com/) | [Windsurf](https://codeium.com/windsurf) | [WebStorm](https://www.jetbrains.com/webstorm/) | [Atom](https://atom.io/) | [HBuilderX](https://www.dcloud.io/hbuilderx.html) | [PhpStorm](https://www.jetbrains.com/phpstorm/) | [PyCharm](https://www.jetbrains.com/pycharm/) | [IntelliJ IDEA](https://www.jetbrains.com/idea/) | [and Others](https://inspector.fe-dev.cn/en/guide/ide.html)
 
-## 🚀 Install
+## 🚀 Quick Start
 
-```perl
+### Installation
+
+```bash
 npm i code-inspector-plugin -D
-# or
-yarn add code-inspector-plugin -D
 # or
 pnpm add code-inspector-plugin -D
 ```
 
-## 🌈 Usage
+### Basic Setup
 
-Please check here for more usage information: [code-inspector-plugin configuration](https://inspector.fe-dev.cn/en/guide/start.html#configuration)
+**Most Common: Vite Projects**
+
+```js
+// vite.config.js
+import { codeInspectorPlugin } from 'code-inspector-plugin';
+
+export default {
+  plugins: [
+    codeInspectorPlugin({
+      bundler: 'vite',
+    }),
+  ],
+};
+```
+
+**Next.js (with auto-detection)**
+
+```js
+// next.config.js
+const { codeInspectorPlugin } = require('code-inspector-plugin');
+
+module.exports = {
+  webpack: (config, { dev }) => {
+    config.plugins.push(codeInspectorPlugin({ bundler: 'webpack' }));
+    return config;
+  },
+};
+```
+
+That's it! Press `Option+Shift` (Mac) or `Alt+Shift` (Windows) on your dev server and start clicking.
+
+### Advanced Options
+
+```js
+codeInspectorPlugin({
+  bundler: 'vite',
+  showSwitch: true,      // Show floating toggle button
+  defaultAction: 'copy', // 'copy' | 'locate' | 'target' | 'all'
+  copy: true,           // Enable copy mode
+  locate: true,         // Enable IDE opening
+  editor: 'vscode',     // Your IDE (auto-detected by default)
+})
+```
+
+**For AI-First Workflows**: Set `defaultAction: 'copy'` and `showSwitch: true`. Toggle between copy and IDE modes with the floating button or `Shift+Alt+C`.
+
+📚 **Full documentation**: [Configuration Guide](https://inspector.fe-dev.cn/en/guide/start.html#configuration)
+
+<details>
+<summary><b>📦 Framework-Specific Configs (click to expand)</b></summary>
+
+## 🌈 Detailed Setup
 
 - 1.Configuring Build Tools
 
@@ -373,13 +441,39 @@ Please check here for more usage information: [code-inspector-plugin configurati
 
   </details>
 
-- 2.Using the function
+</details>
 
-  Now you can enjoy using it!~
+## 💡 Real-World Workflows
 
-  When pressing the combination keys on the page, moving the mouse over the page will display a mask layer on the DOM with relevant information. Clicking will automatically open the IDE and position the cursor to the corresponding code location. (The default combination keys for Mac are `Option + Shift`; for Windows, it's `Alt + Shift`, and the browser console will output related combination key prompts)
+### Traditional IDE Workflow
 
-  <img src="https://cdn.jsdelivr.net/gh/zh-lx/static-img/code-inspector/console-success.png" width="700px" />
+```
+1. Hold Option+Shift (Mac) or Alt+Shift (Windows)
+2. Hover over any element → see its source path
+3. Click → IDE opens at exact line
+```
+
+Perfect for Cursor, VSCode, WebStorm users who live in their editor.
+
+### AI-First Workflow (Vibe Coding)
+
+```
+1. Configure: defaultAction: 'copy', showSwitch: true
+2. Hold Option+Shift, click element
+3. Path copied: src/components/Button.tsx:42:10
+4. Paste to Claude/Cursor: "@src/components/Button.tsx:42:10 fix this bug"
+```
+
+**The difference?** Instead of taking screenshots and describing bugs, you give AI the exact context in 3 seconds. This is how you debug in 2025.
+
+### Hybrid Workflow
+
+Press `Shift+Alt+C` / `Shift+Opt+C` to switch modes on the fly:
+- Copy mode when working with AI
+- IDE mode when you want to edit manually
+- Copy+Open to do both
+
+<img src="https://cdn.jsdelivr.net/gh/zh-lx/static-img/code-inspector/console-success.png" width="700px" />
 
 ## 👨‍💻 Contributors
 
