@@ -79,8 +79,10 @@ export default {
   plugins: [
     codeInspectorPlugin({
       bundler: 'vite',
-      defaultAction: 'copy',  // 👈 Copy mode for AI workflow
-      showSwitch: true,       // 👈 Show toggle button
+      behavior: {
+        defaultAction: 'copy',  // 👈 Copy mode for AI workflow
+      },
+      showSwitch: true,         // 👈 Show toggle button
     }),
   ],
 };
@@ -97,7 +99,9 @@ Now:
 ```js
 codeInspectorPlugin({
   bundler: 'vite',
-  defaultAction: 'locate',  // Opens IDE instead of copying
+  behavior: {
+    defaultAction: 'locate',  // Opens IDE instead of copying
+  },
 })
 ```
 
@@ -106,10 +110,12 @@ codeInspectorPlugin({
 ```js
 codeInspectorPlugin({
   bundler: 'vite',
-  defaultAction: 'copy',
+  behavior: {
+    defaultAction: 'copy',
+    copy: true,
+    locate: true,
+  },
   showSwitch: true,
-  copy: true,
-  locate: true,
 })
 ```
 
@@ -120,11 +126,13 @@ Press `Shift+Alt+C` / `Shift+Opt+C` to switch between copy and IDE modes on the 
 ```js
 codeInspectorPlugin({
   bundler: 'vite',              // Required: 'vite' | 'webpack' | 'rspack' | etc.
-  defaultAction: 'copy',        // 'copy' | 'locate' | 'target' | 'all'
+  behavior: {
+    defaultAction: 'copy',      // 'copy' | 'locate' | 'target' | 'all'
+    copy: true,                 // Enable copy mode
+    locate: true,               // Enable IDE opening
+    target: 'custom-url-{file}', // Custom URL template
+  },
   showSwitch: true,             // Show floating toggle button
-  copy: true,                   // Enable copy mode
-  locate: true,                 // Enable IDE opening
-  target: 'custom-url-{file}',  // Custom URL template
   editor: 'vscode',             // IDE (auto-detected if not specified)
 })
 ```
