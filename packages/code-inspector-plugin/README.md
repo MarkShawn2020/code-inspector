@@ -142,9 +142,11 @@ codeInspectorPlugin({
 
 This fork tracks [zh-lx/code-inspector](https://github.com/zh-lx/code-inspector). We maintain compatibility with upstream and contribute improvements back when possible.
 
-**Original PR**: [#409 - Add mode switching features](https://github.com/zh-lx/code-inspector/pull/409)
+**Upstream PRs**:
+- ✅ [#409 - Mode switching features](https://github.com/zh-lx/code-inspector/pull/409) - **MERGED!** 🎉
+- 🔄 [#420 - Right-click mode support + notifications](https://github.com/zh-lx/code-inspector/pull/420) - Under review
 
-If you want these features in the official version, please 👍 the PR or leave a comment!
+If you want these features in the official version, please 👍 the PRs or leave comments!
 
 ## 📖 Documentation
 
