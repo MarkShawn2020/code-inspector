@@ -1201,19 +1201,51 @@ export class CodeInspectorComponent extends LitElement {
   };
 
   handleClickTreeNode = (e: MouseEvent, node: TreeNode) => {
-    // 如果按住 Ctrl (Windows) 或 Cmd (Mac)，在 DevTools 中检查元素
+    // 如果按住 Ctrl (Windows) 或 Cmd (Mac)，高亮并定位元素
     if (e.ctrlKey || e.metaKey) {
       e.preventDefault();
       e.stopPropagation();
 
-      // 使用浏览器的 inspect() 函数在 DevTools Elements 面板中定位元素
-      if (node.element && typeof (window as any).inspect === 'function') {
-        (window as any).inspect(node.element);
-        this.showNotification('Element inspected in DevTools', 'success');
-      } else if (node.element) {
-        // 降级方案：在控制台输出元素
-        console.log('Element:', node.element);
-        this.showNotification('Element logged to console (open DevTools)', 'success');
+      if (node.element) {
+        // 滚动到元素位置
+        node.element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'center'
+        });
+
+        // 临时高亮元素（闪烁效果）
+        const originalOutline = node.element.style.outline;
+        const originalOutlineOffset = node.element.style.outlineOffset;
+        const highlightElement = () => {
+          node.element.style.outline = '3px solid #D97757';
+          node.element.style.outlineOffset = '2px';
+        };
+        const removeHighlight = () => {
+          node.element.style.outline = originalOutline;
+          node.element.style.outlineOffset = originalOutlineOffset;
+        };
+
+        // 闪烁动画：3次
+        let count = 0;
+        const blink = () => {
+          if (count < 6) {
+            if (count % 2 === 0) {
+              highlightElement();
+            } else {
+              removeHighlight();
+            }
+            count++;
+            setTimeout(blink, 200);
+          }
+        };
+        blink();
+
+        // 在控制台打印元素引用（可以右键 "Reveal in Elements panel"）
+        console.log('%c[Code Inspector] Element:', 'color: #D97757; font-weight: bold;', node.element);
+        console.log('%cTip: Right-click the element above and select "Reveal in Elements panel"', 'color: #87867F; font-style: italic;');
+
+        this.showNotification('Element highlighted and logged to console', 'success');
       }
 
       this.removeLayerPanel();
