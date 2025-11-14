@@ -1200,95 +1200,13 @@ export class CodeInspectorComponent extends LitElement {
     this.moved = false;
   };
 
-  handleClickTreeNode = (e: MouseEvent, node: TreeNode) => {
-    // 如果按住 Ctrl (Windows) 或 Cmd (Mac)，高亮并定位元素
-    if (e.ctrlKey || e.metaKey) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (node.element) {
-        // 滚动到元素位置
-        node.element.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-          inline: 'center'
-        });
-
-        // 临时高亮元素（闪烁效果）- 使用 setProperty 确保优先级
-        const element = node.element as HTMLElement;
-        const originalOutline = element.style.getPropertyValue('outline');
-        const originalOutlineOffset = element.style.getPropertyValue('outline-offset');
-        const originalZIndex = element.style.getPropertyValue('z-index');
-
-        const highlightElement = () => {
-          element.style.setProperty('outline', '4px solid #D97757', 'important');
-          element.style.setProperty('outline-offset', '3px', 'important');
-          element.style.setProperty('z-index', '999999', 'important');
-        };
-
-        const removeHighlight = () => {
-          if (originalOutline) {
-            element.style.setProperty('outline', originalOutline);
-          } else {
-            element.style.removeProperty('outline');
-          }
-          if (originalOutlineOffset) {
-            element.style.setProperty('outline-offset', originalOutlineOffset);
-          } else {
-            element.style.removeProperty('outline-offset');
-          }
-          if (originalZIndex) {
-            element.style.setProperty('z-index', originalZIndex);
-          } else {
-            element.style.removeProperty('z-index');
-          }
-        };
-
-        // 闪烁动画：3次（6个状态变化）
-        let count = 0;
-        const blink = () => {
-          if (count < 6) {
-            if (count % 2 === 0) {
-              highlightElement();
-            } else {
-              removeHighlight();
-            }
-            count++;
-            setTimeout(blink, 250);
-          } else {
-            // 确保最后移除高亮
-            removeHighlight();
-          }
-        };
-
-        // 延迟一点启动，确保滚动开始
-        setTimeout(() => blink(), 100);
-
-        // 将元素保存到全局变量，方便在 Console 中使用
-        (window as any).$inspectElement = node.element;
-
-        // 在控制台打印元素和使用说明
-        console.log('%c[Code Inspector] Element stored in window.$inspectElement', 'color: #D97757; font-weight: bold; font-size: 14px;');
-        console.log('%c━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'color: #E8E6DC;');
-        console.log('%c📍 To reveal in Elements panel, execute:', 'color: #181818; font-weight: 600;');
-        console.log('%c   inspect($inspectElement)', 'color: #00B42A; font-family: monospace; font-size: 13px; background: #F0EEE6; padding: 4px 8px; border-radius: 4px;');
-        console.log('%c━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'color: #E8E6DC;');
-        console.log('%cElement reference:', 'color: #87867F; font-size: 12px;', node.element);
-        console.log('%c💡 Tip: Type the green command above in this console and press Enter', 'color: #87867F; font-style: italic; font-size: 11px;');
-
-        this.showNotification('Element highlighted. Check console for inspect command', 'success');
-      }
-
-      this.removeLayerPanel();
-      return;
-    }
-
+  handleClickTreeNode = (node: TreeNode) => {
     this.element = node;
 
-    // 使用图层面板的当前模式（基于键盘状态）
-    const actionToExecute = this.layerPanelMode || this.getDefaultAction();
+    // Layer Panel 中默认使用 locate（跳转到 IDE），除非用户按了其他快捷键
+    const actionToExecute = this.layerPanelMode || 'locate';
 
-    if (actionToExecute !== 'none') {
+    if (actionToExecute !== 'none' && this.isActionEnabled(actionToExecute as Exclude<InspectorAction, 'all'>)) {
       this.trackCode(actionToExecute as InspectorAction);
     }
     this.removeLayerPanel();
@@ -1383,7 +1301,7 @@ export class CodeInspectorComponent extends LitElement {
       @mouseenter="${async (e: MouseEvent) =>
         await this.handleMouseEnterNode(e, node)}"
       @mouseleave="${this.handleMouseLeaveNode}"
-      @click="${(e: MouseEvent) => this.handleClickTreeNode(e, node)}"
+      @click="${() => this.handleClickTreeNode(node)}"
     >
       &lt;${node.name}&gt;
     </div>
