@@ -1349,8 +1349,6 @@ export class CodeInspectorComponent extends LitElement {
     };
 
     // Define platform-specific hotkey map (needed by both overlays)
-    const resolvedDefaultAction = this.getDefaultAction();
-    const modeLabel = this.getActionLabel(resolvedDefaultAction);
     const isMac =
       typeof navigator !== 'undefined' &&
       /mac|iphone|ipad|ipod/i.test(navigator.userAgent);
