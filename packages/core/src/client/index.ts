@@ -1610,18 +1610,6 @@ export class CodeInspectorComponent extends LitElement {
           </svg>`}
         </div>
 
-        <!-- Element info section (reuse from left-click overlay) -->
-        <div class="layer-panel-element-info">
-          <div class="name-line">
-            <div class="element-name">
-              <span class="element-title" style="color: ${layerPanelColors.accent}">&lt;${this.element.name}&gt;</span>
-            </div>
-          </div>
-          <div class="path-line">
-            ${this.element.path}:${this.element.line}:${this.element.column}
-          </div>
-        </div>
-
         <div
           class="node-tree-list"
           style="${styleMap({ pointerEvents: this.dragging ? 'none' : '' })}"
@@ -1911,34 +1899,6 @@ export class CodeInspectorComponent extends LitElement {
         }
       }
 
-      .layer-panel-element-info {
-        flex-shrink: 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        background: #F9F9F7;
-
-        .name-line {
-          padding: 8px 12px 4px;
-        }
-
-        .element-name {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        .element-title {
-          font-weight: bold;
-          font-size: 13px;
-          transition: color 0.2s ease-in-out;
-        }
-
-        .path-line {
-          padding: 4px 12px 8px;
-          font-size: 10px;
-          color: #87867F;
-          font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-        }
-      }
 
       .brand-footer {
         flex-shrink: 0;
