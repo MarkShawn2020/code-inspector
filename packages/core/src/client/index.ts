@@ -1348,6 +1348,14 @@ export class CodeInspectorComponent extends LitElement {
       transition: 'background 0.2s ease-in-out',
     };
 
+    // Define platform-specific hotkey map (needed by both overlays)
+    const resolvedDefaultAction = this.getDefaultAction();
+    const modeLabel = this.getActionLabel(resolvedDefaultAction);
+    const isMac =
+      typeof navigator !== 'undefined' &&
+      /mac|iphone|ipad|ipod/i.test(navigator.userAgent);
+    const hotKeyMap = isMac ? MacHotKeyMap : WindowsHotKeyMap;
+
     // Layer panel mode-aware styling
     const layerPanelMode = this.layerPanelMode || this.getDefaultAction();
     const layerPanelColors = this.getModeColors(layerPanelMode);
@@ -1384,12 +1392,6 @@ export class CodeInspectorComponent extends LitElement {
       bottom: this.activeNode.bottom,
       display: this.showNodeTree ? '' : 'none',
     };
-    const resolvedDefaultAction = this.getDefaultAction();
-    const modeLabel = this.getActionLabel(resolvedDefaultAction);
-    const isMac =
-      typeof navigator !== 'undefined' &&
-      /mac|iphone|ipad|ipod/i.test(navigator.userAgent);
-    const hotKeyMap = isMac ? MacHotKeyMap : WindowsHotKeyMap;
 
     // Generate structured mode hints for multi-line display
     const modeHints: Array<{hotkey: string, action: string}> = [];
