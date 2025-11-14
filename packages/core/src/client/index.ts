@@ -3,7 +3,7 @@ import { property, query, state } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { PathName, DefaultPort } from '../shared';
 import { formatOpenPath } from 'launch-ide';
-import { DesignTokens, getModeColors as getTokenModeColors } from '../shared/design-tokens';
+import { DesignTokens } from '../shared/design-tokens';
 
 const styleId = '__code-inspector-unique-id';
 const AstroFile = 'data-astro-source-file';
