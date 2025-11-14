@@ -1589,9 +1589,7 @@ export class CodeInspectorComponent extends LitElement {
           <div class="layer-title-content">
             <span class="layer-mode-icon">${layerPanelIcon}</span>
             <span class="layer-mode-text">${this.getActionLabel(layerPanelMode)}</span>
-            <span class="layer-hint">Click node to ${layerPanelMode === 'copy' ? 'copy' : layerPanelMode === 'locate' ? 'open' : 'trigger'}</span>
           </div>
-          <div class="brand-mark">CI</div>
           ${html`<svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -1617,21 +1615,6 @@ export class CodeInspectorComponent extends LitElement {
               <span class="element-title" style="color: ${layerPanelColors.accent}">&lt;${this.element.name}&gt;</span>
             </div>
           </div>
-          ${layerPanelModeHints.length > 0 ? html`
-            <div class="mode-hints" role="list" aria-label="Available keyboard shortcuts">
-              ${layerPanelModeHints.map(hint => html`
-                <div class="mode-hint-item" role="listitem">
-                  <span class="hotkey">${hint.hotkey}</span>
-                  <span class="separator">=</span>
-                  <span class="action">${hint.action}</span>
-                </div>
-              `)}
-            </div>
-          ` : html`
-            <div class="mode-hints-legacy">
-              <span class="element-tip">Mode: ${this.getActionLabel(layerPanelMode)}</span>
-            </div>
-          `}
           <div class="path-line">
             ${this.element.path}:${this.element.line}:${this.element.column}
           </div>
@@ -1645,9 +1628,21 @@ export class CodeInspectorComponent extends LitElement {
           <div style="height: 8px"></div>
         </div>
 
-        <!-- Brand footer (reuse from left-click overlay) -->
+        <!-- Brand footer with mode hints -->
         <div class="brand-footer">
-          <small>Code Inspector</small>
+          ${layerPanelModeHints.length > 0 ? html`
+            <div class="mode-hints" role="list" aria-label="Available keyboard shortcuts">
+              ${layerPanelModeHints.map(hint => html`
+                <div class="mode-hint-item" role="listitem">
+                  <span class="hotkey">${hint.hotkey}</span>
+                  <span class="separator">=</span>
+                  <span class="action">${hint.action}</span>
+                </div>
+              `)}
+            </div>
+          ` : html`
+            <small>Code Inspector</small>
+          `}
         </div>
       </div>
       <div
@@ -1892,24 +1887,6 @@ export class CodeInspectorComponent extends LitElement {
           font-size: 11px;
         }
 
-        .layer-hint {
-          opacity: 0.8;
-          font-weight: 400;
-          font-size: 10px;
-          margin-left: 4px;
-        }
-
-        .brand-mark {
-          font-size: 10px;
-          font-weight: 700;
-          padding: 2px 6px;
-          border-radius: 3px;
-          background: rgba(255, 255, 255, 0.2);
-          opacity: 0.8;
-          letter-spacing: 1px;
-          margin: 0 6px;
-        }
-
         .close-icon {
           opacity: 0.9;
           transition: opacity 0.2s;
@@ -1940,18 +1917,27 @@ export class CodeInspectorComponent extends LitElement {
           transition: color 0.2s ease-in-out;
         }
 
-        .mode-hints {
-          padding: 6px 12px;
-          background: rgba(249, 250, 251, 0.5);
-          border-top: 1px solid rgba(0, 0, 0, 0.05);
-          border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
         .path-line {
           padding: 4px 12px 8px;
           font-size: 10px;
           color: #666;
           font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+      }
+
+      .brand-footer {
+        flex-shrink: 0;
+
+        .mode-hints {
+          padding: 8px 12px;
+          background: rgba(249, 250, 251, 0.8);
+          border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        small {
+          display: block;
+          padding: 4px 10px;
+          text-align: center;
         }
       }
 
