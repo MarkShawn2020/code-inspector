@@ -152,16 +152,46 @@ export function getWebComponentCode(options: CodeOptions, port: number) {
     copy = true,
     target = '',
     defaultAction = 'copy',
+    keys,
   } = behavior;
+
+  // 默认快捷键配置
+  let copyKeysValue = '';
+  let locateKeysValue = '';
+  let targetKeysValue = '';
+  let useDynamicLocateKeys = false;
+
+  if (keys) {
+    // 使用用户配置的 behavior.keys
+    if (keys.copy && Array.isArray(keys.copy)) {
+      copyKeysValue = keys.copy.join(',');
+    }
+    if (keys.locate && Array.isArray(keys.locate)) {
+      locateKeysValue = keys.locate.join(',');
+    }
+    if (keys.target && Array.isArray(keys.target)) {
+      targetKeysValue = keys.target.join(',');
+    }
+  } else {
+    // 使用默认配置：copy = Shift+Alt, locate = Shift+Alt+Cmd(Mac)/Ctrl(Win)
+    copyKeysValue = 'shiftKey,altKey';
+    useDynamicLocateKeys = true; // 需要运行时检测平台
+  }
+
   return `
 ;(function (){
   if (typeof window !== 'undefined') {
     if (!document.documentElement.querySelector('code-inspector-component')) {
       ${bundler === 'mako' ? iifeClientJsCode : jsClientCode};
-      
+
       var inspector = document.createElement('code-inspector-component');
       inspector.port = ${port};
       inspector.hotKeys = '${(hotKeys ? hotKeys : [])?.join(',')}';
+      inspector.copyKeys = '${copyKeysValue}';
+      inspector.locateKeys = ${useDynamicLocateKeys
+        ? `(/mac|iphone|ipad|ipod/i.test(navigator.userAgent)) ? 'shiftKey,altKey,metaKey' : 'shiftKey,altKey,ctrlKey'`
+        : `'${locateKeysValue}'`};
+      inspector.targetKeys = '${targetKeysValue}';
       inspector.showSwitch = !!${showSwitch};
       inspector.autoToggle = !!${autoToggle};
       inspector.hideConsole = !!${hideConsole};

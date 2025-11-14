@@ -2,11 +2,35 @@ import { Server } from 'http';
 import type { Editor } from 'launch-ide';
 
 export type HotKey = 'ctrlKey' | 'altKey' | 'metaKey' | 'shiftKey';
+
+export type BehaviorKeys = {
+  /**
+   * @cn 执行 copy 操作的组合键，默认 ['shiftKey', 'altKey']
+   * @en Keys for copy action, default ['shiftKey', 'altKey']
+   */
+  copy?: HotKey[] | false;
+  /**
+   * @cn 执行 locate 操作（打开 IDE）的组合键。Mac 默认 ['shiftKey', 'altKey', 'metaKey']，Windows/Linux 默认 ['shiftKey', 'altKey', 'ctrlKey']
+   * @en Keys for locate action. Mac default: ['shiftKey', 'altKey', 'metaKey'], Windows/Linux default: ['shiftKey', 'altKey', 'ctrlKey']
+   */
+  locate?: HotKey[] | false;
+  /**
+   * @cn 执行 target 操作的组合键
+   * @en Keys for opening target link
+   */
+  target?: HotKey[] | false;
+};
+
 export type Behavior = {
   locate?: boolean;
   copy?: boolean | string;
   target?: string;
   defaultAction?: 'copy' | 'locate' | 'target' | 'all';
+  /**
+   * @cn 不同行为模式的快捷键配置。配置后会替代 hotKeys，每个操作使用独立的快捷键
+   * @en Hotkey configuration for different behavior modes. When configured, this overrides hotKeys and each action uses independent key combinations
+   */
+  keys?: BehaviorKeys;
 };
 export type RecordInfo = {
   port: number;

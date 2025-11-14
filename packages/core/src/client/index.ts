@@ -82,6 +82,12 @@ function nextTick() {
 export class CodeInspectorComponent extends LitElement {
   @property()
   hotKeys: string = 'shiftKey,altKey';
+  @property({ attribute: 'copy-keys' })
+  copyKeys: string = '';
+  @property({ attribute: 'locate-keys' })
+  locateKeys: string = '';
+  @property({ attribute: 'target-keys' })
+  targetKeys: string = '';
   @property()
   port: number = DefaultPort;
   @property()
@@ -160,6 +166,10 @@ export class CodeInspectorComponent extends LitElement {
   sendType: 'xhr' | 'img' = 'xhr';
   @state()
   activeNode: ActiveNode = {};
+  @state()
+  currentTriggeredAction: InspectorAction | null = null; // 当前触发的操作模式
+  @state()
+  layerPanelMode: InspectorAction | null = null; // 图层面板当前模式（基于键盘状态）
 
   @query('#inspector-switch')
   inspectorSwitchRef!: HTMLDivElement;
@@ -176,7 +186,66 @@ export class CodeInspectorComponent extends LitElement {
   @query('#node-tree-tooltip')
   nodeTreeTooltipRef!: HTMLDivElement;
 
+  // 新的多模式检测系统
+  private hasModeSpecificKeys(): boolean {
+    return !!(this.copyKeys || this.locateKeys || this.targetKeys);
+  }
+
+  // 检测是否匹配指定的快捷键组合
+  private matchesKeys(e: any, keysString: string): boolean {
+    if (!keysString) return false;
+    const keys = keysString.split(',').map(k => k.trim()).filter(Boolean);
+    if (keys.length === 0) return false;
+
+    // 必须所有指定的键都按下
+    const allKeysPressed = keys.every((key) => e[key]);
+    if (!allKeysPressed) return false;
+
+    // 确保没有按下额外的修饰键
+    const modifierKeys = ['ctrlKey', 'altKey', 'metaKey', 'shiftKey'];
+    const pressedKeys = modifierKeys.filter(key => e[key]);
+    return pressedKeys.length === keys.length;
+  }
+
+  // 获取当前触发的操作（按键数多的优先，避免快捷键冲突）
+  private getTriggeredAction(e: any): InspectorAction | null {
+    if (!this.hasModeSpecificKeys()) {
+      // 向后兼容：使用旧的 hotKeys 系统
+      return this.hotKeys && this.hotKeys.split(',').every((key) => e[key.trim()])
+        ? this.defaultAction
+        : null;
+    }
+
+    // 新系统：按键数从多到少检测，避免子集触发
+    const actions: Array<{ action: InspectorAction; keys: string; enabled: boolean }> = [
+      { action: 'locate', keys: this.locateKeys, enabled: !!this.locate },
+      { action: 'target', keys: this.targetKeys, enabled: !!this.target },
+      { action: 'copy', keys: this.copyKeys, enabled: !!this.copy },
+    ];
+
+    // 按键数降序排序
+    const sortedActions = actions
+      .filter(a => a.enabled && a.keys)
+      .sort((a, b) => {
+        const aLen = a.keys.split(',').length;
+        const bLen = b.keys.split(',').length;
+        return bLen - aLen;
+      });
+
+    for (const { action, keys } of sortedActions) {
+      if (this.matchesKeys(e, keys)) {
+        return action;
+      }
+    }
+
+    return null;
+  }
+
+  // 兼容旧的 isTracking 方法
   isTracking = (e: any) => {
+    if (this.hasModeSpecificKeys()) {
+      return this.getTriggeredAction(e) !== null;
+    }
     return (
       this.hotKeys && this.hotKeys.split(',').every((key) => e[key.trim()])
     );
@@ -471,12 +540,43 @@ export class CodeInspectorComponent extends LitElement {
     this.nodeTreePosition = position;
     this.nodeTree = nodeTree;
     this.showNodeTree = true;
+
+    // 初始化图层面板模式（默认为 copy）
+    if (this.hasModeSpecificKeys()) {
+      this.layerPanelMode = this.copy ? 'copy' : (this.locate ? 'locate' : (this.target ? 'target' : null));
+    } else {
+      const defaultMode = this.getDefaultAction();
+      this.layerPanelMode = defaultMode === 'none' ? null : (defaultMode as InspectorAction);
+    }
   };
 
   removeLayerPanel = () => {
     this.showNodeTree = false;
     this.nodeTree = null;
     this.activeNode = {};
+    this.layerPanelMode = null;
+  };
+
+  // 图层面板键盘监听：动态检测快捷键组合状态
+  handleLayerPanelKeyChange = (e: KeyboardEvent) => {
+    if (!this.showNodeTree) return;
+
+    if (this.hasModeSpecificKeys()) {
+      // 新系统：使用完整的模式检测逻辑（与主覆盖层保持一致）
+      const triggeredMode = this.getTriggeredAction(e);
+
+      if (triggeredMode) {
+        this.layerPanelMode = triggeredMode;
+      } else {
+        // 如果没有快捷键匹配，回退到默认模式
+        const defaultMode = this.getDefaultAction();
+        this.layerPanelMode = defaultMode === 'none' ? null : (defaultMode as InspectorAction);
+      }
+    } else {
+      // 旧系统：使用默认模式
+      const defaultMode = this.getDefaultAction();
+      this.layerPanelMode = defaultMode === 'none' ? null : (defaultMode as InspectorAction);
+    }
   };
 
   addGlobalCursorStyle = () => {
@@ -630,66 +730,68 @@ export class CodeInspectorComponent extends LitElement {
     return 'none';
   }
 
-  private getAvailableDefaultActions(): InspectorAction[] {
-    const actions: InspectorAction[] = [];
-    if (this.copy) {
-      actions.push('copy');
+  // Legacy mode switching removed - now using behavior.keys configuration
+
+  // Get mode-specific colors for visual differentiation
+  private getModeColors(mode: InspectorAction | ResolvedAction | null): {
+    overlay: string;
+    accent: string;
+    badge: string;
+    badgeText: string;
+  } {
+    switch (mode) {
+      case 'copy':
+        return {
+          overlay: 'rgba(0, 106, 255, 0.6)',      // Blue - copy action
+          accent: '#006AFF',
+          badge: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          badgeText: '#ffffff'
+        };
+      case 'locate':
+        return {
+          overlay: 'rgba(0, 180, 42, 0.6)',       // Green - IDE action
+          accent: '#00B42A',
+          badge: 'linear-gradient(135deg, #00B42A 0%, #00875A 100%)',
+          badgeText: '#ffffff'
+        };
+      case 'target':
+        return {
+          overlay: 'rgba(245, 63, 63, 0.6)',      // Red - target link
+          accent: '#F53F3F',
+          badge: 'linear-gradient(135deg, #F7BA1E 0%, #F77234 100%)',
+          badgeText: '#ffffff'
+        };
+      case 'all':
+        return {
+          overlay: 'rgba(168, 85, 247, 0.6)',     // Purple - all actions
+          accent: '#A855F7',
+          badge: 'linear-gradient(135deg, #A855F7 0%, #7C3AED 100%)',
+          badgeText: '#ffffff'
+        };
+      default:
+        return {
+          overlay: 'rgba(120, 170, 210, 0.7)',    // Default blue
+          accent: '#78AAD2',
+          badge: '#E5E7EB',
+          badgeText: '#6B7280'
+        };
     }
-    if (this.locate) {
-      actions.push('locate');
-    }
-    if (this.target) {
-      actions.push('target');
-    }
-    if (actions.length > 1 && this.copy && this.locate) {
-      actions.push('all');
-    }
-    return actions;
   }
 
-  private handleModeShortcut = (e: KeyboardEvent) => {
-    if (!e.shiftKey || !e.altKey) {
-      return;
+  // Get mode icon for visual indication
+  private getModeIcon(mode: InspectorAction | ResolvedAction | null): string {
+    switch (mode) {
+      case 'copy':
+        return '📋';  // Clipboard
+      case 'locate':
+        return '🎯';  // Target/Locate
+      case 'target':
+        return '🔗';  // Link
+      case 'all':
+        return '⚡';  // All actions
+      default:
+        return '🔍';  // Default search
     }
-    const code = e.code?.toLowerCase();
-    const key = e.key?.toLowerCase();
-    const isCKey = code ? code === 'keyc' : key === 'c';
-    if (!isCKey) {
-      return;
-    }
-    e.preventDefault();
-    e.stopPropagation();
-    const actions = this.getAvailableDefaultActions();
-    if (actions.length <= 1) {
-      return;
-    }
-    const currentIndex = actions.indexOf(this.defaultAction);
-    const nextAction =
-      currentIndex === -1
-        ? actions[0]
-        : actions[(currentIndex + 1) % actions.length];
-    this.defaultAction = nextAction;
-    this.printModeChange(nextAction);
-  };
-
-  private printModeChange(action: InspectorAction) {
-    if (this.hideConsole) {
-      return;
-    }
-    const label = this.getActionLabel(action);
-    const agent =
-      typeof navigator !== 'undefined' ? navigator.userAgent.toLowerCase() : '';
-    const isWindows = ['windows', 'win32', 'wow32', 'win64', 'wow64'].some(
-      (item) => agent.toUpperCase().includes(item.toUpperCase())
-    );
-    const shortcut = isWindows ? 'Shift+Alt+C' : 'Shift+Opt+C';
-    console.log(
-      `%c[code-inspector-plugin]%c Mode switched to %c${label}%c (${shortcut})`,
-      'color: #006aff; font-weight: bolder; font-size: 12px;',
-      'color: #006aff; font-size: 12px;',
-      'color: #00B42A; font-weight: bold; font-size: 12px;',
-      'color: #006aff; font-size: 12px;'
-    );
   }
 
   private getActionLabel(action: ResolvedAction): string {
@@ -810,6 +912,11 @@ export class CodeInspectorComponent extends LitElement {
       ((this.isTracking(e) && !this.dragging) || this.open) &&
       !this.hoverSwitch
     ) {
+      // 更新当前触发的操作模式
+      if (this.hasModeSpecificKeys()) {
+        this.currentTriggeredAction = this.getTriggeredAction(e);
+      }
+
       const nodePath = e.composedPath() as HTMLElement[];
       let targetNode;
       // 寻找第一个有 data-insp-path 属性的元素
@@ -838,6 +945,7 @@ export class CodeInspectorComponent extends LitElement {
         this.removeCover();
       }
     } else {
+      this.currentTriggeredAction = null;
       this.removeCover();
     }
   };
@@ -850,9 +958,18 @@ export class CodeInspectorComponent extends LitElement {
         e.stopPropagation();
         // 阻止默认事件
         e.preventDefault();
-        const primaryAction = this.getDefaultAction();
-        if (primaryAction !== 'none') {
-          this.trackCode(primaryAction as InspectorAction);
+
+        // 使用新的模式系统或回退到旧系统
+        let actionToExecute: InspectorAction | ResolvedAction;
+        if (this.hasModeSpecificKeys()) {
+          const triggered = this.getTriggeredAction(e);
+          actionToExecute = triggered || (this.open ? this.getDefaultAction() : 'none');
+        } else {
+          actionToExecute = this.getDefaultAction();
+        }
+
+        if (actionToExecute !== 'none') {
+          this.trackCode(actionToExecute as InspectorAction);
         }
         // 清除遮罩层
         this.removeCover();
@@ -872,6 +989,15 @@ export class CodeInspectorComponent extends LitElement {
       !this.hoverSwitch
     ) {
       e.preventDefault();
+
+      // Capture the current triggered mode at right-click time
+      if (this.hasModeSpecificKeys()) {
+        this.layerPanelMode = this.getTriggeredAction(e);
+      } else {
+        const defaultMode = this.getDefaultAction();
+        this.layerPanelMode = defaultMode === 'none' ? null : (defaultMode as InspectorAction);
+      }
+
       const nodePath = e.composedPath() as HTMLElement[];
       const nodeTree = this.generateNodeTree(nodePath);
 
@@ -938,6 +1064,20 @@ export class CodeInspectorComponent extends LitElement {
     }
   };
 
+  // 监听键盘变化，更新主覆盖层模式
+  handleOverlayKeyChange = (e: KeyboardEvent) => {
+    // 仅在覆盖层显示时更新模式
+    if (this.show && this.hasModeSpecificKeys()) {
+      const triggeredMode = this.getTriggeredAction(e);
+      if (triggeredMode) {
+        this.currentTriggeredAction = triggeredMode;
+      } else {
+        const defaultMode = this.getDefaultAction();
+        this.currentTriggeredAction = defaultMode === 'none' ? null : (defaultMode as InspectorAction);
+      }
+    }
+  };
+
   // 监听键盘抬起，清除遮罩层
   handleKeyUp = (e: KeyboardEvent) => {
     if (!this.isTracking(e) && !this.open) {
@@ -951,30 +1091,58 @@ export class CodeInspectorComponent extends LitElement {
     const isWindows = ['windows', 'win32', 'wow32', 'win64', 'wow64'].some(
       (item) => agent.toUpperCase().match(item.toUpperCase())
     );
-    const modeShortcut = isWindows ? 'Shift+Alt+C' : 'Shift+Opt+C';
     const hotKeyMap = isWindows ? WindowsHotKeyMap : MacHotKeyMap;
-    const keys = this.hotKeys
-      .split(',')
-      .map((item) => '%c' + hotKeyMap[item.trim() as keyof typeof hotKeyMap]);
-    const colorCount = keys.length * 2 + 1;
-    const colors = Array(colorCount)
-      .fill('')
-      .map((_, index) => {
-        if (index % 2 === 0) {
-          return 'color: #00B42A; font-family: PingFang SC; font-size: 12px;';
-        } else {
-          return 'color: #006aff; font-weight: bold; font-family: PingFang SC; font-size: 12px;';
-        }
-      });
-    const replacement = '%c';
-    const currentMode = this.getActionLabel(this.getDefaultAction());
-    console.log(
-      `${replacement}[code-inspector-plugin]${replacement}Press and hold ${keys.join(
-        ` ${replacement}+ `
-      )}${replacement} to enable the feature. (Current mode: ${currentMode}; press ${modeShortcut} to switch)`,
-      'color: #006aff; font-weight: bolder; font-size: 12px;',
-      ...colors
-    );
+
+    if (this.hasModeSpecificKeys()) {
+      // 新系统：显示每个操作的快捷键
+      const hints: string[] = [];
+      if (this.copyKeys && this.copy) {
+        const keys = this.copyKeys.split(',').map(k => hotKeyMap[k.trim() as keyof typeof hotKeyMap]).join('+');
+        hints.push(`${keys} to copy path`);
+      }
+      if (this.locateKeys && this.locate) {
+        const keys = this.locateKeys.split(',').map(k => hotKeyMap[k.trim() as keyof typeof hotKeyMap]).join('+');
+        hints.push(`${keys} to open in IDE`);
+      }
+      if (this.targetKeys && this.target) {
+        const keys = this.targetKeys.split(',').map(k => hotKeyMap[k.trim() as keyof typeof hotKeyMap]).join('+');
+        hints.push(`${keys} to open target`);
+      }
+
+      console.log(
+        `%c[code-inspector-plugin]%c Press and hold: %c${hints.join('%c · %c')}`,
+        'color: #006aff; font-weight: bolder; font-size: 12px;',
+        'color: #006aff; font-size: 12px;',
+        ...hints.flatMap(() => [
+          'color: #00B42A; font-weight: bold; font-size: 12px;',
+          'color: #006aff; font-size: 12px;'
+        ])
+      );
+    } else {
+      // 旧系统：向后兼容
+      const keys = this.hotKeys
+        .split(',')
+        .map((item) => '%c' + hotKeyMap[item.trim() as keyof typeof hotKeyMap]);
+      const colorCount = keys.length * 2 + 1;
+      const colors = Array(colorCount)
+        .fill('')
+        .map((_, index) => {
+          if (index % 2 === 0) {
+            return 'color: #00B42A; font-family: PingFang SC; font-size: 12px;';
+          } else {
+            return 'color: #006aff; font-weight: bold; font-family: PingFang SC; font-size: 12px;';
+          }
+        });
+      const replacement = '%c';
+      const currentMode = this.getActionLabel(this.getDefaultAction());
+      console.log(
+        `${replacement}[code-inspector-plugin]${replacement}Press and hold ${keys.join(
+          ` ${replacement}+ `
+        )}${replacement} to enable the feature. (Current mode: ${currentMode})`,
+        'color: #006aff; font-weight: bolder; font-size: 12px;',
+        ...colors
+      );
+    }
   };
 
   // 获取鼠标位置
@@ -1026,9 +1194,12 @@ export class CodeInspectorComponent extends LitElement {
 
   handleClickTreeNode = (node: TreeNode) => {
     this.element = node;
-    const primaryAction = this.getDefaultAction();
-    if (primaryAction !== 'none') {
-      this.trackCode(primaryAction as InspectorAction);
+
+    // 使用图层面板的当前模式（基于键盘状态）
+    const actionToExecute = this.layerPanelMode || this.getDefaultAction();
+
+    if (actionToExecute !== 'none') {
+      this.trackCode(actionToExecute as InspectorAction);
     }
     this.removeLayerPanel();
   };
@@ -1083,7 +1254,12 @@ export class CodeInspectorComponent extends LitElement {
     window.addEventListener('click', this.handleMouseClick, true);
     window.addEventListener('pointerdown', this.handlePointerDown, true);
     window.addEventListener('keyup', this.handleKeyUp, true);
-    window.addEventListener('keydown', this.handleModeShortcut, true);
+    // Keyboard listeners for main overlay mode switching
+    window.addEventListener('keydown', this.handleOverlayKeyChange, true);
+    window.addEventListener('keyup', this.handleOverlayKeyChange, true);
+    // Keyboard listeners for layer panel mode switching
+    window.addEventListener('keydown', this.handleLayerPanelKeyChange, true);
+    window.addEventListener('keyup', this.handleLayerPanelKeyChange, true);
     window.addEventListener('mouseleave', this.removeCover, true);
     window.addEventListener('mouseup', this.handleMouseUp, true);
     window.addEventListener('touchend', this.handleMouseUp, true);
@@ -1098,7 +1274,12 @@ export class CodeInspectorComponent extends LitElement {
     window.removeEventListener('click', this.handleMouseClick, true);
     window.removeEventListener('pointerdown', this.handlePointerDown, true);
     window.removeEventListener('keyup', this.handleKeyUp, true);
-    window.removeEventListener('keydown', this.handleModeShortcut, true);
+    // Remove main overlay keyboard listeners
+    window.removeEventListener('keydown', this.handleOverlayKeyChange, true);
+    window.removeEventListener('keyup', this.handleOverlayKeyChange, true);
+    // Remove layer panel keyboard listeners
+    window.removeEventListener('keydown', this.handleLayerPanelKeyChange, true);
+    window.removeEventListener('keyup', this.handleLayerPanelKeyChange, true);
     window.removeEventListener('mouseleave', this.removeCover, true);
     window.removeEventListener('mouseup', this.handleMouseUp, true);
     window.removeEventListener('touchend', this.handleMouseUp, true);
@@ -1120,6 +1301,11 @@ export class CodeInspectorComponent extends LitElement {
   `;
 
   render() {
+    // Get mode-specific styling
+    const currentMode = this.currentTriggeredAction || this.getDefaultAction();
+    const modeColors = this.getModeColors(currentMode);
+    const modeIcon = this.getModeIcon(currentMode);
+
     const containerPosition = {
       display: this.show ? 'block' : 'none',
       top: `${this.position.top - this.position.margin.top}px`,
@@ -1156,8 +1342,20 @@ export class CodeInspectorComponent extends LitElement {
       borderLeftWidth: `${this.position.padding.left}px`,
     };
 
+    // Mode-aware content overlay
+    const contentOverlayStyle = {
+      background: modeColors.overlay,
+      transition: 'background 0.2s ease-in-out',
+    };
+
+    // Layer panel mode-aware styling
+    const layerPanelMode = this.layerPanelMode || this.getDefaultAction();
+    const layerPanelColors = this.getModeColors(layerPanelMode);
+    const layerPanelIcon = this.getModeIcon(layerPanelMode);
+
     const nodeTreeStyles = {
       display: this.showNodeTree ? 'flex' : 'none',
+      borderLeft: `4px solid ${layerPanelColors.accent}`,
       ...this.nodeTreePosition,
     };
 
@@ -1171,11 +1369,31 @@ export class CodeInspectorComponent extends LitElement {
     };
     const resolvedDefaultAction = this.getDefaultAction();
     const modeLabel = this.getActionLabel(resolvedDefaultAction);
-    const modeShortcut =
+    const isMac =
       typeof navigator !== 'undefined' &&
-      /mac|iphone|ipad|ipod/i.test(navigator.userAgent)
-        ? 'Shift+Opt+C'
-        : 'Shift+Alt+C';
+      /mac|iphone|ipad|ipod/i.test(navigator.userAgent);
+    const hotKeyMap = isMac ? MacHotKeyMap : WindowsHotKeyMap;
+
+    // Generate hint text based on mode system
+    let modeTipText = '';
+    if (this.hasModeSpecificKeys()) {
+      const hints: string[] = [];
+      if (this.copyKeys && this.copy) {
+        const keys = this.copyKeys.split(',').map(k => hotKeyMap[k.trim() as keyof typeof hotKeyMap]).join('+');
+        hints.push(`${keys}=Copy`);
+      }
+      if (this.locateKeys && this.locate) {
+        const keys = this.locateKeys.split(',').map(k => hotKeyMap[k.trim() as keyof typeof hotKeyMap]).join('+');
+        hints.push(`${keys}=IDE`);
+      }
+      if (this.targetKeys && this.target) {
+        const keys = this.targetKeys.split(',').map(k => hotKeyMap[k.trim() as keyof typeof hotKeyMap]).join('+');
+        hints.push(`${keys}=Link`);
+      }
+      modeTipText = hints.join(' · ');
+    } else {
+      modeTipText = `Mode: ${modeLabel}`;
+    }
 
     return html`
       <div
@@ -1186,7 +1404,7 @@ export class CodeInspectorComponent extends LitElement {
         <div class="margin-overlay" style=${styleMap(marginPosition)}>
           <div class="border-overlay" style=${styleMap(borderPosition)}>
             <div class="padding-overlay" style=${styleMap(paddingPosition)}>
-              <div class="content-overlay"></div>
+              <div class="content-overlay" style=${styleMap(contentOverlayStyle)}></div>
             </div>
           </div>
         </div>
@@ -1197,15 +1415,23 @@ export class CodeInspectorComponent extends LitElement {
           style=${styleMap({
             width: PopperWidth + 'px',
             maxWidth: '100vw',
+            borderLeft: `3px solid ${modeColors.accent}`,
             ...this.elementTipStyle.additionStyle,
           })}
         >
           <div class="element-info-content">
+            <div class="mode-badge" style=${styleMap({
+              background: modeColors.badge,
+              color: modeColors.badgeText,
+            })}>
+              <span class="mode-icon">${modeIcon}</span>
+              <span class="mode-text">${this.getActionLabel(currentMode)}</span>
+            </div>
             <div class="name-line">
               <div class="element-name">
-                <span class="element-title">&lt;${this.element.name}&gt;</span>
+                <span class="element-title" style="color: ${modeColors.accent}">&lt;${this.element.name}&gt;</span>
                 <span class="element-tip">
-                  Mode: ${modeLabel} · ${modeShortcut} to switch
+                  ${modeTipText}
                 </span>
               </div>
             </div>
@@ -1316,17 +1542,25 @@ export class CodeInspectorComponent extends LitElement {
       </div>
       <div
         id="inspector-node-tree"
-        class="element-info-content"
+        class="element-info-content layer-panel-mode-${layerPanelMode || 'default'}"
         style=${styleMap(nodeTreeStyles)}
       >
         <div
           class="inspector-layer-title"
+          style=${styleMap({
+            background: layerPanelColors.badge,
+            color: layerPanelColors.badgeText,
+          })}
           @mousedown="${(e: MouseEvent) =>
             this.recordMousePosition(e, 'nodeTree')}"
           @touchstart="${(e: TouchEvent) =>
             this.recordMousePosition(e, 'nodeTree')}"
         >
-          <div>🔍️ Click node · ${this.getActionLabel(this.getDefaultAction())}</div>
+          <div class="layer-title-content">
+            <span class="layer-mode-icon">${layerPanelIcon}</span>
+            <span class="layer-mode-text">${this.getActionLabel(layerPanelMode)}</span>
+            <span class="layer-hint">Click node to ${layerPanelMode === 'copy' ? 'copy' : layerPanelMode === 'locate' ? 'open' : 'trigger'}</span>
+          </div>
           ${html`<svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -1388,6 +1622,8 @@ export class CodeInspectorComponent extends LitElement {
               position: absolute;
               inset: 0;
               background: rgba(120, 170, 210, 0.7);
+              transition: background 0.2s ease-in-out;
+              animation: pulse-glow 2s ease-in-out infinite;
             }
           }
         }
@@ -1395,6 +1631,7 @@ export class CodeInspectorComponent extends LitElement {
     }
     .element-info {
       position: absolute;
+      transition: border-color 0.2s ease-in-out;
     }
     .element-info.hidden {
       visibility: hidden;
@@ -1405,10 +1642,36 @@ export class CodeInspectorComponent extends LitElement {
       color: #000;
       background-color: #fff;
       word-break: break-all;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
       box-sizing: border-box;
-      padding: 4px 8px;
-      border-radius: 4px;
+      padding: 0;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .mode-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      transition: background 0.2s ease-in-out;
+    }
+    .mode-icon {
+      font-size: 14px;
+      line-height: 1;
+    }
+    .mode-text {
+      flex: 1;
+    }
+    .name-line {
+      padding: 6px 10px 4px;
+    }
+    .path-line {
+      padding: 0 10px 6px;
     }
     .element-info-top {
       top: -4px;
@@ -1434,8 +1697,8 @@ export class CodeInspectorComponent extends LitElement {
       justify-content: flex-end;
     }
     .element-name .element-title {
-      color: coral;
       font-weight: bold;
+      transition: color 0.2s ease-in-out;
     }
     .element-name .element-tip {
       color: #006aff;
@@ -1482,19 +1745,54 @@ export class CodeInspectorComponent extends LitElement {
       display: flex;
       flex-direction: column;
       padding: 0;
+      transition: border-color 0.2s ease-in-out;
 
       .inspector-layer-title {
-        border-bottom: 1px solid #eee;
-        padding: 8px 8px 4px;
-        margin-bottom: 8px;
+        padding: 10px 12px;
+        margin-bottom: 0;
         flex-shrink: 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
         cursor: move;
         user-select: none;
-        &:hover {
-          background: rgba(0, 106, 255, 0.1);
+        font-weight: 600;
+        font-size: 12px;
+        transition: background 0.2s ease-in-out;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+        .layer-title-content {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex: 1;
+        }
+
+        .layer-mode-icon {
+          font-size: 16px;
+          line-height: 1;
+        }
+
+        .layer-mode-text {
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          font-size: 11px;
+        }
+
+        .layer-hint {
+          opacity: 0.8;
+          font-weight: 400;
+          font-size: 10px;
+          margin-left: 4px;
+        }
+
+        .close-icon {
+          opacity: 0.9;
+          transition: opacity 0.2s;
+          &:hover {
+            opacity: 1;
+          }
         }
       }
 
@@ -1546,6 +1844,15 @@ export class CodeInspectorComponent extends LitElement {
     }
     .close-icon {
       cursor: pointer;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.85;
+      }
     }
   `;
 }

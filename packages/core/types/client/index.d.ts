@@ -39,6 +39,9 @@ type InspectorAction = 'copy' | 'locate' | 'target' | 'all';
 type TrackAction = InspectorAction | 'default';
 export declare class CodeInspectorComponent extends LitElement {
     hotKeys: string;
+    copyKeys: string;
+    locateKeys: string;
+    targetKeys: string;
     port: number;
     showSwitch: boolean;
     autoToggle: boolean;
@@ -97,12 +100,17 @@ export declare class CodeInspectorComponent extends LitElement {
     preUserSelect: string;
     sendType: 'xhr' | 'img';
     activeNode: ActiveNode;
+    currentTriggeredAction: InspectorAction | null;
+    layerPanelMode: InspectorAction | null;
     inspectorSwitchRef: HTMLDivElement;
     codeInspectorContainerRef: HTMLDivElement;
     elementInfoRef: HTMLDivElement;
     nodeTreeRef: HTMLDivElement;
     nodeTreeTitleRef: HTMLDivElement;
     nodeTreeTooltipRef: HTMLDivElement;
+    private hasModeSpecificKeys;
+    private matchesKeys;
+    private getTriggeredAction;
     isTracking: (e: any) => boolean | "";
     getDomPropertyValue: (target: HTMLElement, property: string) => number;
     calculateElementInfoPosition: (target: HTMLElement) => Promise<{
@@ -131,6 +139,7 @@ export declare class CodeInspectorComponent extends LitElement {
         y: number;
     }) => void;
     removeLayerPanel: () => void;
+    handleLayerPanelKeyChange: (e: KeyboardEvent) => void;
     addGlobalCursorStyle: () => void;
     removeGlobalCursorStyle: () => void;
     sendXHR: () => void;
@@ -140,9 +149,8 @@ export declare class CodeInspectorComponent extends LitElement {
     private getDefaultAction;
     private isActionEnabled;
     private resolvePreferredAction;
-    private getAvailableDefaultActions;
-    private handleModeShortcut;
-    private printModeChange;
+    private getModeColors;
+    private getModeIcon;
     private getActionLabel;
     showNotification(message: string, type?: 'success' | 'error'): void;
     copyToClipboard(text: string): void;
@@ -154,6 +162,7 @@ export declare class CodeInspectorComponent extends LitElement {
     handleContextMenu: (e: MouseEvent) => void;
     generateNodeTree: (nodePath: HTMLElement[]) => TreeNode;
     handlePointerDown: (e: PointerEvent) => void;
+    handleOverlayKeyChange: (e: KeyboardEvent) => void;
     handleKeyUp: (e: KeyboardEvent) => void;
     printTip: () => void;
     getMousePosition: (e: MouseEvent | TouchEvent) => {
