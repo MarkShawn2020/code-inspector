@@ -23,7 +23,9 @@ describe('trackCode', () => {
       path: '/path/to/file.ts',
       line: 10,
       column: 5,
-      name: 'test'
+      name: 'test',
+      width: 120,
+      height: 60
     };
     
     // 模拟方法
@@ -176,7 +178,9 @@ describe('trackCode', () => {
         path: '/path/to/file.ts',
         line: 10,
         column: 5,
-        name: 'test'
+        name: 'test',
+        width: 120,
+        height: 60
       };
       
       component.trackCode('copy');
@@ -197,7 +201,9 @@ describe('trackCode', () => {
         line: 'abc',
         // @ts-ignore
         column: null,
-        name: 'test'
+        name: 'test',
+        width: 120,
+        height: 60
       };
       
       component.trackCode('copy');

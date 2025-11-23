@@ -13,6 +13,10 @@ interface SourceInfo {
     line: number;
     column: number;
 }
+interface ElementInfo extends SourceInfo {
+    width: number;
+    height: number;
+}
 interface ElementTipStyle {
     vertical: string;
     horizon: string;
@@ -21,7 +25,7 @@ interface ElementTipStyle {
         transform: string;
     };
 }
-interface TreeNode extends SourceInfo {
+interface TreeNode extends ElementInfo {
     children: TreeNode[];
     element: HTMLElement;
     depth: number;
@@ -76,12 +80,7 @@ export declare class CodeInspectorComponent extends LitElement {
             left: number;
         };
     };
-    element: {
-        name: string;
-        line: number;
-        column: number;
-        path: string;
-    };
+    element: ElementInfo;
     elementTipStyle: ElementTipStyle;
     show: boolean;
     showNodeTree: boolean;
@@ -113,6 +112,7 @@ export declare class CodeInspectorComponent extends LitElement {
     private getTriggeredAction;
     isTracking: (e: any) => boolean | "";
     getDomPropertyValue: (target: HTMLElement, property: string) => number;
+    getElementSize: (target: HTMLElement, rect?: DOMRect | DOMRectReadOnly) => Pick<ElementInfo, 'width' | 'height'>;
     calculateElementInfoPosition: (target: HTMLElement) => Promise<{
         vertical: string;
         horizon: string;

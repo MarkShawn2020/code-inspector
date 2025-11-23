@@ -16,7 +16,9 @@ describe('sendImg', () => {
       path: '/path/to/file.ts',
       line: 10,
       column: 5,
-      name: 'test'
+      name: 'test',
+      width: 120,
+      height: 60
     };
 
     // 保存原始的 createElement 方法

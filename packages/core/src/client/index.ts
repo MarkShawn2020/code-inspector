@@ -43,6 +43,11 @@ interface SourceInfo {
   column: number;
 }
 
+interface ElementInfo extends SourceInfo {
+  width: number;
+  height: number;
+}
+
 interface ElementTipStyle {
   vertical: string;
   horizon: string;
@@ -52,7 +57,7 @@ interface ElementTipStyle {
   };
 }
 
-interface TreeNode extends SourceInfo {
+interface TreeNode extends ElementInfo {
   children: TreeNode[];
   element: HTMLElement;
   depth: number;
@@ -136,7 +141,7 @@ export class CodeInspectorComponent extends LitElement {
     },
   }; // 弹窗位置
   @state()
-  element = { name: '', line: 0, column: 0, path: '' }; // 选中节点信息
+  element: ElementInfo = { name: '', line: 0, column: 0, path: '', width: 0, height: 0 }; // 选中节点信息
   @state()
   elementTipStyle: ElementTipStyle = {
     vertical: '',
@@ -256,6 +261,22 @@ export class CodeInspectorComponent extends LitElement {
   getDomPropertyValue = (target: HTMLElement, property: string) => {
     const computedStyle = window.getComputedStyle(target);
     return Number(computedStyle.getPropertyValue(property).replace('px', ''));
+  };
+
+  getElementSize = (
+    target: HTMLElement,
+    rect: DOMRect | DOMRectReadOnly = target.getBoundingClientRect()
+  ): Pick<ElementInfo, 'width' | 'height'> => {
+    const width = Number.isFinite(rect.width)
+      ? rect.width
+      : rect.right - rect.left;
+    const height = Number.isFinite(rect.height)
+      ? rect.height
+      : rect.bottom - rect.top;
+    return {
+      width: Math.max(0, Math.round(width || 0)),
+      height: Math.max(0, Math.round(height || 0)),
+    };
   };
 
   // 计算 element-info 的最佳位置
@@ -413,7 +434,8 @@ export class CodeInspectorComponent extends LitElement {
   // 渲染遮罩层
   renderCover = async (target: HTMLElement) => {
     // 设置 target 的位置
-    const { top, right, bottom, left } = target.getBoundingClientRect();
+    const rect = target.getBoundingClientRect();
+    const { top, right, bottom, left } = rect;
     this.position = {
       top,
       right,
@@ -453,7 +475,16 @@ export class CodeInspectorComponent extends LitElement {
       this.preUserSelect = getComputedStyle(document.body).userSelect;
     }
     document.body.style.userSelect = 'none';
-    this.element = this.getSourceInfo(target)!;
+    const sourceInfo = this.getSourceInfo(target);
+    const { width, height } = this.getElementSize(target, rect);
+    this.element = {
+      name: sourceInfo?.name || target.tagName.toLowerCase(),
+      path: sourceInfo?.path || '',
+      line: sourceInfo?.line ?? NaN,
+      column: sourceInfo?.column ?? NaN,
+      width,
+      height,
+    };
     this.show = true;
     if (!this.showNodeTree) {
       const { vertical, horizon, additionStyle } =
@@ -992,8 +1023,11 @@ export class CodeInspectorComponent extends LitElement {
       const sourceInfo = this.getSourceInfo(element);
       if (!sourceInfo) continue;
 
+      const { width, height } = this.getElementSize(element);
       const node: TreeNode = {
         ...sourceInfo,
+        width,
+        height,
         children: [],
         depth: depth++,
         element,
@@ -1363,6 +1397,12 @@ export class CodeInspectorComponent extends LitElement {
         modeHints.push({ hotkey: keys, action: 'Open Target' });
       }
     }
+    const elementWidth = Number.isFinite(this.element.width)
+      ? this.element.width
+      : 0;
+    const elementHeight = Number.isFinite(this.element.height)
+      ? this.element.height
+      : 0;
 
     return html`
       <div
@@ -1400,6 +1440,10 @@ export class CodeInspectorComponent extends LitElement {
               <div class="element-name">
                 <span class="element-title" style="color: ${modeColors.accent}">&lt;${this.element.name}&gt;</span>
               </div>
+            </div>
+            <div class="size-line">
+              <span class="size-chip">W ${elementWidth}px</span>
+              <span class="size-chip">H ${elementHeight}px</span>
             </div>
             <div class="path-line">
               ${this.element.path}:${this.element.line}:${this.element.column}
@@ -1758,6 +1802,21 @@ export class CodeInspectorComponent extends LitElement {
     }
     .element-name .element-tip {
       color: #006aff;
+    }
+    .size-line {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .size-chip {
+      background: #f6f8fa;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      color: #444;
+      padding: 2px 6px;
+      line-height: 16px;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     }
     .path-line {
       color: #333;

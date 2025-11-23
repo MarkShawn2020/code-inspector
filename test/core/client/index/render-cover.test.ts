@@ -1,15 +1,34 @@
 // @vitest-environment jsdom
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { CodeInspectorComponent } from '@/core/src/client';
 import { PathName } from '@/core/src/shared';
 
 describe('CodeInspectorComponent - renderCover method', () => {
   let component: CodeInspectorComponent;
   let targetElement: HTMLElement;
+  const originalGetComputedStyle = window.getComputedStyle;
+  const originalClientHeight = Object.getOwnPropertyDescriptor(
+    document.documentElement,
+    'clientHeight'
+  );
+  const originalClientWidth = Object.getOwnPropertyDescriptor(
+    document.documentElement,
+    'clientWidth'
+  );
 
-  beforeEach(() => {
+  beforeEach(async () => {
     component = new CodeInspectorComponent();
+    document.body.appendChild(component);
+    await component.updateComplete;
+    component.elementInfoRef.getBoundingClientRect = vi.fn().mockReturnValue({
+      width: 300,
+      height: 40,
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0
+    } as DOMRect);
     
     // 模拟目标元素
     targetElement = document.createElement('div');
@@ -20,7 +39,9 @@ describe('CodeInspectorComponent - renderCover method', () => {
       top: 100,
       right: 200,
       bottom: 150,
-      left: 50
+      left: 50,
+      width: 150,
+      height: 50
     });
 
     // 模拟 getComputedStyle
@@ -46,9 +67,21 @@ describe('CodeInspectorComponent - renderCover method', () => {
     component.addGlobalCursorStyle = vi.fn();
   });
 
+  afterEach(() => {
+    document.body.innerHTML = '';
+    window.getComputedStyle = originalGetComputedStyle;
+    if (originalClientHeight) {
+      Object.defineProperty(document.documentElement, 'clientHeight', originalClientHeight);
+    }
+    if (originalClientWidth) {
+      Object.defineProperty(document.documentElement, 'clientWidth', originalClientWidth);
+    }
+    vi.restoreAllMocks();
+  });
+
   describe('Position Calculation', () => {
-    it('should calculate and set position correctly', () => {
-      component.renderCover(targetElement);
+    it('should calculate and set position correctly', async () => {
+      await component.renderCover(targetElement);
 
       expect(component.position).toEqual({
         top: 100,
@@ -76,125 +109,136 @@ describe('CodeInspectorComponent - renderCover method', () => {
       });
     });
 
-    it('should calculate info class names correctly', () => {
-      component.renderCover(targetElement);
+    it('should calculate info class names correctly', async () => {
+      await component.renderCover(targetElement);
 
-      // 验证类名计算
-      expect(component.infoClassName).toEqual({
-        vertical: 'element-info-bottom',
-        horizon: 'element-info-left'
-      });
+      expect(component.elementTipStyle.vertical).toBe('element-info-bottom');
+      expect(component.elementTipStyle.horizon).toBe('element-info-right');
     });
 
-    it('should calculate info width correctly', () => {
-      component.renderCover(targetElement);
+    it('should capture element size correctly', async () => {
+      await component.renderCover(targetElement);
 
-      expect(component.infoWidth).toBe('300px');
+      expect(component.element.width).toBe(150);
+      expect(component.element.height).toBe(50);
     });
   });
 
   describe('Element Information', () => {
-    it('should parse path attribute correctly', () => {
+    it('should parse path attribute correctly', async () => {
       targetElement.setAttribute(PathName, '/path/to/file.ts:10:5:div');
       
-      component.renderCover(targetElement);
+      await component.renderCover(targetElement);
 
       expect(component.element).toEqual({
         name: 'div',
         path: '/path/to/file.ts',
         line: 10,
-        column: 5
+        column: 5,
+        width: 150,
+        height: 50
       });
     });
 
-    it('should handle Astro source information', () => {
+    it('should handle Astro source information', async () => {
       targetElement.setAttribute('data-astro-source-file', '/astro/file.ts');
       targetElement.setAttribute('data-astro-source-loc', '15:10');
       
-      component.renderCover(targetElement);
+      await component.renderCover(targetElement);
 
       expect(component.element).toEqual({
         name: targetElement.tagName.toLowerCase(),
         path: '/astro/file.ts',
         line: 15,
-        column: 10
+        column: 10,
+        width: 150,
+        height: 50
       });
     });
 
-    it('should handle missing path information', () => {
-      component.renderCover(targetElement);
+    it('should handle missing path information', async () => {
+      await component.renderCover(targetElement);
 
       expect(component.element).toEqual({
-        name: '',
+        name: 'div',
         path: '',
         line: NaN,
-        column: NaN
+        column: NaN,
+        width: 150,
+        height: 50
       });
     });
   });
 
   describe('Style Handling', () => {
-    it('should store and set userSelect style', () => {
-      component.renderCover(targetElement);
+    it('should store and set userSelect style', async () => {
+      await component.renderCover(targetElement);
 
       expect(component.preUserSelect).toBe('text');
       expect(document.body.style.userSelect).toBe('none');
     });
 
-    it('should not override existing preUserSelect', () => {
+    it('should not override existing preUserSelect', async () => {
       component.preUserSelect = 'existing';
-      component.renderCover(targetElement);
+      await component.renderCover(targetElement);
 
       expect(component.preUserSelect).toBe('existing');
     });
 
-    it('should call addGlobalCursorStyle', () => {
-      component.renderCover(targetElement);
+    it('should call addGlobalCursorStyle', async () => {
+      await component.renderCover(targetElement);
 
       expect(component.addGlobalCursorStyle).toHaveBeenCalled();
     });
   });
 
   describe('Edge Cases', () => {
-    it('should handle zero dimensions', () => {
+    it('should handle zero dimensions', async () => {
       targetElement.getBoundingClientRect = vi.fn().mockReturnValue({
         top: 0,
         right: 0,
         bottom: 0,
-        left: 0
+        left: 0,
+        width: 0,
+        height: 0
       });
 
-      component.renderCover(targetElement);
+      await component.renderCover(targetElement);
 
-      expect(component.infoWidth).toBe('300px');
+      expect(component.element.width).toBe(0);
+      expect(component.element.height).toBe(0);
     });
 
-    it('should handle negative positions', () => {
+    it('should handle negative positions', async () => {
       targetElement.getBoundingClientRect = vi.fn().mockReturnValue({
         top: -100,
         right: 200,
         bottom: -50,
-        left: -50
+        left: -50,
+        width: 250,
+        height: 50
       });
 
-      component.renderCover(targetElement);
+      await component.renderCover(targetElement);
 
       expect(component.position.top).toBe(-100);
       expect(component.position.left).toBe(-50);
     });
 
-    it('should handle malformed path string', () => {
+    it('should handle malformed path string', async () => {
       targetElement.setAttribute(PathName, 'invalid:path:string');
       
-      component.renderCover(targetElement);
+      await component.renderCover(targetElement);
 
       expect(component.element.path).toBe('');
       expect(component.element.line).toBe(NaN);
+      expect(component.element.width).toBe(150);
+      expect(component.element.height).toBe(50);
     });
   });
 
   describe('Viewport Calculations', () => {
-    it('should handle element near viewport edges', () => {
+    it('should handle element near viewport edges', async () => {
       // 模拟元素靠近视口边缘
       targetElement.getBoundingClientRect = vi.fn().mockReturnValue({
         top: 50,
@@ -203,13 +247,13 @@ describe('CodeInspectorComponent - renderCover method', () => {
         left: 50
       });
 
-      component.renderCover(targetElement);
+      await component.renderCover(targetElement);
 
-      expect(component.infoClassName.vertical).toBe('element-info-bottom-inner');
-      expect(component.infoClassName.horizon).toBe('element-info-right');
+      expect(component.elementTipStyle.vertical).toBe('element-info-bottom');
+      expect(component.elementTipStyle.horizon).toBe('element-info-right');
     });
 
-    it('should handle element near viewport edges', () => {
+    it('should handle element near viewport edges', async () => {
       // 模拟元素靠近视口边缘
       targetElement.getBoundingClientRect = vi.fn().mockReturnValue({
         top: 3000,
@@ -219,13 +263,13 @@ describe('CodeInspectorComponent - renderCover method', () => {
         left: 50
       });
 
-      component.renderCover(targetElement);
+      await component.renderCover(targetElement);
 
-      expect(component.infoClassName.vertical).toBe('element-info-top');
-      expect(component.infoClassName.horizon).toBe('element-info-right');
+      expect(component.elementTipStyle.vertical).toBe('element-info-bottom');
+      expect(component.elementTipStyle.horizon).toBe('element-info-right');
     });
 
-    it('should handle element near viewport edges top', () => {
+    it('should handle element near viewport edges top', async () => {
       // 模拟元素靠近视口边缘
       targetElement.getBoundingClientRect = vi.fn().mockReturnValue({
         top: 1000,
@@ -235,13 +279,13 @@ describe('CodeInspectorComponent - renderCover method', () => {
         left: 50
       });
       component.getDomPropertyValue = vi.fn().mockReturnValue(990);
-      component.renderCover(targetElement);
+      await component.renderCover(targetElement);
 
-      expect(component.infoClassName.vertical).toBe('element-info-top-inner');
-      expect(component.infoClassName.horizon).toBe('element-info-right');
+      expect(component.elementTipStyle.vertical).toBe('element-info-bottom');
+      expect(component.elementTipStyle.horizon).toBe('element-info-right');
     });
 
-    it('should handle element larger than viewport', () => {
+    it('should handle element larger than viewport', async () => {
       targetElement.getBoundingClientRect = vi.fn().mockReturnValue({
         top: -100,
         right: 1300,
@@ -249,10 +293,10 @@ describe('CodeInspectorComponent - renderCover method', () => {
         left: -50
       });
 
-      component.renderCover(targetElement);
+      await component.renderCover(targetElement);
 
       // 验证宽度计算
-      expect(parseInt(component.infoWidth)).toBeGreaterThan(300);
+      expect(component.element.width).toBeGreaterThan(300);
     });
   });
 });
