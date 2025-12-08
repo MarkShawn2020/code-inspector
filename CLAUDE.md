@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**code-inspector** is a developer productivity tool that enables click-to-code workflow: developers click any DOM element in a running web app and automatically open their IDE at the exact source code location. Current version: 1.2.10.
+**code-inspector** is a developer productivity tool that enables click-to-code workflow: developers click any DOM element in a running web app and automatically open their IDE at the exact source code location. Current version: 1.4.2.
 
 **Core Architecture:**
 - **Monorepo Structure:** pnpm workspace with multiple packages (`core`, `vite`, `webpack`, `esbuild`, `turbopack`, `mako`, `code-inspector-plugin`)
