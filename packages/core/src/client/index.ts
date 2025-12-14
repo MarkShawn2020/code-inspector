@@ -97,10 +97,6 @@ export class CodeInspectorComponent extends LitElement {
   @property()
   port: number = DefaultPort;
   @property()
-  showSwitch: boolean = false;
-  @property()
-  autoToggle: boolean = false;
-  @property()
   hideConsole: boolean = false;
   @property()
   locate: boolean = true;
@@ -161,14 +157,6 @@ export class CodeInspectorComponent extends LitElement {
   @state()
   mousePosition = { baseX: 0, baseY: 0, moveX: 0, moveY: 0 };
   @state()
-  draggingTarget: 'switch' | 'nodeTree' = 'switch'; // 是否正在拖拽节点树
-  @state()
-  open = false; // 点击开关打开
-  @state()
-  moved = false;
-  @state()
-  hoverSwitch = false;
-  @state()
   preUserSelect = '';
   @state()
   sendType: 'xhr' | 'img' = 'xhr';
@@ -176,9 +164,6 @@ export class CodeInspectorComponent extends LitElement {
   activeNode: ActiveNode = {};
   @state()
   currentMode: InspectorAction | null = null; // 全局共享的当前操作模式（基于键盘状态）
-
-  @query('#inspector-switch')
-  inspectorSwitchRef!: HTMLDivElement;
 
   @query('#code-inspector-container')
   codeInspectorContainerRef!: HTMLDivElement;
@@ -893,20 +878,10 @@ export class CodeInspectorComponent extends LitElement {
     }
   }
 
-  // 移动按钮
+  // 拖拽节点树面板
   handleDrag = (e: MouseEvent | TouchEvent) => {
-    if (e.composedPath().includes(this)) {
-      this.hoverSwitch = true;
-    } else {
-      this.hoverSwitch = false;
-    }
-    // 判断是否在拖拽按钮
     if (this.dragging) {
-      this.moved = true;
-      const ref =
-        this.draggingTarget === 'switch'
-          ? this.inspectorSwitchRef
-          : this.nodeTreeRef;
+      const ref = this.nodeTreeRef;
       ref.style.left =
         this.mousePosition.baseX +
         (this.getMousePosition(e).x - this.mousePosition.moveX) +
@@ -915,11 +890,8 @@ export class CodeInspectorComponent extends LitElement {
         this.mousePosition.baseY +
         (this.getMousePosition(e).y - this.mousePosition.moveY) +
         'px';
-      if (this.draggingTarget) {
-        this.nodeTreePosition.left = ref.style.left;
-        this.nodeTreePosition.top = ref.style.top;
-      }
-      return;
+      this.nodeTreePosition.left = ref.style.left;
+      this.nodeTreePosition.top = ref.style.top;
     }
   };
 
@@ -936,10 +908,7 @@ export class CodeInspectorComponent extends LitElement {
 
   // 鼠标移动渲染遮罩层位置
   handleMouseMove = async (e: MouseEvent | TouchEvent) => {
-    if (
-      ((this.isTracking(e) && !this.dragging) || this.open) &&
-      !this.hoverSwitch
-    ) {
+    if (this.isTracking(e) && !this.dragging) {
       const nodePath = e.composedPath() as HTMLElement[];
       let targetNode;
       // 寻找第一个有 data-insp-path 属性的元素
@@ -974,7 +943,7 @@ export class CodeInspectorComponent extends LitElement {
 
   // 鼠标点击唤醒遮罩层
   handleMouseClick = (e: MouseEvent | TouchEvent) => {
-    if (this.isTracking(e) || this.open) {
+    if (this.isTracking(e)) {
       if (this.show) {
         // 阻止冒泡
         e.stopPropagation();
@@ -989,9 +958,6 @@ export class CodeInspectorComponent extends LitElement {
         }
         // 清除遮罩层
         this.removeCover();
-        if (this.autoToggle) {
-          this.open = false;
-        }
       }
     }
     if (!e.composedPath().includes(this.nodeTreeRef)) {
@@ -1000,10 +966,7 @@ export class CodeInspectorComponent extends LitElement {
   };
 
   handleContextMenu = (e: MouseEvent) => {
-    if (
-      ((this.isTracking(e) && !this.dragging) || this.open) &&
-      !this.hoverSwitch
-    ) {
+    if (this.isTracking(e) && !this.dragging) {
       e.preventDefault();
 
       const nodePath = e.composedPath() as HTMLElement[];
@@ -1058,7 +1021,7 @@ export class CodeInspectorComponent extends LitElement {
     if (!disabled) {
       return;
     }
-    if (this.isTracking(e) || this.open) {
+    if (this.isTracking(e)) {
       if (this.show) {
         // 阻止冒泡
         e.stopPropagation();
@@ -1068,26 +1031,14 @@ export class CodeInspectorComponent extends LitElement {
         this.trackCode();
         // 清除遮罩层
         this.removeCover();
-        if (this.autoToggle) {
-          this.open = false;
-        }
       }
     }
   };
 
   // 监听键盘抬起，清除遮罩层
   handleKeyUp = (e: KeyboardEvent) => {
-    if (!this.isTracking(e) && !this.open) {
+    if (!this.isTracking(e)) {
       this.removeCover();
-    }
-  };
-
-  // 切换 switch 显示/隐藏 (Alt+Shift+0)
-  handleToggleSwitchVisibility = (e: KeyboardEvent) => {
-    // Use keyCode/code for reliability across platforms (Alt+Shift+0)
-    if (e.altKey && e.shiftKey && (e.key === '0' || e.code === 'Digit0' || e.keyCode === 48)) {
-      e.preventDefault();
-      this.showSwitch = !this.showSwitch;
     }
   };
 
@@ -1159,13 +1110,9 @@ export class CodeInspectorComponent extends LitElement {
     };
   };
 
-  // 记录鼠标按下时初始位置
-  recordMousePosition = (
-    e: MouseEvent | TouchEvent,
-    target: 'switch' | 'nodeTree'
-  ) => {
-    const ref =
-      target === 'switch' ? this.inspectorSwitchRef : this.nodeTreeRef;
+  // 记录鼠标按下时初始位置（用于拖拽节点树面板）
+  recordMousePosition = (e: MouseEvent | TouchEvent) => {
+    const ref = this.nodeTreeRef;
     this.mousePosition = {
       baseX: ref.offsetLeft,
       baseY: ref.offsetTop,
@@ -1173,29 +1120,14 @@ export class CodeInspectorComponent extends LitElement {
       moveY: this.getMousePosition(e).y,
     };
     this.dragging = true;
-    this.draggingTarget = target;
     e.preventDefault();
   };
 
   // 结束拖拽
-  handleMouseUp = (e: MouseEvent | TouchEvent) => {
-    this.hoverSwitch = false;
+  handleMouseUp = () => {
     if (this.dragging) {
       this.dragging = false;
-      if (e instanceof TouchEvent && this.draggingTarget === 'switch') {
-        this.switch(e);
-      }
     }
-  };
-
-  // 切换开关
-  switch = (e: Event) => {
-    if (!this.moved) {
-      this.open = !this.open;
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    this.moved = false;
   };
 
   handleClickTreeNode = (node: TreeNode) => {
@@ -1263,8 +1195,6 @@ export class CodeInspectorComponent extends LitElement {
     // Global keyboard listeners for unified mode state management
     window.addEventListener('keydown', this.handleGlobalKeyChange, true);
     window.addEventListener('keyup', this.handleGlobalKeyChange, true);
-    // Toggle switch visibility (Alt+Shift+0)
-    window.addEventListener('keydown', this.handleToggleSwitchVisibility, true);
     window.addEventListener('mouseleave', this.removeCover, true);
     window.addEventListener('mouseup', this.handleMouseUp, true);
     window.addEventListener('touchend', this.handleMouseUp, true);
@@ -1282,7 +1212,6 @@ export class CodeInspectorComponent extends LitElement {
     // Remove global keyboard listeners
     window.removeEventListener('keydown', this.handleGlobalKeyChange, true);
     window.removeEventListener('keyup', this.handleGlobalKeyChange, true);
-    window.removeEventListener('keydown', this.handleToggleSwitchVisibility, true);
     window.removeEventListener('mouseleave', this.removeCover, true);
     window.removeEventListener('mouseup', this.handleMouseUp, true);
     window.removeEventListener('touchend', this.handleMouseUp, true);
@@ -1478,61 +1407,6 @@ export class CodeInspectorComponent extends LitElement {
         </div>
       </div>
       <div
-        id="inspector-switch"
-        class="inspector-switch ${this.open
-          ? 'active-inspector-switch'
-          : ''} ${this.moved ? 'move-inspector-switch' : ''}"
-        style=${styleMap({ display: this.showSwitch ? 'flex' : 'none' })}
-        @mousedown="${(e: MouseEvent) => this.recordMousePosition(e, 'switch')}"
-        @touchstart="${(e: TouchEvent) =>
-          this.recordMousePosition(e, 'switch')}"
-        @click="${this.switch}"
-        title="${this.open ? 'Click to disable inspector' : 'Click to enable inspector'}"
-        role="button"
-        aria-pressed="${this.open}"
-        aria-label="Code Inspector Toggle"
-      >
-        ${this.open
-          ? html`
-              <!-- Active state: crosshair/target icon -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="12" cy="12" r="10"/>
-                <circle cx="12" cy="12" r="4"/>
-                <line x1="12" y1="2" x2="12" y2="6"/>
-                <line x1="12" y1="18" x2="12" y2="22"/>
-                <line x1="2" y1="12" x2="6" y2="12"/>
-                <line x1="18" y1="12" x2="22" y2="12"/>
-              </svg>
-            `
-          : html`
-              <!-- Inactive state: code bracket icon -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polyline points="16 18 22 12 16 6"/>
-                <polyline points="8 6 2 12 8 18"/>
-              </svg>
-            `}
-      </div>
-      <div
         id="inspector-node-tree"
         class="element-info-content layer-panel-mode-${currentMode || 'default'}"
         style=${styleMap(nodeTreeStyles)}
@@ -1543,10 +1417,8 @@ export class CodeInspectorComponent extends LitElement {
             background: layerPanelColors.badge,
             color: layerPanelColors.badgeText,
           })}
-          @mousedown="${(e: MouseEvent) =>
-            this.recordMousePosition(e, 'nodeTree')}"
-          @touchstart="${(e: TouchEvent) =>
-            this.recordMousePosition(e, 'nodeTree')}"
+          @mousedown="${(e: MouseEvent) => this.recordMousePosition(e)}"
+          @touchstart="${(e: TouchEvent) => this.recordMousePosition(e)}"
         >
           <div class="layer-title-content">
             <span class="layer-mode-icon">${layerPanelIcon}</span>
@@ -1790,76 +1662,6 @@ export class CodeInspectorComponent extends LitElement {
       color: #333;
       line-height: 12px;
       margin-top: 4px;
-    }
-    /* Switch Button - Warm Academic Design */
-    .inspector-switch {
-      position: fixed;
-      z-index: 9999999999999;
-      bottom: 24px;
-      right: 24px;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      /* Warm Academic: ivory background with subtle warmth */
-      background: linear-gradient(135deg, #FDFCFA 0%, #F9F9F7 100%);
-      color: #87867F;
-      height: 44px;
-      width: 44px;
-      border-radius: 12px;
-      /* Subtle paper-like shadow */
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06),
-        0 1px 2px rgba(0, 0, 0, 0.04),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-      border: 1px solid rgba(135, 134, 127, 0.15);
-      cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1),
-          0 2px 4px rgba(0, 0, 0, 0.06),
-          inset 0 1px 0 rgba(255, 255, 255, 0.9);
-        border-color: rgba(204, 120, 92, 0.3);
-        color: #CC785C;
-      }
-
-      &:active {
-        transform: translateY(0);
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08),
-          inset 0 1px 2px rgba(0, 0, 0, 0.04);
-      }
-
-      svg {
-        transition: transform 0.2s ease;
-      }
-
-      &:hover svg {
-        transform: scale(1.05);
-      }
-    }
-    .active-inspector-switch {
-      /* Terracotta accent when active */
-      background: linear-gradient(135deg, #CC785C 0%, #B86B4F 100%);
-      color: #FFFFFF;
-      border-color: #B86B4F;
-      box-shadow: 0 4px 12px rgba(204, 120, 92, 0.3),
-        0 2px 4px rgba(204, 120, 92, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-
-      &:hover {
-        background: linear-gradient(135deg, #D98A6E 0%, #CC785C 100%);
-        color: #FFFFFF;
-        border-color: #CC785C;
-        box-shadow: 0 6px 16px rgba(204, 120, 92, 0.35),
-          0 3px 6px rgba(204, 120, 92, 0.25),
-          inset 0 1px 0 rgba(255, 255, 255, 0.25);
-      }
-    }
-    .move-inspector-switch {
-      cursor: move;
     }
     #inspector-node-tree {
       position: fixed;

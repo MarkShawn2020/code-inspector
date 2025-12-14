@@ -7,7 +7,7 @@
 </p>
 
 [![Original Repo](https://img.shields.io/badge/upstream-zh--lx%2Fcode--inspector-blue)](https://github.com/zh-lx/code-inspector)
-[![Fork Version](https://img.shields.io/badge/fork-v1.4.3-green)](https://github.com/MarkShawn2020/code-inspector)
+[![Fork Version](https://img.shields.io/badge/fork-v1.4.4-green)](https://github.com/MarkShawn2020/code-inspector)
 [![MIT-license](https://img.shields.io/npm/l/code-inspector.svg)](https://opensource.org/licenses/MIT)
 
 </div>
@@ -22,7 +22,7 @@ The original plugin is excellent for traditional IDE workflows (click → open i
 
 > **"I don't want to open my IDE. I want to copy the file path and paste it to my AI assistant."**
 
-### 🆕 What's New in This Fork (v1.4.3)
+### 🆕 What's New in This Fork (v1.4.4)
 
 - **📋 Copy Mode**: Click to copy file paths instead of opening IDE
   - Visual toast notifications when copying
@@ -38,6 +38,8 @@ The original plugin is excellent for traditional IDE workflows (click → open i
 - **🔄 Dynamic Context Menu**: Right-click shows component hierarchy, all actions respect current mode
 
 - **🎨 Polished UX**: Toast notifications, dynamic panel titles, unified interaction model
+
+- **🧹 Simplified UI (v1.4.4)**: Removed floating switch button for cleaner interface
 
 **In short**: Give AI your exact code context in 3 seconds, not 3 minutes of screenshot describing.
 
@@ -60,7 +62,7 @@ This tells npm/pnpm to fetch `@code-inspector/*` packages from Cloudsmith instea
 ### Step 2: Install Main Package
 
 ```bash
-pnpm add code-inspector-plugin@https://npm.cloudsmith.io/mark/code-inspector/code-inspector-plugin/-/code-inspector-plugin-1.4.3.tgz
+pnpm add code-inspector-plugin@https://npm.cloudsmith.io/mark/code-inspector/code-inspector-plugin/-/code-inspector-plugin-1.4.4.tgz
 ```
 
 > **Why both steps?** The main package `code-inspector-plugin` uses direct URL. But it depends on scoped packages like `@code-inspector/core`, `@code-inspector/vite`, etc. The `.npmrc` config ensures these dependencies are also fetched from Cloudsmith.
@@ -82,7 +84,6 @@ export default {
       behavior: {
         defaultAction: 'copy',  // 👈 Copy mode for AI workflow
       },
-      showSwitch: true,         // 👈 Show toggle button
     }),
   ],
 };
@@ -115,7 +116,6 @@ codeInspectorPlugin({
     copy: true,
     locate: true,
   },
-  showSwitch: true,
 })
 ```
 
@@ -132,7 +132,6 @@ codeInspectorPlugin({
     locate: true,               // Enable IDE opening
     target: 'custom-url-{file}', // Custom URL template
   },
-  showSwitch: true,             // Show floating toggle button
   editor: 'vscode',             // IDE (auto-detected if not specified)
 })
 ```

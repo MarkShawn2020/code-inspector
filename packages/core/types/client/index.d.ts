@@ -47,8 +47,6 @@ export declare class CodeInspectorComponent extends LitElement {
     locateKeys: string;
     targetKeys: string;
     port: number;
-    showSwitch: boolean;
-    autoToggle: boolean;
     hideConsole: boolean;
     locate: boolean;
     copy: boolean | string;
@@ -93,15 +91,10 @@ export declare class CodeInspectorComponent extends LitElement {
         moveX: number;
         moveY: number;
     };
-    draggingTarget: 'switch' | 'nodeTree';
-    open: boolean;
-    moved: boolean;
-    hoverSwitch: boolean;
     preUserSelect: string;
     sendType: 'xhr' | 'img';
     activeNode: ActiveNode;
     currentMode: InspectorAction | null;
-    inspectorSwitchRef: HTMLDivElement;
     codeInspectorContainerRef: HTMLDivElement;
     elementInfoRef: HTMLDivElement;
     nodeTreeRef: HTMLDivElement;
@@ -163,15 +156,13 @@ export declare class CodeInspectorComponent extends LitElement {
     generateNodeTree: (nodePath: HTMLElement[]) => TreeNode;
     handlePointerDown: (e: PointerEvent) => void;
     handleKeyUp: (e: KeyboardEvent) => void;
-    handleToggleSwitchVisibility: (e: KeyboardEvent) => void;
     printTip: () => void;
     getMousePosition: (e: MouseEvent | TouchEvent) => {
         x: number;
         y: number;
     };
-    recordMousePosition: (e: MouseEvent | TouchEvent, target: 'switch' | 'nodeTree') => void;
-    handleMouseUp: (e: MouseEvent | TouchEvent) => void;
-    switch: (e: Event) => void;
+    recordMousePosition: (e: MouseEvent | TouchEvent) => void;
+    handleMouseUp: () => void;
     handleClickTreeNode: (node: TreeNode) => void;
     handleMouseEnterNode: (e: MouseEvent, node: TreeNode) => Promise<void>;
     handleMouseLeaveNode: () => void;
