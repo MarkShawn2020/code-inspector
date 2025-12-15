@@ -15,7 +15,7 @@
     "@farmfe/cli": "^1.0.2",
     "@farmfe/core": "^1.2.4",
     "@vitejs/plugin-vue": "^5.0.4",
-    "code-inspector-plugin": "workspace:*",
+    "lovinsp": "workspace:*",
     "core-js": "^3.30.1"
   }
 }

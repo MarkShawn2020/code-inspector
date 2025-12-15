@@ -2,270 +2,270 @@
 
 ## 1.2.10
 
-- 【fix】Increased the scope of files that can be recognized by `nextjs` [#399](https://github.com/zh-lx/code-inspector/pull/399)
+- 【fix】Increased the scope of files that can be recognized by `nextjs` [#399](https://github.com/MarkShawn2020/lovinsp/pull/399)
 
 ## 1.2.9
 
-- 【fix】Fixed the issue where the plugin did not work with `middleware` in `turbopack` [#398](https://github.com/zh-lx/code-inspector/pull/398)
+- 【fix】Fixed the issue where the plugin did not work with `middleware` in `turbopack` [#398](https://github.com/MarkShawn2020/lovinsp/pull/398)
 
 ## 1.2.8
 
-- 【fix】Fixed the error issue `Maximum call stack size exceeded` [#396](https://github.com/zh-lx/code-inspector/pull/396)
+- 【fix】Fixed the error issue `Maximum call stack size exceeded` [#396](https://github.com/MarkShawn2020/lovinsp/pull/396)
 
 ## 1.2.7
 
-- 【fix】Fixed usage error in mako projects with `app.ts` files [#392](https://github.com/zh-lx/code-inspector/pull/392)
-- 【fix】Fixed issue where it doesn't work in multi-page Next.js projects [#391](https://github.com/zh-lx/code-inspector/pull/391)
+- 【fix】Fixed usage error in mako projects with `app.ts` files [#392](https://github.com/MarkShawn2020/lovinsp/pull/392)
+- 【fix】Fixed issue where it doesn't work in multi-page Next.js projects [#391](https://github.com/MarkShawn2020/lovinsp/pull/391)
 
 ## 1.2.6
 
-- 【fix】Compatible with other `loader`s in `turbopack` [#386](https://github.com/zh-lx/code-inspector/pull/386)
+- 【fix】Compatible with other `loader`s in `turbopack` [#386](https://github.com/MarkShawn2020/lovinsp/pull/386)
 
 ## 1.2.5
 
-- 【fix】Re-fixed the `address already in use` error issue in `turbopack` [#384](https://github.com/zh-lx/code-inspector/pull/384)
+- 【fix】Re-fixed the `address already in use` error issue in `turbopack` [#384](https://github.com/MarkShawn2020/lovinsp/pull/384)
 
 ## 1.2.4
 
-- 【feat】Optimized the speed of opening editor when locating files [#381](https://github.com/zh-lx/code-inspector/pull/381)
-- 【feat】Support `Qoder` editor recognition [#381](https://github.com/zh-lx/code-inspector/pull/381)
-- 【fix】Fixed the issue where `client code` was injected into multiple files in `turbopack` [#380](https://github.com/zh-lx/code-inspector/pull/380)
+- 【feat】Optimized the speed of opening editor when locating files [#381](https://github.com/MarkShawn2020/lovinsp/pull/381)
+- 【feat】Support `Qoder` editor recognition [#381](https://github.com/MarkShawn2020/lovinsp/pull/381)
+- 【fix】Fixed the issue where `client code` was injected into multiple files in `turbopack` [#380](https://github.com/MarkShawn2020/lovinsp/pull/380)
 
 ## 1.2.3
 
-- 【feat】Added `skipSnippets` parameter, support user-defined code snippet injection skipping [#375](https://github.com/zh-lx/code-inspector/pull/375)
-- 【fix】Compatible with `.mjs` format `next.config.mjs` file [#374](https://github.com/zh-lx/code-inspector/pull/374)
-- 【fix】Fixed the error issue `address already in use` in `turbopack` [#373](https://github.com/zh-lx/code-inspector/pull/373)
+- 【feat】Added `skipSnippets` parameter, support user-defined code snippet injection skipping [#375](https://github.com/MarkShawn2020/lovinsp/pull/375)
+- 【fix】Compatible with `.mjs` format `next.config.mjs` file [#374](https://github.com/MarkShawn2020/lovinsp/pull/374)
+- 【fix】Fixed the error issue `address already in use` in `turbopack` [#373](https://github.com/MarkShawn2020/lovinsp/pull/373)
 
 ## 1.2.2
 
-- 【fix】Fixed the error issue `Error: Cannot find module '@code-inspector/webpack/dist/loader.js'` in `nextjs 15.x(turbopack)` [#369](https://github.com/zh-lx/code-inspector/pull/369)
+- 【fix】Fixed the error issue `Error: Cannot find module '@lovinsp/webpack/dist/loader.js'` in `nextjs 15.x(turbopack)` [#369](https://github.com/MarkShawn2020/lovinsp/pull/369)
 
 ## 1.2.1
 
-- 【fix】Fixed the error issue `Error: Cannot find module '@code-inspector/webpack/dist/loader.js'` in `nextjs 15.x(turbopack)` [#367](https://github.com/zh-lx/code-inspector/pull/367)
+- 【fix】Fixed the error issue `Error: Cannot find module '@lovinsp/webpack/dist/loader.js'` in `nextjs 15.x(turbopack)` [#367](https://github.com/MarkShawn2020/lovinsp/pull/367)
 
 ## 1.2.0
 
-- 【feat】Added a warning about incorrect plugin configuration order in `vite` [#365](https://github.com/zh-lx/code-inspector/pull/365)
-- 【feat】Added a custom event `code-inspector:trackCode` when triggering the `trackCode` function [#364](https://github.com/zh-lx/code-inspector/pull/364)
+- 【feat】Added a warning about incorrect plugin configuration order in `vite` [#365](https://github.com/MarkShawn2020/lovinsp/pull/365)
+- 【feat】Added a custom event `code-inspector:trackCode` when triggering the `trackCode` function [#364](https://github.com/MarkShawn2020/lovinsp/pull/364)
 
 ## 1.1.1
 
-- 【fix】Fixed the issue where the installation failed [9694900bb](https://github.com/zh-lx/code-inspector/commit/9694900bbde7b254184532b8eda10a3cad105a91)
+- 【fix】Fixed the issue where the installation failed [9694900bb](https://github.com/MarkShawn2020/lovinsp/commit/9694900bbde7b254184532b8eda10a3cad105a91)
 
 ## 1.1.0
 
-- 【feat】Supported project using `mako` as the bundler [#361](https://github.com/zh-lx/code-inspector/pull/361)
+- 【feat】Supported project using `mako` as the bundler [#361](https://github.com/MarkShawn2020/lovinsp/pull/361)
 
 ## 1.0.5
 
-- 【fix】Fixed the issue where the plugin did not work when using `webpack` as the bundler in `nextjs` [#359](https://github.com/zh-lx/code-inspector/pull/359)
+- 【fix】Fixed the issue where the plugin did not work when using `webpack` as the bundler in `nextjs` [#359](https://github.com/MarkShawn2020/lovinsp/pull/359)
 
 ## 1.0.4
 
-- 【feat】Support reading `.env.local` file in some cases [#356](https://github.com/zh-lx/code-inspector/pull/356)
+- 【feat】Support reading `.env.local` file in some cases [#356](https://github.com/MarkShawn2020/lovinsp/pull/356)
 
 ## 1.0.3
 
-- 【fix】Fixed the issue where the error occurred in `nextjs 15.x(turbopack)` when the entry file declares `use client` [#355](https://github.com/zh-lx/code-inspector/pull/355) again
+- 【fix】Fixed the issue where the error occurred in `nextjs 15.x(turbopack)` when the entry file declares `use client` [#355](https://github.com/MarkShawn2020/lovinsp/pull/355) again
 
 ## 1.0.2
 
-- 【feat】Add support for `codebuddy` editor recognition [#354](https://github.com/zh-lx/code-inspector/pull/354)
+- 【feat】Add support for `codebuddy` editor recognition [#354](https://github.com/MarkShawn2020/lovinsp/pull/354)
 
 ## 1.0.1
 
-- 【fix】Fixed the error issue when entry file declares `use client` in `nextjs 15.x(turbopack)` [#352](https://github.com/zh-lx/code-inspector/pull/352)
+- 【fix】Fixed the error issue when entry file declares `use client` in `nextjs 15.x(turbopack)` [#352](https://github.com/MarkShawn2020/lovinsp/pull/352)
 
 ## 1.0.0 🎉
 
 After a long period of iteration, the current `code-inspector` has already reached a sufficient level of completeness and stability, so I am happy to release the `1.0.0` version today. The main content of this update is as follows:
 
-- 【feat】Add support for `nextjs 15.x(turbopack)` [#349](https://github.com/zh-lx/code-inspector/pull/349)
-- 【feat】Add more comprehensive right-click node tree selection capabilities [#347](https://github.com/zh-lx/code-inspector/pull/347)
+- 【feat】Add support for `nextjs 15.x(turbopack)` [#349](https://github.com/MarkShawn2020/lovinsp/pull/349)
+- 【feat】Add more comprehensive right-click node tree selection capabilities [#347](https://github.com/MarkShawn2020/lovinsp/pull/347)
 
 ## 0.20.17
 
-- 【feat】Add the `behavior.target` parameter to support custom jump paths [#342](https://github.com/zh-lx/code-inspector/pull/342)
+- 【feat】Add the `behavior.target` parameter to support custom jump paths [#342](https://github.com/MarkShawn2020/lovinsp/pull/342)
 
 ## 0.20.16
 
-- 【perf】Support identifying the user's currently active IDE via PID [#340](https://github.com/zh-lx/code-inspector/pull/340)
-- 【feat】Add recognition support for the `Comate` code editor [#340](https://github.com/zh-lx/code-inspector/pull/340)
-- 【fix】Resolve inconsistent behavior of the `exclude` parameter between `webpack/rspack` and `vite/esbuild` configurations [#339](https://github.com/zh-lx/code-inspector/pull/339)
+- 【perf】Support identifying the user's currently active IDE via PID [#340](https://github.com/MarkShawn2020/lovinsp/pull/340)
+- 【feat】Add recognition support for the `Comate` code editor [#340](https://github.com/MarkShawn2020/lovinsp/pull/340)
+- 【fix】Resolve inconsistent behavior of the `exclude` parameter between `webpack/rspack` and `vite/esbuild` configurations [#339](https://github.com/MarkShawn2020/lovinsp/pull/339)
 
 ## 0.20.15
 
-- 【fix】Fixed the issue where the `exclude` parameter did not work in `vite` and `esbuild` [#331](https://github.com/zh-lx/code-inspector/pull/331)
+- 【fix】Fixed the issue where the `exclude` parameter did not work in `vite` and `esbuild` [#331](https://github.com/MarkShawn2020/lovinsp/pull/331)
 
 ## 0.20.14
 
-- 【fix】Fixed the issue where the source code of the sub-application could not be opened when the main and sub-applications were not in the same repository and the `pathType` was `absolute` [#329](https://github.com/zh-lx/code-inspector/pull/329)
+- 【fix】Fixed the issue where the source code of the sub-application could not be opened when the main and sub-applications were not in the same repository and the `pathType` was `absolute` [#329](https://github.com/MarkShawn2020/lovinsp/pull/329)
 
 ## 0.20.13
 
-- 【fix】Forbid opening files outside the project [#327](https://github.com/zh-lx/code-inspector/pull/327)
+- 【fix】Forbid opening files outside the project [#327](https://github.com/MarkShawn2020/lovinsp/pull/327)
 
 ## 0.20.12
 
-- 【fix】Fixed the issue of building error in `vue` project using `pug` syntax [#321](https://github.com/zh-lx/code-inspector/pull/321)
+- 【fix】Fixed the issue of building error in `vue` project using `pug` syntax [#321](https://github.com/MarkShawn2020/lovinsp/pull/321)
 
 ## 0.20.11
 
-- 【feat】Support source code location for `<template src="xxx.html">` in `vue` files [#319](https://github.com/zh-lx/code-inspector/pull/319)、[#320](https://github.com/zh-lx/code-inspector/pull/320)
+- 【feat】Support source code location for `<template src="xxx.html">` in `vue` files [#319](https://github.com/MarkShawn2020/lovinsp/pull/319)、[#320](https://github.com/MarkShawn2020/lovinsp/pull/320)
 
 ## 0.20.10
 
-- 【fix】Fixed compatibility with Svelte code using TypeScript and Less/SCSS [#311](https://github.com/zh-lx/code-inspector/pull/311)
-- 【fix】Fixed the issue that `idea` cannot be recognized in the Linux system [#312](https://github.com/zh-lx/code-inspector/pull/312)
+- 【fix】Fixed compatibility with Svelte code using TypeScript and Less/SCSS [#311](https://github.com/MarkShawn2020/lovinsp/pull/311)
+- 【fix】Fixed the issue that `idea` cannot be recognized in the Linux system [#312](https://github.com/MarkShawn2020/lovinsp/pull/312)
 
 ## 0.20.9
 
-- 【fix】Fixed the issue that `trae CN` can't be recognized [#308](https://github.com/zh-lx/code-inspector/pull/308)
+- 【fix】Fixed the issue that `trae CN` can't be recognized [#308](https://github.com/MarkShawn2020/lovinsp/pull/308)
 
 ## 0.20.8
 
-- 【fix】Fixed the issue where the error occurred in `rspack` with `persistent` cache and the plugin was not set to `cache: true` [#305](https://github.com/zh-lx/code-inspector/pull/305)
+- 【fix】Fixed the issue where the error occurred in `rspack` with `persistent` cache and the plugin was not set to `cache: true` [#305](https://github.com/MarkShawn2020/lovinsp/pull/305)
 
 ## 0.20.7
 
-- 【fix】Fixed the issue where requests failed after the project was restarted in `rspack` with `persistent` cache [#304](https://github.com/zh-lx/code-inspector/pull/304)
+- 【fix】Fixed the issue where requests failed after the project was restarted in `rspack` with `persistent` cache [#304](https://github.com/MarkShawn2020/lovinsp/pull/304)
 
 ## 0.20.6
 
-- 【feat】Support recognition for `trae CN.exe` Chinese version on Windows [#300](https://github.com/zh-lx/code-inspector/pull/300)
+- 【feat】Support recognition for `trae CN.exe` Chinese version on Windows [#300](https://github.com/MarkShawn2020/lovinsp/pull/300)
 
 ## 0.20.5
 
-- 【feat】Support recognition for `trae` Chinese version [#299](https://github.com/zh-lx/code-inspector/pull/299)
+- 【feat】Support recognition for `trae` Chinese version [#299](https://github.com/MarkShawn2020/lovinsp/pull/299)
 
 ## 0.20.4
 
-- 【fix】Fixed the issue where pug syntax could not be located after HMR, supports class literal, ID literal, `Case`, `Each`, `While`, `When`, `Code`, `Conditional` and other pug syntax [#297](https://github.com/zh-lx/code-inspector/pull/297)
+- 【fix】Fixed the issue where pug syntax could not be located after HMR, supports class literal, ID literal, `Case`, `Each`, `While`, `When`, `Code`, `Conditional` and other pug syntax [#297](https://github.com/MarkShawn2020/lovinsp/pull/297)
 
 ## 0.20.3
 
-- 【fix】Fixed the issue where the client component was repeatedly registered and unloaded, causing the interaction to fail [#295](https://github.com/zh-lx/code-inspector/pull/295)
+- 【fix】Fixed the issue where the client component was repeatedly registered and unloaded, causing the interaction to fail [#295](https://github.com/MarkShawn2020/lovinsp/pull/295)
 
 ## 0.20.2
 
-- 【feat】Added `cache` API, allowing users to reuse cache capabilities in `webpack/rspack` projects that use `filesystem` caching [#292](https://github.com/zh-lx/code-inspector/pull/292)
-- 【fix】Fixed an issue where plugin interaction would be blocked when host page elements had `mousemove` events with `stopPropagation` [#291](https://github.com/zh-lx/code-inspector/pull/291)
+- 【feat】Added `cache` API, allowing users to reuse cache capabilities in `webpack/rspack` projects that use `filesystem` caching [#292](https://github.com/MarkShawn2020/lovinsp/pull/292)
+- 【fix】Fixed an issue where plugin interaction would be blocked when host page elements had `mousemove` events with `stopPropagation` [#291](https://github.com/MarkShawn2020/lovinsp/pull/291)
 
 ## 0.20.1
 
-- 【fix】Fixed the issue where the `data-insp-path` attribute was not correctly injected into the `pug` template file [#284](https://github.com/zh-lx/code-inspector/pull/284)
-- 【feat】Support recognition for [trae](https://www.trae.ai) editor on Windows [#287](https://github.com/zh-lx/code-inspector/pull/287)
+- 【fix】Fixed the issue where the `data-insp-path` attribute was not correctly injected into the `pug` template file [#284](https://github.com/MarkShawn2020/lovinsp/pull/284)
+- 【feat】Support recognition for [trae](https://www.trae.ai) editor on Windows [#287](https://github.com/MarkShawn2020/lovinsp/pull/287)
 
 ## 0.20.0
 
-- 【fix】Fixed the warning issue about `Compilation.assets` in webpack v5+ [#280](https://github.com/zh-lx/code-inspector/pull/280)
-- 【feat】Support specifying the path type of the `data-insp-path` attribute through the `pathType` parameter, defaulting to relative path, optionally using absolute path [#278](https://github.com/zh-lx/code-inspector/pull/278)
-- 【feat】Support recognition for [trae](https://www.trae.ai) editor [#277](https://github.com/zh-lx/code-inspector/pull/277)
-- 【feat】Support filtering parent components of elements by right-clicking [#272](https://github.com/zh-lx/code-inspector/pull/272)
+- 【fix】Fixed the warning issue about `Compilation.assets` in webpack v5+ [#280](https://github.com/MarkShawn2020/lovinsp/pull/280)
+- 【feat】Support specifying the path type of the `data-insp-path` attribute through the `pathType` parameter, defaulting to relative path, optionally using absolute path [#278](https://github.com/MarkShawn2020/lovinsp/pull/278)
+- 【feat】Support recognition for [trae](https://www.trae.ai) editor [#277](https://github.com/MarkShawn2020/lovinsp/pull/277)
+- 【feat】Support filtering parent components of elements by right-clicking [#272](https://github.com/MarkShawn2020/lovinsp/pull/272)
 
 ## 0.19.2
 
-- 【fix】Fixed the compilation error when the project does not use `git` [#269](https://github.com/zh-lx/code-inspector/pull/269)
+- 【fix】Fixed the compilation error when the project does not use `git` [#269](https://github.com/MarkShawn2020/lovinsp/pull/269)
 
 ## 0.19.1
 
-- 【feat】Support specifying files not to be compiled through the `exclude` parameter [#266](https://github.com/zh-lx/code-inspector/pull/266)
+- 【feat】Support specifying files not to be compiled through the `exclude` parameter [#266](https://github.com/MarkShawn2020/lovinsp/pull/266)
 
 ## 0.19.0
 
-- 【feat】Support specifying the server port through the `port` parameter [#260](https://github.com/zh-lx/code-inspector/pull/260)
-- 【feat】Support specifying whether to print server startup information in the console through the `printServer` parameter [#265](https://github.com/zh-lx/code-inspector/pull/265)
-- 【fix】Fixed the issue where the `instrumentation.ts` file was not compiled in `nextjs` projects [#264](https://github.com/zh-lx/code-inspector/pull/264)
-- 【fix】Fixed the issue where the server port would be repeatedly started when modifying the `vite.config.ts` file [#261](https://github.com/zh-lx/code-inspector/pull/261)
-- 【perf】Optimized the `data-insp-path` attribute on the DOM from absolute path to relative path [#256](https://github.com/zh-lx/code-inspector/pull/256)
+- 【feat】Support specifying the server port through the `port` parameter [#260](https://github.com/MarkShawn2020/lovinsp/pull/260)
+- 【feat】Support specifying whether to print server startup information in the console through the `printServer` parameter [#265](https://github.com/MarkShawn2020/lovinsp/pull/265)
+- 【fix】Fixed the issue where the `instrumentation.ts` file was not compiled in `nextjs` projects [#264](https://github.com/MarkShawn2020/lovinsp/pull/264)
+- 【fix】Fixed the issue where the server port would be repeatedly started when modifying the `vite.config.ts` file [#261](https://github.com/MarkShawn2020/lovinsp/pull/261)
+- 【perf】Optimized the `data-insp-path` attribute on the DOM from absolute path to relative path [#256](https://github.com/MarkShawn2020/lovinsp/pull/256)
 
 ## 0.18.3
 
-- 【feat】Supported recognition for `Windsurf` [#254](https://github.com/zh-lx/code-inspector/pull/254)
+- 【feat】Supported recognition for `Windsurf` [#254](https://github.com/MarkShawn2020/lovinsp/pull/254)
 
 ## 0.18.2
 
-- 【perf】Optimized interaction experience: prioritize displaying the source code location of the component call [#248](https://github.com/zh-lx/code-inspector/pull/248)
+- 【perf】Optimized interaction experience: prioritize displaying the source code location of the component call [#248](https://github.com/MarkShawn2020/lovinsp/pull/248)
 
 ## 0.18.1
 
-- 【feat】Add `mappings` parameter, support user-defined source code file path mapping relationship, as a supplement to `include` [#242](https://github.com/zh-lx/code-inspector/pull/242)
+- 【feat】Add `mappings` parameter, support user-defined source code file path mapping relationship, as a supplement to `include` [#242](https://github.com/MarkShawn2020/lovinsp/pull/242)
 
 ## 0.18.0
 
-- 【feat】Support specifying package names in `node_modules` through the `include` parameter to allow internal files to participate in compilation and inject `path` information [#241](https://github.com/zh-lx/code-inspector/pull/241)
+- 【feat】Support specifying package names in `node_modules` through the `include` parameter to allow internal files to participate in compilation and inject `path` information [#241](https://github.com/MarkShawn2020/lovinsp/pull/241)
 
 ## 0.17.9
 
-- 【perf】Optimized the interaction experience on mobile devices [#240](https://github.com/zh-lx/code-inspector/pull/240)
-- 【perf】Improved the performance of IDE recognition and invocation on Windows systems [#239](https://github.com/zh-lx/code-inspector/pull/239)
+- 【perf】Optimized the interaction experience on mobile devices [#240](https://github.com/MarkShawn2020/lovinsp/pull/240)
+- 【perf】Improved the performance of IDE recognition and invocation on Windows systems [#239](https://github.com/MarkShawn2020/lovinsp/pull/239)
 
 ## 0.17.8
 
-- 【fix】Fixed the issue where clicking a `disabled` DOM's child element would not work [#237](https://github.com/zh-lx/code-inspector/pull/237)
+- 【fix】Fixed the issue where clicking a `disabled` DOM's child element would not work [#237](https://github.com/MarkShawn2020/lovinsp/pull/237)
 
 ## 0.17.7
 
-- 【fix】Fixed the issue about building error when used in a few versions of webpack [#234](https://github.com/zh-lx/code-inspector/pull/234)
+- 【fix】Fixed the issue about building error when used in a few versions of webpack [#234](https://github.com/MarkShawn2020/lovinsp/pull/234)
 
 ## 0.17.6
 
-- 【fix】Fix the issue about building error [#232](https://github.com/zh-lx/code-inspector/pull/232)
+- 【fix】Fix the issue about building error [#232](https://github.com/MarkShawn2020/lovinsp/pull/232)
 
 ## 0.17.5
 
-- 【perf】The `injectTo` parameter now supports passing an array to allow injecting multiple files simultaneously [#231](https://github.com/zh-lx/code-inspector/pull/231)
-- 【feat】Webpack will also inject client code into HTML files to support some MPA-type projects [#230](https://github.com/zh-lx/code-inspector/pull/230)
+- 【perf】The `injectTo` parameter now supports passing an array to allow injecting multiple files simultaneously [#231](https://github.com/MarkShawn2020/lovinsp/pull/231)
+- 【feat】Webpack will also inject client code into HTML files to support some MPA-type projects [#230](https://github.com/MarkShawn2020/lovinsp/pull/230)
 
 ## 0.17.4
 
-- 【fix】Fixed the issue where it only worked on the first HTML page when used in MPA projects [#229](https://github.com/zh-lx/code-inspector/pull/229)
+- 【fix】Fixed the issue where it only worked on the first HTML page when used in MPA projects [#229](https://github.com/MarkShawn2020/lovinsp/pull/229)
 
 ## 0.17.3
 
-- 【fix】Fixed the issue where elements inside the `ShadowRoot` of a web component could not be hovered when using the `无界` web component solution [#227](https://github.com/zh-lx/code-inspector/pull/227).
-- 【fix】Fixed the issue where a hydrate warning would be printed in the console when using the `hideDomPathAttr` attribute in Next.js v15+ projects [#226](https://github.com/zh-lx/code-inspector/pull/226).
+- 【fix】Fixed the issue where elements inside the `ShadowRoot` of a web component could not be hovered when using the `无界` web component solution [#227](https://github.com/MarkShawn2020/lovinsp/pull/227).
+- 【fix】Fixed the issue where a hydrate warning would be printed in the console when using the `hideDomPathAttr` attribute in Next.js v15+ projects [#226](https://github.com/MarkShawn2020/lovinsp/pull/226).
 
 ## 0.17.2
 
-- 【fix】Fix compatibility issues with Chinese and special characters in Windows systems [#225](https://github.com/zh-lx/code-inspector/pull/225)
+- 【fix】Fix compatibility issues with Chinese and special characters in Windows systems [#225](https://github.com/MarkShawn2020/lovinsp/pull/225)
 
 ## 0.17.1
 
-- 【fix】Fix the error issue when the first two parameters of console.warn and console.error are not of string type. [#223](https://github.com/zh-lx/code-inspector/pull/223)
+- 【fix】Fix the error issue when the first two parameters of console.warn and console.error are not of string type. [#223](https://github.com/MarkShawn2020/lovinsp/pull/223)
 
 ## 0.17.0
 
-- 【refactor】Optimized the recognition logic for IDEs and added support for more IDEs [#222](https://github.com/zh-lx/code-inspector/pull/222)
+- 【refactor】Optimized the recognition logic for IDEs and added support for more IDEs [#222](https://github.com/MarkShawn2020/lovinsp/pull/222)
 
 ## 0.16.2
 
-- 【fix】Fixed the issue when using `hideDomPathAttr` in Nextjs, browser console will print hydrate warning [#219](https://github.com/zh-lx/code-inspector/pull/219)
+- 【fix】Fixed the issue when using `hideDomPathAttr` in Nextjs, browser console will print hydrate warning [#219](https://github.com/MarkShawn2020/lovinsp/pull/219)
 
 ## 0.16.1
 
-- 【fix】Fixed the issue where lower version browsers do not support the `globalThis` variable. [#210](https://github.com/zh-lx/code-inspector/pull/210)
-- 【refactor】Optimized the code for checking the `development` environment. [#209](https://github.com/zh-lx/code-inspector/pull/209)
+- 【fix】Fixed the issue where lower version browsers do not support the `globalThis` variable. [#210](https://github.com/MarkShawn2020/lovinsp/pull/210)
+- 【refactor】Optimized the code for checking the `development` environment. [#209](https://github.com/MarkShawn2020/lovinsp/pull/209)
 
 ## 0.16.0
 
-- 【feat】Built-in recognition of cursor IDE. [#207](https://github.com/zh-lx/code-inspector/pull/207)
-- 【perf】Optimize the injection logic of the client code. By default, inject using the `code` method, and for Next.js projects, it will automatically recognize and inject using the `file` method. [#203](https://github.com/zh-lx/code-inspector/pull/203).
+- 【feat】Built-in recognition of cursor IDE. [#207](https://github.com/MarkShawn2020/lovinsp/pull/207)
+- 【perf】Optimize the injection logic of the client code. By default, inject using the `code` method, and for Next.js projects, it will automatically recognize and inject using the `file` method. [#203](https://github.com/MarkShawn2020/lovinsp/pull/203).
 
 ## 0.15.2
 
-- 【perf】Optimized console messages [#199](https://github.com/zh-lx/code-inspector/pull/199)
+- 【perf】Optimized console messages [#199](https://github.com/MarkShawn2020/lovinsp/pull/199)
 
 ## 0.15.1
 
-- 【fix】Fixed the issue where it occasionally did not work after compilation in Next.js [#198](https://github.com/zh-lx/code-inspector/pull/198)
+- 【fix】Fixed the issue where it occasionally did not work after compilation in Next.js [#198](https://github.com/MarkShawn2020/lovinsp/pull/198)
 
 ## 0.15.0
 
-- 【fix】Fixed the issue where code location could not be accurately pinpointed to the line/column when specifying the full path of the IDE [#191](https://github.com/zh-lx/code-inspector/pull/191), [#193](https://github.com/zh-lx/code-inspector/pull/193)
-- 【feat】Added support for use in esbuild [#189](https://github.com/zh-lx/code-inspector/pull/189)
+- 【fix】Fixed the issue where code location could not be accurately pinpointed to the line/column when specifying the full path of the IDE [#191](https://github.com/MarkShawn2020/lovinsp/pull/191), [#193](https://github.com/MarkShawn2020/lovinsp/pull/193)
+- 【feat】Added support for use in esbuild [#189](https://github.com/MarkShawn2020/lovinsp/pull/189)
 
 ## 0.14.2
 

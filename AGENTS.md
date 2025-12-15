@@ -3,7 +3,7 @@
 ## Project Structure & Module Organization
 - `packages/core`: TypeScript server/runtime that resolves inspected DOM nodes and launches IDE hooks; shared utilities live in `src/shared`.
 - `packages/{vite,webpack,esbuild,turbopack,mako,standalone}`: Bundler adapters that wrap `core`; choose the package that matches your target toolchain.
-- `packages/code-inspector-plugin`: Bundler-agnostic entry that ships the inspector overlay and re-exports adapter glue.
+- `packages/lovinsp`: Bundler-agnostic entry that ships the inspector overlay and re-exports adapter glue.
 - `docs/` powers the VitePress site, `demos/` contains runnable examples, `assets/` stores UI sprites, and `test/` houses Vitest suites for cross-package behavior.
 
 ## Build, Test, and Development Commands

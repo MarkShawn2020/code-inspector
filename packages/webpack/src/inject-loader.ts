@@ -2,7 +2,7 @@ import {
   normalizePath,
   getCodeWithWebComponent,
   isExcludedFile,
-} from '@code-inspector/core';
+} from '@lovinsp/core';
 
 export default async function WebpackCodeInjectLoader(
   content: string,

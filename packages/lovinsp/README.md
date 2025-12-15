@@ -1,12 +1,12 @@
 <div align="center">
-<img src="https://github.com/zh-lx/code-inspector/assets/73059627/842c3e88-dca7-4743-854c-d61093d3d34f" width="160px" style="margin-bottom: 12px;" />
+<img src="https://github.com/MarkShawn2020/lovinsp/assets/73059627/842c3e88-dca7-4743-854c-d61093d3d34f" width="160px" style="margin-bottom: 12px;" />
 
 <p align="center">
   <h2>code-inspector (AI-Enhanced Fork)</h2>
-  <b>Fork of <a href="https://github.com/zh-lx/code-inspector">zh-lx/code-inspector</a> with AI-first workflow enhancements</b>
+  <b>Fork of <a href="https://github.com/MarkShawn2020/lovinsp">MarkShawn2020/lovinsp</a> with AI-first workflow enhancements</b>
 </p>
 
-[![Original Repo](https://img.shields.io/badge/upstream-zh--lx%2Fcode--inspector-blue)](https://github.com/zh-lx/code-inspector)
+[![Original Repo](https://img.shields.io/badge/upstream-zh--lx%2Fcode--inspector-blue)](https://github.com/MarkShawn2020/lovinsp)
 [![Fork Version](https://img.shields.io/badge/fork-v1.4.4-green)](https://github.com/MarkShawn2020/code-inspector)
 [![MIT-license](https://img.shields.io/npm/l/code-inspector.svg)](https://opensource.org/licenses/MIT)
 
@@ -16,7 +16,7 @@
 
 ## 🎯 Why This Fork?
 
-This is an enhanced fork of [code-inspector-plugin](https://github.com/zh-lx/code-inspector) with **AI-first workflow improvements**.
+This is an enhanced fork of [lovinsp](https://github.com/MarkShawn2020/lovinsp) with **AI-first workflow improvements**.
 
 The original plugin is excellent for traditional IDE workflows (click → open in VSCode/Cursor). But if you're doing **Vibe Coding** (living in Claude Code, Cursor Composer, or any AI chat interface), you need a different workflow:
 
@@ -62,10 +62,10 @@ This tells npm/pnpm to fetch `@code-inspector/*` packages from Cloudsmith instea
 ### Step 2: Install Main Package
 
 ```bash
-pnpm add code-inspector-plugin@https://npm.cloudsmith.io/mark/code-inspector/code-inspector-plugin/-/code-inspector-plugin-1.4.4.tgz
+pnpm add lovinsp@https://npm.cloudsmith.io/mark/code-inspector/lovinsp/-/lovinsp-1.4.4.tgz
 ```
 
-> **Why both steps?** The main package `code-inspector-plugin` uses direct URL. But it depends on scoped packages like `@code-inspector/core`, `@code-inspector/vite`, etc. The `.npmrc` config ensures these dependencies are also fetched from Cloudsmith.
+> **Why both steps?** The main package `lovinsp` uses direct URL. But it depends on scoped packages like `@lovinsp/core`, `@lovinsp/vite`, etc. The `.npmrc` config ensures these dependencies are also fetched from Cloudsmith.
 
 > **Why Cloudsmith?** We use the same package name as upstream, so we need a private registry. Cloudsmith automatically proxies other npm packages, so only `code-inspector` related packages come from our registry.
 
@@ -75,11 +75,11 @@ pnpm add code-inspector-plugin@https://npm.cloudsmith.io/mark/code-inspector/cod
 
 ```js
 // vite.config.js
-import { codeInspectorPlugin } from 'code-inspector-plugin';
+import { lovinspPlugin } from 'lovinsp';
 
 export default {
   plugins: [
-    codeInspectorPlugin({
+    lovinspPlugin({
       bundler: 'vite',
       behavior: {
         defaultAction: 'copy',  // 👈 Copy mode for AI workflow
@@ -98,7 +98,7 @@ Now:
 ### Traditional IDE Workflow
 
 ```js
-codeInspectorPlugin({
+lovinspPlugin({
   bundler: 'vite',
   behavior: {
     defaultAction: 'locate',  // Opens IDE instead of copying
@@ -109,7 +109,7 @@ codeInspectorPlugin({
 ### Hybrid Workflow
 
 ```js
-codeInspectorPlugin({
+lovinspPlugin({
   bundler: 'vite',
   behavior: {
     defaultAction: 'copy',
@@ -124,7 +124,7 @@ Press `Shift+Alt+C` / `Shift+Opt+C` to switch between copy and IDE modes on the 
 ### All Options
 
 ```js
-codeInspectorPlugin({
+lovinspPlugin({
   bundler: 'vite',              // Required: 'vite' | 'webpack' | 'rspack' | etc.
   behavior: {
     defaultAction: 'copy',      // 'copy' | 'locate' | 'target' | 'all'
@@ -147,11 +147,11 @@ codeInspectorPlugin({
 
 ## 🤝 Upstream & Contributing
 
-This fork tracks [zh-lx/code-inspector](https://github.com/zh-lx/code-inspector). We maintain compatibility with upstream and contribute improvements back when possible.
+This fork tracks [MarkShawn2020/lovinsp](https://github.com/MarkShawn2020/lovinsp). We maintain compatibility with upstream and contribute improvements back when possible.
 
 **Upstream PRs**:
-- ✅ [#409 - Mode switching features](https://github.com/zh-lx/code-inspector/pull/409) - **MERGED!** 🎉
-- 🔄 [#420 - Right-click mode support + notifications](https://github.com/zh-lx/code-inspector/pull/420) - Under review
+- ✅ [#409 - Mode switching features](https://github.com/MarkShawn2020/lovinsp/pull/409) - **MERGED!** 🎉
+- 🔄 [#420 - Right-click mode support + notifications](https://github.com/MarkShawn2020/lovinsp/pull/420) - Under review
 
 If you want these features in the official version, please 👍 the PRs or leave comments!
 
@@ -173,11 +173,11 @@ If you want these features in the official version, please 👍 the PRs or leave
 
   ```js
   // webpack.config.js
-  const { codeInspectorPlugin } = require('code-inspector-plugin');
+  const { lovinspPlugin } = require('lovinsp');
 
   module.exports = () => ({
     plugins: [
-      codeInspectorPlugin({
+      lovinspPlugin({
         bundler: 'webpack',
       }),
     ],
@@ -192,11 +192,11 @@ If you want these features in the official version, please 👍 the PRs or leave
   ```js
   // vite.config.js
   import { defineConfig } from 'vite';
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   export default defineConfig({
     plugins: [
-      codeInspectorPlugin({
+      lovinspPlugin({
         bundler: 'vite',
       }),
     ],
@@ -210,12 +210,12 @@ If you want these features in the official version, please 👍 the PRs or leave
 
   ```js
   // rspack.config.js
-  const { codeInspectorPlugin } = require('code-inspector-plugin');
+  const { lovinspPlugin } = require('lovinsp');
 
   module.exports = {
     // other config...
     plugins: [
-      codeInspectorPlugin({
+      lovinspPlugin({
         bundler: 'rspack',
       }),
       // other plugins...
@@ -230,14 +230,14 @@ If you want these features in the official version, please 👍 the PRs or leave
 
   ```js
   // rsbuild.config.js
-  const { codeInspectorPlugin } = require('code-inspector-plugin');
+  const { lovinspPlugin } = require('lovinsp');
 
   module.exports = {
     // other config...
     tools: {
       rspack: {
         plugins: [
-          codeInspectorPlugin({
+          lovinspPlugin({
             bundler: 'rspack',
           }),
         ],
@@ -254,12 +254,12 @@ If you want these features in the official version, please 👍 the PRs or leave
   ```js
   // esbuild.config.js
   const esbuild = require('esbuild');
-  const { codeInspectorPlugin } = require('code-inspector-plugin');
+  const { lovinspPlugin } = require('lovinsp');
 
   esbuild.build({
     // other configs...
     // [注意] esbuild 中使用时，dev 函数的返回值需自己根据环境判断，本地开发的环境返回 true，线上打包返回 false
-    plugins: [codeInspectorPlugin({ bundler: 'esbuild', dev: () => true })],
+    plugins: [lovinspPlugin({ bundler: 'esbuild', dev: () => true })],
   });
   ```
 
@@ -271,11 +271,11 @@ If you want these features in the official version, please 👍 the PRs or leave
   ```js
   // farm.config.js
   import { defineConfig } from '@farmfe/core';
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   export default defineConfig({
     vitePlugins: [
-      codeInspectorPlugin({
+      lovinspPlugin({
         bundler: 'vite',
       }),
       // ...other code
@@ -290,13 +290,13 @@ If you want these features in the official version, please 👍 the PRs or leave
 
   ```js
   // vue.config.js
-  const { codeInspectorPlugin } = require('code-inspector-plugin');
+  const { lovinspPlugin } = require('lovinsp');
 
   module.exports = {
     // ...other code
     chainWebpack: (config) => {
-      config.plugin('code-inspector-plugin').use(
-        codeInspectorPlugin({
+      config.plugin('lovinsp').use(
+        lovinspPlugin({
           bundler: 'webpack',
         })
       );
@@ -313,12 +313,12 @@ If you want these features in the official version, please 👍 the PRs or leave
 
     ```js
     // nuxt.config.js
-    import { codeInspectorPlugin } from 'code-inspector-plugin';
+    import { lovinspPlugin } from 'lovinsp';
 
     // https://nuxt.com/docs/api/configuration/nuxt-config
     export default defineNuxtConfig({
       vite: {
-        plugins: [codeInspectorPlugin({ bundler: 'vite' })],
+        plugins: [lovinspPlugin({ bundler: 'vite' })],
       },
     });
     ```
@@ -327,12 +327,12 @@ If you want these features in the official version, please 👍 the PRs or leave
 
     ```js
     // nuxt.config.js
-    import { codeInspectorPlugin } from 'code-inspector-plugin';
+    import { lovinspPlugin } from 'lovinsp';
 
     export default {
       build: {
         extend(config) {
-          config.plugins.push(codeInspectorPlugin({ bundler: 'webpack' }));
+          config.plugins.push(lovinspPlugin({ bundler: 'webpack' }));
           return config;
         },
       },
@@ -348,11 +348,11 @@ If you want these features in the official version, please 👍 the PRs or leave
 
     ```js
     // next.config.js
-    const { codeInspectorPlugin } = require('code-inspector-plugin');
+    const { lovinspPlugin } = require('lovinsp');
 
     const nextConfig = {
       webpack: (config, { dev, isServer }) => {
-        config.plugins.push(codeInspectorPlugin({ bundler: 'webpack' }));
+        config.plugins.push(lovinspPlugin({ bundler: 'webpack' }));
         return config;
       },
     };
@@ -364,12 +364,12 @@ If you want these features in the official version, please 👍 the PRs or leave
 
     ```js
     import type { NextConfig } from 'next';
-    import { codeInspectorPlugin } from 'code-inspector-plugin';
+    import { lovinspPlugin } from 'lovinsp';
 
     const nextConfig: NextConfig = {
       experimental: {
         turbo: {
-          rules: codeInspectorPlugin({
+          rules: lovinspPlugin({
             bundler: 'turbopack',
           }),
         },
@@ -384,11 +384,11 @@ If you want these features in the official version, please 👍 the PRs or leave
     ```js
     // next.config.js
     import type { NextConfig } from 'next';
-    import { codeInspectorPlugin } from 'code-inspector-plugin';
+    import { lovinspPlugin } from 'lovinsp';
 
     const nextConfig: NextConfig = {
       turbopack: {
-        rules: codeInspectorPlugin({
+        rules: lovinspPlugin({
           bundler: 'turbopack',
         }),
       },
@@ -407,12 +407,12 @@ If you want these features in the official version, please 👍 the PRs or leave
     ```js
     // umi.config.js or umirc.js
     import { defineConfig } from '@umijs/max';
-    import { codeInspectorPlugin } from 'code-inspector-plugin';
+    import { lovinspPlugin } from 'lovinsp';
 
     export default defineConfig({
       chainWebpack(memo) {
-        memo.plugin('code-inspector-plugin').use(
-          codeInspectorPlugin({
+        memo.plugin('lovinsp').use(
+          lovinspPlugin({
             bundler: 'webpack',
           })
         );
@@ -426,13 +426,13 @@ If you want these features in the official version, please 👍 the PRs or leave
     ```ts
     // .umirc.ts
     import { defineConfig } from 'umi';
-    import { codeInspectorPlugin } from 'code-inspector-plugin';
+    import { lovinspPlugin } from 'lovinsp';
 
     export default defineConfig({
       // other config...
       mako: {
         plugins: [
-          codeInspectorPlugin({
+          lovinspPlugin({
             bundler: 'mako',
           }),
         ],
@@ -448,11 +448,11 @@ If you want these features in the official version, please 👍 the PRs or leave
   ```js
   // astro.config.mjs
   import { defineConfig } from 'astro/config';
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   export default defineConfig({
     vite: {
-      plugins: [codeInspectorPlugin({ bundler: 'vite' })],
+      plugins: [lovinspPlugin({ bundler: 'vite' })],
     },
   });
   ```
@@ -466,25 +466,25 @@ If you want these features in the official version, please 👍 the PRs or leave
 - **Fork Maintainer**: [@MarkShawn2020](https://github.com/MarkShawn2020)
 - **Maintenance Guide**: [MAINTENANCE.md](./docs/MAINTENANCE.md) - Publishing, releases, development setup
 - **Issues**: Report fork-specific issues [here](https://github.com/MarkShawn2020/code-inspector/issues)
-- **Upstream Issues**: Report general issues to [zh-lx/code-inspector](https://github.com/zh-lx/code-inspector/issues)
+- **Upstream Issues**: Report general issues to [MarkShawn2020/lovinsp](https://github.com/MarkShawn2020/lovinsp/issues)
 
 ## 🌟 Credits
 
 - **Original Author**: [@zh-lx](https://github.com/zh-lx) - Huge thanks for creating this amazing tool!
-- **Original Repo**: [zh-lx/code-inspector](https://github.com/zh-lx/code-inspector)
-- **Contributors**: <img src="https://contrib.rocks/image?repo=zh-lx/code-inspector" height="20" />
+- **Original Repo**: [MarkShawn2020/lovinsp](https://github.com/MarkShawn2020/lovinsp)
+- **Contributors**: <img src="https://contrib.rocks/image?repo=MarkShawn2020/lovinsp" height="20" />
 
 ## 📧 Support
 
 - **Fork Questions**: Open an issue on [this repo](https://github.com/MarkShawn2020/code-inspector/issues)
-- **General Questions**: Visit [upstream docs](https://inspector.fe-dev.cn/en) or [upstream repo](https://github.com/zh-lx/code-inspector)
+- **General Questions**: Visit [upstream docs](https://inspector.fe-dev.cn/en) or [upstream repo](https://github.com/MarkShawn2020/lovinsp)
 - **Original Author**: Follow [@zh-lx on Twitter](https://twitter.com/zhulxing312147) or [sponsor the project](https://inspector.fe-dev.cn/en/more/sponsor.html)
 
 ---
 
 **Love this fork?** Consider:
 - ⭐ Starring [this repo](https://github.com/MarkShawn2020/code-inspector)
-- ⭐ Starring the [original repo](https://github.com/zh-lx/code-inspector)
-- 👍 Supporting [the upstream PR #409](https://github.com/zh-lx/code-inspector/pull/409) to get these features merged!
+- ⭐ Starring the [original repo](https://github.com/MarkShawn2020/lovinsp)
+- 👍 Supporting [the upstream PR #409](https://github.com/MarkShawn2020/lovinsp/pull/409) to get these features merged!
 
 **Built for developers who believe AI should know exactly where the code is.** 🚀

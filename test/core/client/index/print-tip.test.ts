@@ -1,14 +1,14 @@
-import { CodeInspectorComponent } from '@/core/src/client';
+import { LovinspComponent } from '@/core/src/client';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
 describe('printTip', () => {
   let consoleSpy: any;
-  let component: CodeInspectorComponent;
+  let component: LovinspComponent;
   const originalUserAgent = navigator.userAgent;
 
   beforeEach(() => {
     // 创建组件实例
-    component = new CodeInspectorComponent();
+    component = new LovinspComponent();
     document.body.appendChild(component);
     consoleSpy = vi.spyOn(console, 'log');
   });
@@ -37,7 +37,7 @@ describe('printTip', () => {
 
     // 验证包含 Windows 快捷键
     const logMessage = consoleSpy.mock.calls[1][0];
-    expect(logMessage).toContain('[code-inspector-plugin]');
+    expect(logMessage).toContain('[lovinsp]');
     expect(logMessage).toContain('Shift');
     expect(logMessage).toContain('Alt');
   });
@@ -52,7 +52,7 @@ describe('printTip', () => {
 
     expect(consoleSpy).toHaveBeenCalled();
     const logMessage = consoleSpy.mock.calls[1][0];
-    expect(logMessage).toContain('[code-inspector-plugin]');
+    expect(logMessage).toContain('[lovinsp]');
     expect(logMessage).toContain('Shift');
   });
 
@@ -69,7 +69,7 @@ describe('printTip', () => {
 
     // 验证包含 Mac 快捷键
     const logMessage = consoleSpy.mock.calls[1][0];
-    expect(logMessage).toContain('[code-inspector-plugin]');
+    expect(logMessage).toContain('[lovinsp]');
     expect(logMessage).toContain('shift');
     expect(logMessage).toContain('⌥option');
   });

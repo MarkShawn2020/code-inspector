@@ -1,16 +1,16 @@
 <div align="center">
-<img src="https://github.com/zh-lx/code-inspector/assets/73059627/842c3e88-dca7-4743-854c-d61093d3d34f" width="160px" style="margin-bottom: 12px;" />
+<img src="https://github.com/MarkShawn2020/lovinsp/assets/73059627/842c3e88-dca7-4743-854c-d61093d3d34f" width="160px" style="margin-bottom: 12px;" />
 
 <p align="center">
-  <h2>code-inspector-plugin</h2>
+  <h2>lovinsp</h2>
   <a href="https://inspector.fe-dev.cn">中文文档</a> | <a href="https://inspector.fe-dev.cn/en">Documentation</a>
 </p>
 
-[![NPM version](https://img.shields.io/npm/v/code-inspector-plugin.svg)](https://www.npmjs.com/package/code-inspector-plugin)
-[![GITHUB star](https://img.shields.io/github/stars/zh-lx/code-inspector?style=flat&label=%E2%AD%90%EF%B8%8F%20stars)](https://github.com/zh-lx/code-inspector)
-[![NPM Downloads](https://img.shields.io/npm/dm/code-inspector-plugin.svg)](https://npmcharts.netlify.app/compare/code-inspector-plugin?minimal=true)
+[![NPM version](https://img.shields.io/npm/v/lovinsp.svg)](https://www.npmjs.com/package/lovinsp)
+[![GITHUB star](https://img.shields.io/github/stars/MarkShawn2020/lovinsp?style=flat&label=%E2%AD%90%EF%B8%8F%20stars)](https://github.com/MarkShawn2020/lovinsp)
+[![NPM Downloads](https://img.shields.io/npm/dm/lovinsp.svg)](https://npmcharts.netlify.app/compare/lovinsp?minimal=true)
 [![MIT-license](https://img.shields.io/npm/l/code-inspector.svg)](https://opensource.org/licenses/MIT)
-[![GITHUB-language](https://img.shields.io/github/languages/top/zh-lx/code-inspector?logoColor=purple&color=purple)](https://github.com/zh-lx/code-inspector)
+[![GITHUB-language](https://img.shields.io/github/languages/top/MarkShawn2020/lovinsp?logoColor=purple&color=purple)](https://github.com/MarkShawn2020/lovinsp)
 
 </div>
 
@@ -56,16 +56,16 @@
 ## 🚀 安装
 
 ```perl
-npm i code-inspector-plugin -D
+npm i lovinsp -D
 # or
-yarn add code-inspector-plugin -D
+yarn add lovinsp -D
 # or
-pnpm add code-inspector-plugin -D
+pnpm add lovinsp -D
 ```
 
 ## 🌈 使用
 
-完整的接入及使用方式请查看：[code-inspector-plugin 配置](https://inspector.fe-dev.cn/guide/start.html#%E9%85%8D%E7%BD%AE)
+完整的接入及使用方式请查看：[lovinsp 配置](https://inspector.fe-dev.cn/guide/start.html#%E9%85%8D%E7%BD%AE)
 
 - 1.配置打包工具
 
@@ -74,11 +74,11 @@ pnpm add code-inspector-plugin -D
 
   ```js
   // webpack.config.js
-  const { codeInspectorPlugin } = require('code-inspector-plugin');
+  const { lovinspPlugin } = require('lovinsp');
 
   module.exports = () => ({
     plugins: [
-      codeInspectorPlugin({
+      lovinspPlugin({
         bundler: 'webpack',
       }),
     ],
@@ -93,11 +93,11 @@ pnpm add code-inspector-plugin -D
   ```js
   // vite.config.js
   import { defineConfig } from 'vite';
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   export default defineConfig({
     plugins: [
-      codeInspectorPlugin({
+      lovinspPlugin({
         bundler: 'vite',
       }),
     ],
@@ -111,12 +111,12 @@ pnpm add code-inspector-plugin -D
 
   ```js
   // rspack.config.js
-  const { codeInspectorPlugin } = require('code-inspector-plugin');
+  const { lovinspPlugin } = require('lovinsp');
 
   module.exports =  = {
     // other config...
     plugins: [
-      codeInspectorPlugin({
+      lovinspPlugin({
         bundler: 'rspack',
       }),
       // other plugins...
@@ -131,14 +131,14 @@ pnpm add code-inspector-plugin -D
 
   ```js
   // rsbuild.config.js
-  const { codeInspectorPlugin } = require('code-inspector-plugin');
+  const { lovinspPlugin } = require('lovinsp');
 
   module.exports = {
     // other config...
     tools: {
       rspack: {
         plugins: [
-          codeInspectorPlugin({
+          lovinspPlugin({
             bundler: 'rspack',
           }),
         ],
@@ -154,13 +154,13 @@ pnpm add code-inspector-plugin -D
 
   ```js
   // vue.config.js
-  const { codeInspectorPlugin } = require('code-inspector-plugin');
+  const { lovinspPlugin } = require('lovinsp');
 
   module.exports = {
     // ...other code
     chainWebpack: (config) => {
-      config.plugin('code-inspector-plugin').use(
-        codeInspectorPlugin({
+      config.plugin('lovinsp').use(
+        lovinspPlugin({
           bundler: 'webpack',
         })
       );
@@ -177,12 +177,12 @@ pnpm add code-inspector-plugin -D
 
   ```js
   // nuxt.config.js
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   // https://nuxt.com/docs/api/configuration/nuxt-config
   export default defineNuxtConfig({
     vite: {
-      plugins: [codeInspectorPlugin({ bundler: 'vite' })],
+      plugins: [lovinspPlugin({ bundler: 'vite' })],
     },
   });
   ```
@@ -191,12 +191,12 @@ pnpm add code-inspector-plugin -D
 
   ```js
   // nuxt.config.js
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   export default {
     build: {
       extend(config) {
-        config.plugins.push(codeInspectorPlugin({ bundler: 'webpack' }));
+        config.plugins.push(lovinspPlugin({ bundler: 'webpack' }));
         return config;
       },
     },
@@ -210,11 +210,11 @@ pnpm add code-inspector-plugin -D
 
   ```js
   // next.config.js
-  const { codeInspectorPlugin } = require('code-inspector-plugin');
+  const { lovinspPlugin } = require('lovinsp');
 
   const nextConfig = {
     webpack: (config, { dev, isServer }) => {
-      config.plugins.push(codeInspectorPlugin({ bundler: 'webpack' }));
+      config.plugins.push(lovinspPlugin({ bundler: 'webpack' }));
       return config;
     },
   };
@@ -230,12 +230,12 @@ pnpm add code-inspector-plugin -D
   ```js
   // umi.config.js or umirc.js
   import { defineConfig } from '@umijs/max';
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   export default defineConfig({
     chainWebpack(memo) {
-      memo.plugin('code-inspector-plugin').use(
-        codeInspectorPlugin({
+      memo.plugin('lovinsp').use(
+        lovinspPlugin({
           bundler: 'webpack',
         })
       );
@@ -252,11 +252,11 @@ pnpm add code-inspector-plugin -D
   ```js
   // astro.config.mjs
   import { defineConfig } from 'astro/config';
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   export default defineConfig({
     vite: {
-      plugins: [codeInspectorPlugin({ bundler: 'vite' })],
+      plugins: [lovinspPlugin({ bundler: 'vite' })],
     },
   });
   ```
@@ -274,7 +274,7 @@ pnpm add code-inspector-plugin -D
 ## 👨‍💻 Contributors
 
 特别鸣谢本项目的贡献者：<br />
-<img src="https://contrib.rocks/image?repo=zh-lx/code-inspector" height="40" />
+<img src="https://contrib.rocks/image?repo=MarkShawn2020/lovinsp" height="40" />
 
 ## 📧 交流与反馈
 

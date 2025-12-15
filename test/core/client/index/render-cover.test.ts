@@ -1,11 +1,11 @@
 // @vitest-environment jsdom
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { CodeInspectorComponent } from '@/core/src/client';
+import { LovinspComponent } from '@/core/src/client';
 import { PathName } from '@/core/src/shared';
 
-describe('CodeInspectorComponent - renderCover method', () => {
-  let component: CodeInspectorComponent;
+describe('LovinspComponent - renderCover method', () => {
+  let component: LovinspComponent;
   let targetElement: HTMLElement;
   const originalGetComputedStyle = window.getComputedStyle;
   const originalClientHeight = Object.getOwnPropertyDescriptor(
@@ -18,7 +18,7 @@ describe('CodeInspectorComponent - renderCover method', () => {
   );
 
   beforeEach(async () => {
-    component = new CodeInspectorComponent();
+    component = new LovinspComponent();
     document.body.appendChild(component);
     await component.updateComplete;
     component.elementInfoRef.getBoundingClientRect = vi.fn().mockReturnValue({

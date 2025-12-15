@@ -1,12 +1,12 @@
-import { CodeInspectorComponent } from '@/core/src/client';
+import { LovinspComponent } from '@/core/src/client';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
 describe('removeCover', () => {
-  let component: CodeInspectorComponent;
+  let component: LovinspComponent;
   
   beforeEach(() => {
     // 创建组件实例
-    component = new CodeInspectorComponent();
+    component = new LovinspComponent();
     document.body.appendChild(component);
   });
 

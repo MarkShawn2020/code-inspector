@@ -1,5 +1,5 @@
 import { defineConfig } from 'umi';
-import { codeInspectorPlugin } from 'code-inspector-plugin';
+import { lovinspPlugin } from 'lovinsp';
 
 export default defineConfig({
   routes: [
@@ -9,7 +9,7 @@ export default defineConfig({
   npmClient: 'pnpm',
   mako: {
     plugins: [
-      codeInspectorPlugin({
+      lovinspPlugin({
         bundler: 'mako',
       }),
     ],

@@ -1,7 +1,7 @@
 {
-  "name": "code-inspector",
+  "name": "lovinsp",
   "version": "0.0.1",
-  "repository": "git@github.com:zh-lx/code-inspector.git",
+  "repository": "git@github.com:MarkShawn2020/lovinsp.git",
   "author": "zh-lx <18366276315@163.com>",
   "license": "MIT",
   "homepage": "https://inspector.fe-dev.cn/en",
@@ -16,7 +16,7 @@
     "inspect"
   ],
   "bugs": {
-    "url": "https://github.com/zh-lx/code-inspector/issues"
+    "url": "https://github.com/MarkShawn2020/lovinsp/issues"
   },
   "scripts": {
     "test": "vitest run --coverage",

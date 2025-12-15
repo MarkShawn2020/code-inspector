@@ -181,10 +181,10 @@ export function getWebComponentCode(options: CodeOptions, port: number) {
   return `
 ;(function (){
   if (typeof window !== 'undefined') {
-    if (!document.documentElement.querySelector('code-inspector-component')) {
+    if (!document.documentElement.querySelector('lovinsp-component')) {
       ${bundler === 'mako' ? iifeClientJsCode : jsClientCode};
 
-      var inspector = document.createElement('code-inspector-component');
+      var inspector = document.createElement('lovinsp-component');
       inspector.port = ${port};
       inspector.hotKeys = '${(hotKeys ? hotKeys : [])?.join(',')}';
       inspector.copyKeys = '${copyKeysValue}';
@@ -210,11 +210,11 @@ export function getWebComponentCode(options: CodeOptions, port: number) {
 export function getEliminateWarningCode() {
   return `
   ;(function(){
-    if (typeof globalThis === 'undefined' || globalThis.__code_inspector_console) {
+    if (typeof globalThis === 'undefined' || globalThis.__lovinsp_console) {
       return;
     };
     var path = "${PathName}";
-    globalThis.__code_inspector_console = true;
+    globalThis.__lovinsp_console = true;
     var wrappers = [
       {
         type: 'error',
@@ -250,7 +250,7 @@ export function getEliminateWarningCode() {
 export function getHidePathAttrCode() {
   return `
   ;(function(){
-    if (typeof window === 'undefined' || window.__code_inspector_observed) {
+    if (typeof window === 'undefined' || window.__lovinsp_observed) {
       return;
     };
     function observe() {
@@ -261,7 +261,7 @@ export function getHidePathAttrCode() {
       setTimeout(observe, 1000);
     }
     observe();
-    window.__code_inspector_observed = true;
+    window.__lovinsp_observed = true;
   })();
   `;
 }
@@ -309,7 +309,7 @@ function recordInjectTo(record: RecordInfo, options: CodeOptions) {
         const info = [
           chalk.cyan('injectTo'),
           chalk.red('in'),
-          chalk.cyan('code-inspector-plugin'),
+          chalk.cyan('lovinsp'),
           chalk.red('must be an absolute file path!'),
         ];
         console.log(info.join(' '));
@@ -318,7 +318,7 @@ function recordInjectTo(record: RecordInfo, options: CodeOptions) {
           chalk.red('The ext of '),
           chalk.cyan('injectTo'),
           chalk.red('in'),
-          chalk.cyan('code-inspector-plugin'),
+          chalk.cyan('lovinsp'),
           chalk.red('must in .js/.ts/.mjs/.mts/.jsx/.tsx'),
         ];
         console.log(info.join(' '));

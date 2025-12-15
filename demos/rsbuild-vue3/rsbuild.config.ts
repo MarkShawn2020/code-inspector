@@ -1,6 +1,6 @@
 import { defineConfig } from '@rsbuild/core';
 import { pluginVue } from '@rsbuild/plugin-vue';
-const { codeInspectorPlugin } = require('code-inspector-plugin');
+const { lovinspPlugin } = require('lovinsp');
 
 export default defineConfig({
   plugins: [
@@ -9,7 +9,7 @@ export default defineConfig({
   tools: {
     rspack: {
       plugins: [
-        codeInspectorPlugin({
+        lovinspPlugin({
           bundler: "rspack"
         })
       ]

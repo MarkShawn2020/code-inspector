@@ -1,11 +1,11 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { CodeInspectorComponent } from '@/core/src/client';
+import { LovinspComponent } from '@/core/src/client';
 
 describe('recordMousePosition', () => {
-  let component: CodeInspectorComponent;
+  let component: LovinspComponent;
 
   beforeEach(() => {
-    component = new CodeInspectorComponent();
+    component = new LovinspComponent();
     document.body.appendChild(component);
 
     // 模拟 getMousePosition 方法

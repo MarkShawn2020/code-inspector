@@ -1,11 +1,11 @@
 # 基础配置
 
-`codeInspectorPlugin` 的详细参数配置如下所示：
+`lovinspPlugin` 的详细参数配置如下所示：
 
 ```typescript
-import { codeInspectorPlugin } from 'code-inspector-plugin';
+import { lovinspPlugin } from 'lovinsp';
 
-codeInspectorPlugin({
+lovinspPlugin({
   bundler: 'vite',
   editor: 'cursor',
   // 其他属性见下方说明...
@@ -24,19 +24,19 @@ codeInspectorPlugin({
 - 可选项。
 - 类型：`string`
 - 可选值：`code / cursor / webstorm / appcode / atom / atom-beta / brackets / code-insiders / codium / colin / emacs / goland / hbuilder / idea / notepad / phpstorm / pycharm / rider / rubymine / sublime / vim / zed`
-- 说明：`code-inspector-plugin` 默认会根据当前系统中运行的进程，自动识别你所使用的 IDE 并打开。当你的系统中同时运行多个类别的 IDE 时，`code-inspector-plugin` 所打开的 IDE 可能不是你所想打开的那个，此时，你可以通过设置 `editor` 参数来指定打开的 IDE。更多细节可以参考 [IDE](/guide/ide.html) 一节
+- 说明：`lovinsp` 默认会根据当前系统中运行的进程，自动识别你所使用的 IDE 并打开。当你的系统中同时运行多个类别的 IDE 时，`lovinsp` 所打开的 IDE 可能不是你所想打开的那个，此时，你可以通过设置 `editor` 参数来指定打开的 IDE。更多细节可以参考 [IDE](/guide/ide.html) 一节
 
 ## dev <Badge type="tip" text="0.5.0+" vertical="middle" />
 
 - 可选项
 - 类型：`boolean | (() => boolean)`
-- 说明：`code-inspector-plugin` 内部会根据打包器的信息自动判断当前的环境且仅在 `development` 环境下生效。在某些情况下如老版本 `webpack` 或者用户自定义了环境变量，可能会判断 `development` 环境失败而导致 `code-inspector-plugin` 不生效。此时，你可以通过设置 `dev` 参数来手动添加判断是否为 `development` 环境的逻辑以让 `code-inspector-plugin` 生效。
+- 说明：`lovinsp` 内部会根据打包器的信息自动判断当前的环境且仅在 `development` 环境下生效。在某些情况下如老版本 `webpack` 或者用户自定义了环境变量，可能会判断 `development` 环境失败而导致 `lovinsp` 不生效。此时，你可以通过设置 `dev` 参数来手动添加判断是否为 `development` 环境的逻辑以让 `lovinsp` 生效。
 
 ## enforcePre <Badge type="tip" text="0.4.0+" vertical="middle" />
 
 - 可选项。默认值为 `true`
 - 类型：`boolean`
-- 说明：是否为 `code-inspector-plugin` 添加 `enforce: 'pre'` 配置。某些项目(特别是 `vue-cli` 创建的项目)会内置 `eslint-loader`，如果 `code-inspector-plugin` 的编译逻辑在 `eslint-loader` 的校验逻辑之前执行，可能会导致 `eslint-loader` 抛出错误。此时，需要设置此项为 `false` 以让 `code-inspector-plugin` 的编译逻辑在 `eslint-loader` 校验逻辑之后执行。
+- 说明：是否为 `lovinsp` 添加 `enforce: 'pre'` 配置。某些项目(特别是 `vue-cli` 创建的项目)会内置 `eslint-loader`，如果 `lovinsp` 的编译逻辑在 `eslint-loader` 的校验逻辑之前执行，可能会导致 `eslint-loader` 抛出错误。此时，需要设置此项为 `false` 以让 `lovinsp` 的编译逻辑在 `eslint-loader` 校验逻辑之后执行。
 
 ## hotKeys
 

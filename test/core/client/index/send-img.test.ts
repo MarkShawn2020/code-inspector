@@ -1,13 +1,13 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { CodeInspectorComponent } from '@/core/src/client';
+import { LovinspComponent } from '@/core/src/client';
 
 describe('sendImg', () => {
-  let component: CodeInspectorComponent;
+  let component: LovinspComponent;
   let createElement: typeof document.createElement;
 
   beforeEach(() => {
     // 创建组件实例
-    component = new CodeInspectorComponent();
+    component = new LovinspComponent();
     
     // 设置初始状态
     component.ip = 'localhost';

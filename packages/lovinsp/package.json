@@ -1,10 +1,10 @@
 {
-  "name": "code-inspector-plugin",
+  "name": "lovinsp",
   "version": "1.4.3",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "typings": "./types/index.d.ts",
-  "repository": "git@github.com:zh-lx/code-inspector.git",
+  "repository": "git@github.com:MarkShawn2020/lovinsp.git",
   "author": "zh-lx <18366276315@163.com>",
   "license": "MIT",
   "scripts": {
@@ -49,16 +49,16 @@
     "inspect"
   ],
   "bugs": {
-    "url": "https://github.com/zh-lx/code-inspector/issues"
+    "url": "https://github.com/MarkShawn2020/lovinsp/issues"
   },
   "dependencies": {
     "chalk": "4.1.1",
-    "@code-inspector/core": "workspace:*",
-    "@code-inspector/vite": "workspace:*",
-    "@code-inspector/webpack": "workspace:*",
-    "@code-inspector/esbuild": "workspace:*",
-    "@code-inspector/turbopack": "workspace:*",
-    "@code-inspector/mako": "workspace:*"
+    "@lovinsp/core": "workspace:*",
+    "@lovinsp/vite": "workspace:*",
+    "@lovinsp/webpack": "workspace:*",
+    "@lovinsp/esbuild": "workspace:*",
+    "@lovinsp/turbopack": "workspace:*",
+    "@lovinsp/mako": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^16.0.1",

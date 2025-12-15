@@ -1,11 +1,11 @@
-import { codeInspectorPlugin } from 'code-inspector-plugin'
+import { lovinspPlugin } from 'lovinsp'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
   vite: {
     plugins: [
-      codeInspectorPlugin({
+      lovinspPlugin({
          bundler: 'vite'
       })
     ],

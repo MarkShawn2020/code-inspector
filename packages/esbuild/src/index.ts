@@ -8,18 +8,18 @@ import {
   isDev,
   getMappingFilePath,
   isExcludedFile,
-} from '@code-inspector/core';
+} from '@lovinsp/core';
 import fs from 'fs';
 import path from 'path';
 
-const PluginName = '@code-inspector/esbuild';
+const PluginName = '@lovinsp/esbuild';
 
 interface Options extends CodeOptions {
   close?: boolean;
   output: string;
 }
 
-export function EsbuildCodeInspectorPlugin(options: Options) {
+export function EsbuildLovinspPlugin(options: Options) {
   return {
     name: PluginName,
     setup(build) {

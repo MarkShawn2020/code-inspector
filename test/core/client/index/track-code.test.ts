@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { CodeInspectorComponent } from '@/core/src/client';
+import { LovinspComponent } from '@/core/src/client';
 import { formatOpenPath } from 'launch-ide';
 
 // 模拟 formatOpenPath
@@ -11,12 +11,12 @@ vi.mock('@/core/src/shared', () => ({
 }));
 
 describe('trackCode', () => {
-  let component: CodeInspectorComponent;
+  let component: LovinspComponent;
 
   beforeEach(() => {
     vi.clearAllMocks();
     // 创建组件实例
-    component = new CodeInspectorComponent();
+    component = new LovinspComponent();
     
     // 设置基本属性
     component.element = {

@@ -1,7 +1,7 @@
-import { CodeOptions } from '@code-inspector/core';
+import { CodeOptions } from '@lovinsp/core';
 interface Options extends CodeOptions {
     close?: boolean;
     output: string;
 }
-export declare function TurbopackCodeInspectorPlugin(options: Options): Record<string, any>;
+export declare function TurbopackLovinspPlugin(options: Options): Record<string, any>;
 export {};

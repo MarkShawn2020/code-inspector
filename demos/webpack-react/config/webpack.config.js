@@ -25,7 +25,7 @@ const ForkTsCheckerWebpackPlugin =
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
-const { CodeInspectorPlugin } = require('code-inspector-plugin');
+const { LovinspPlugin } = require('lovinsp');
 
 console.log(1111);
 
@@ -612,7 +612,7 @@ module.exports = function (webpackEnv) {
       // during a production build.
       // Otherwise React will be compiled in the very slow development mode.
       new webpack.DefinePlugin(env.stringified),
-      CodeInspectorPlugin({
+      LovinspPlugin({
         bundler: 'webpack',
       }),
       // Experimental hot reloading for React .

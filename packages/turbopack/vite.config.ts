@@ -7,14 +7,14 @@ export default defineConfig({
       entry: ['src/index.ts'],
       formats: ['cjs', 'es'],
       fileName: '[name]',
-      name: 'TurbopackCodeInspectorPlugin',
+      name: 'TurbopackLovinspPlugin',
     },
     minify: true,
     emptyOutDir: false,
     rollupOptions: {
       external: [
-        '@code-inspector/core',
-        '@code-inspector/webpack',
+        '@lovinsp/core',
+        '@lovinsp/webpack',
         'path',
         'fs',
         'url',

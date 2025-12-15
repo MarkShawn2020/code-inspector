@@ -1,5 +1,5 @@
 {
-  "name": "@code-inspector/core",
+  "name": "@lovinsp/core",
   "version": "1.4.4",
   "main": "dist/index.js",
   "module": "./dist/index.mjs",
@@ -20,7 +20,7 @@
       }
     }
   },
-  "repository": "git@github.com:zh-lx/code-inspector.git",
+  "repository": "git@github.com:MarkShawn2020/lovinsp.git",
   "author": "zh-lx <18366276315@163.com>",
   "license": "MIT",
   "homepage": "https://inspector.fe-dev.cn/en",
@@ -35,7 +35,7 @@
     "inspect"
   ],
   "bugs": {
-    "url": "https://github.com/zh-lx/code-inspector/issues"
+    "url": "https://github.com/MarkShawn2020/lovinsp/issues"
   },
   "scripts": {
     "dev": "vite",

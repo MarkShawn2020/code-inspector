@@ -1,7 +1,7 @@
-import { CodeOptions } from '@code-inspector/core';
+import { CodeOptions } from '@lovinsp/core';
 interface Options extends CodeOptions {
     close?: boolean;
     output: string;
 }
-export declare function MakoCodeInspectorPlugin(options: Options): Record<string, any>;
+export declare function MakoLovinspPlugin(options: Options): Record<string, any>;
 export {};

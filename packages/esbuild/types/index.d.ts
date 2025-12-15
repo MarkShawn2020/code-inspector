@@ -1,9 +1,9 @@
-import { CodeOptions } from '@code-inspector/core';
+import { CodeOptions } from '@lovinsp/core';
 interface Options extends CodeOptions {
     close?: boolean;
     output: string;
 }
-export declare function EsbuildCodeInspectorPlugin(options: Options): {
+export declare function EsbuildLovinspPlugin(options: Options): {
     name: string;
     setup(build: any): void;
 };

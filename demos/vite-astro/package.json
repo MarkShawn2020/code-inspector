@@ -13,6 +13,6 @@
     "astro": "^4.4.1",
     "@astrojs/check": "^0.5.5",
     "typescript": "^5.3.3",
-    "code-inspector-plugin": "workspace:*"
+    "lovinsp": "workspace:*"
   }
 }

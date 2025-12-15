@@ -82,7 +82,7 @@ export default defineConfig({
       },
     ],
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/zh-lx/code-inspector' },
+      { icon: 'github', link: 'https://github.com/MarkShawn2020/lovinsp' },
     ],
   },
   locales: {

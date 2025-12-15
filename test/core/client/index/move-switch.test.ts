@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { CodeInspectorComponent } from '@/core/src/client';
+import { LovinspComponent } from '@/core/src/client';
 
 // 模拟 composedPath
 vi.mock('@/core/src/client/util', () => ({
@@ -7,10 +7,10 @@ vi.mock('@/core/src/client/util', () => ({
 }));
 
 describe('moveSwitch', () => {
-  let component: CodeInspectorComponent;
+  let component: LovinspComponent;
 
   beforeEach(() => {
-    component = new CodeInspectorComponent();
+    component = new LovinspComponent();
     document.body.appendChild(component);
     
     // 初始化必要的属性

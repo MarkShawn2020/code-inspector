@@ -1,6 +1,6 @@
 # Turbopack Next.js 15 Demo
 
-This demo showcases code-inspector-plugin with Next.js 15 using Turbopack bundler.
+This demo showcases lovinsp with Next.js 15 using Turbopack bundler.
 
 ## Features
 

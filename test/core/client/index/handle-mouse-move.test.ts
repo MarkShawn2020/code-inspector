@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { CodeInspectorComponent } from '@/core/src/client';
+import { LovinspComponent } from '@/core/src/client';
 import { PathName } from '@/core/src/shared';
 
 // 模拟 composedPath
@@ -11,10 +11,10 @@ vi.mock('@/core/src/shared', () => ({
 }));
 
 describe('handleMouseMove', () => {
-  let component: CodeInspectorComponent;
+  let component: LovinspComponent;
 
   beforeEach(() => {
-    component = new CodeInspectorComponent();
+    component = new LovinspComponent();
     document.body.appendChild(component);
     
     // 模拟方法

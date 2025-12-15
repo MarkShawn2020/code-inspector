@@ -2,10 +2,10 @@
 
 ## Problem
 
-When `code-inspector-plugin` is linked via `pnpm link` for local development, the application fails with `MODULE_NOT_FOUND` error:
+When `lovinsp` is linked via `pnpm link` for local development, the application fails with `MODULE_NOT_FOUND` error:
 
 ```
-Error: Cannot find module 'code-inspector-plugin/dist/append-code-5678.js'
+Error: Cannot find module 'lovinsp/dist/append-code-5678.js'
 ```
 
 ## Root Cause
@@ -17,7 +17,7 @@ In `/packages/core/src/server/use-client.ts:376-386`, the code generated an NPM-
 ```typescript
 function writeWebComponentFile(targetPath: string, content: string, port: number) {
   const webComponentFileName = `append-code-${port}.js`;
-  const webComponentNpmPath = `code-inspector-plugin/dist/${webComponentFileName}`; // ❌ Hardcoded
+  const webComponentNpmPath = `lovinsp/dist/${webComponentFileName}`; // ❌ Hardcoded
   const webComponentFilePath = path.resolve(targetPath, webComponentFileName);
   fs.writeFileSync(webComponentFilePath, content, 'utf-8');
   return webComponentNpmPath;
@@ -28,17 +28,17 @@ function writeWebComponentFile(targetPath: string, content: string, port: number
 
 1. **File Write Location**: File is written to the plugin's dist directory (follows symlink to real path)
    ```
-   /Users/mark/projects/code-inspector/packages/code-inspector-plugin/dist/append-code-5678.js
+   /Users/mark/projects/code-inspector/packages/lovinsp/dist/append-code-5678.js
    ```
 
 2. **Import Resolution**: Generated code tries to import using NPM specifier:
    ```typescript
-   import CodeInspectorEmptyElement from 'code-inspector-plugin/dist/append-code-5678.js';
+   import CodeInspectorEmptyElement from 'lovinsp/dist/append-code-5678.js';
    ```
 
 3. **Resolution Mismatch**: Node.js resolves from consumer project's node_modules:
    ```
-   /Users/mark/projects/user-app/node_modules/code-inspector-plugin/dist/append-code-5678.js
+   /Users/mark/projects/user-app/node_modules/lovinsp/dist/append-code-5678.js
    ```
 
 4. **Result**: File exists at write location but not at resolution location → **MODULE_NOT_FOUND**
@@ -46,8 +46,8 @@ function writeWebComponentFile(targetPath: string, content: string, port: number
 ### Why It Worked with Normal Installation
 
 In normal `npm install`, both locations are the same:
-- Write location: `/project/node_modules/code-inspector-plugin/dist/append-code-5678.js`
-- Resolution location: `/project/node_modules/code-inspector-plugin/dist/append-code-5678.js`
+- Write location: `/project/node_modules/lovinsp/dist/append-code-5678.js`
+- Resolution location: `/project/node_modules/lovinsp/dist/append-code-5678.js`
 
 ## Solution
 
@@ -97,14 +97,14 @@ pnpm link --global
 
 # Terminal 2: Use in another project
 cd /path/to/your-project
-pnpm link --global code-inspector-plugin
+pnpm link --global lovinsp
 
 # Configure in vite.config.ts
-import { CodeInspectorPlugin } from 'code-inspector-plugin';
+import { LovinspPlugin } from 'lovinsp';
 
 export default {
   plugins: [
-    CodeInspectorPlugin({ bundler: 'vite' })
+    LovinspPlugin({ bundler: 'vite' })
   ]
 }
 
@@ -119,10 +119,10 @@ pnpm dev
 The fix generates imports like:
 ```typescript
 // Before (broken with pnpm link):
-import CodeInspectorEmptyElement from 'code-inspector-plugin/dist/append-code-5678.js';
+import CodeInspectorEmptyElement from 'lovinsp/dist/append-code-5678.js';
 
 // After (works everywhere):
-import CodeInspectorEmptyElement from '/Users/mark/projects/user-app/node_modules/code-inspector-plugin/dist/append-code-5678.js';
+import CodeInspectorEmptyElement from '/Users/mark/projects/user-app/node_modules/lovinsp/dist/append-code-5678.js';
 ```
 
 ## Alternative Solutions Considered

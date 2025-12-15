@@ -6,7 +6,7 @@ import { ElementUiResolver } from "unplugin-vue-components/resolvers";
 import { viteMockServe } from "vite-plugin-mock";
 import path from "path";
 import vueJsx from "@vitejs/plugin-vue2-jsx";
-import { CodeInspectorPlugin } from "code-inspector-plugin";
+import { LovinspPlugin } from "lovinsp";
 
 export default ({ command }: ConfigEnv): UserConfigExport => {
   return {
@@ -17,7 +17,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
     plugins: [
       vue(),
       vueJsx(),
-      CodeInspectorPlugin({
+      LovinspPlugin({
         bundler: "vite",
       }),
       viteMockServe({

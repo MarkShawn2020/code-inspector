@@ -1,9 +1,9 @@
-import { codeInspectorPlugin } from 'code-inspector-plugin';
+import { lovinspPlugin } from 'lovinsp';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack: (config, { dev, isServer }) => {
-    config.plugins.push(codeInspectorPlugin({ bundler: 'webpack' }));
+    config.plugins.push(lovinspPlugin({ bundler: 'webpack' }));
     return config;
   },
 };

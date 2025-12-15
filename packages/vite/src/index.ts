@@ -8,10 +8,10 @@ import {
   isDev,
   getMappingFilePath,
   isExcludedFile,
-} from '@code-inspector/core';
+} from '@lovinsp/core';
 import chalk from 'chalk';
 
-const PluginName = '@code-inspector/vite';
+const PluginName = '@lovinsp/vite';
 
 const OrderedPlugins = [
   {
@@ -62,7 +62,7 @@ function printOrderWarning(plugins: { name: string }[] = []) {
       const info = [
         chalk.yellow('[WARNING]'),
         'You need to put',
-        chalk.green('code-inspector-plugin'),
+        chalk.green('lovinsp'),
         'before',
         chalk.green(p.package),
         'in the vite config file.',
@@ -77,7 +77,7 @@ interface Options extends CodeOptions {
   output: string;
 }
 
-export function ViteCodeInspectorPlugin(options: Options) {
+export function ViteLovinspPlugin(options: Options) {
   const record: RecordInfo = {
     port: 0,
     entry: '',

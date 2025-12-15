@@ -1,13 +1,13 @@
 // @vitest-environment jsdom
 
 import { describe, it, expect, beforeEach } from 'vitest';
-import { CodeInspectorComponent } from '@/core/src/client';
+import { LovinspComponent } from '@/core/src/client';
 
 describe('getMousePosition', () => {
-  let component: CodeInspectorComponent;
+  let component: LovinspComponent;
 
   beforeEach(() => {
-    component = new CodeInspectorComponent();
+    component = new LovinspComponent();
   });
 
   describe('Mouse Events', () => {

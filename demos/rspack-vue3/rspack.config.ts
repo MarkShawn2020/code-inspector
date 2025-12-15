@@ -1,7 +1,7 @@
 import { defineConfig } from "@rspack/cli";
 import { type RspackPluginFunction, rspack } from "@rspack/core";
 import { VueLoaderPlugin } from "vue-loader";
-import { codeInspectorPlugin } from "code-inspector-plugin";
+import { lovinspPlugin } from "lovinsp";
 
 // Target browsers, see: https://github.com/browserslist/browserslist
 const targets = ["chrome >= 87", "edge >= 88", "firefox >= 78", "safari >= 14"];
@@ -55,7 +55,7 @@ export default defineConfig({
 			__VUE_PROD_DEVTOOLS__: false
 		}),
 		new VueLoaderPlugin() as RspackPluginFunction,
-		codeInspectorPlugin({
+		lovinspPlugin({
 			bundler: 'rspack',
 			cache: true,
 			port: 6200

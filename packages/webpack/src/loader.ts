@@ -5,7 +5,7 @@ import {
   isJsTypeFile,
   getMappingFilePath,
   isExcludedFile,
-} from '@code-inspector/core';
+} from '@lovinsp/core';
 
 const jsxParamList = ['isJsx', 'isTsx', 'lang.jsx', 'lang.tsx'];
 

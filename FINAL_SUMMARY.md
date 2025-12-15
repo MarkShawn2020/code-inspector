@@ -103,11 +103,11 @@ export type Behavior = {
 
 ```typescript
 // vite.config.ts
-import { codeInspectorPlugin } from 'code-inspector-plugin';
+import { lovinspPlugin } from 'lovinsp';
 
 export default {
   plugins: [
-    codeInspectorPlugin({
+    lovinspPlugin({
       bundler: 'vite',
       // 无需配置，默认行为：
       // - Shift+Alt = Copy
@@ -120,7 +120,7 @@ export default {
 ### 自定义快捷键
 
 ```typescript
-codeInspectorPlugin({
+lovinspPlugin({
   bundler: 'vite',
   behavior: {
     copy: true,
@@ -142,7 +142,7 @@ codeInspectorPlugin({
 
 **新版本：**
 ```
-[code-inspector-plugin] Press and hold: ⌥option+shift to copy path · ⌥option+shift+⌘command to open in IDE
+[lovinsp] Press and hold: ⌥option+shift to copy path · ⌥option+shift+⌘command to open in IDE
 ```
 
 ### 元素信息弹窗

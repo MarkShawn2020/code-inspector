@@ -24,7 +24,7 @@ If you want to publish this package to a private npm registry like Cloudsmith, f
 
 ```bash
 cd packages
-for dir in core vite webpack esbuild turbopack mako code-inspector-plugin; do
+for dir in core vite webpack esbuild turbopack mako lovinsp; do
   echo "Building $dir..."
   cd $dir && pnpm build && cd ..
 done
@@ -33,7 +33,7 @@ done
 **2. Pack packages (this resolves `workspace:*` dependencies):**
 
 ```bash
-for dir in core vite webpack esbuild turbopack mako code-inspector-plugin; do
+for dir in core vite webpack esbuild turbopack mako lovinsp; do
   echo "Packing $dir..."
   cd $dir && pnpm pack && cd ..
 done
@@ -51,7 +51,7 @@ for tarball in \
   packages/esbuild/code-inspector-esbuild-*.tgz \
   packages/turbopack/code-inspector-turbopack-*.tgz \
   packages/mako/code-inspector-mako-*.tgz \
-  packages/code-inspector-plugin/code-inspector-plugin-*.tgz; do
+  packages/lovinsp/lovinsp-*.tgz; do
   echo "Publishing $(basename $tarball)..."
   cloudsmith push npm mark/code-inspector $tarball --republish
 done
@@ -72,7 +72,7 @@ In your project's `package.json`:
 ```json
 {
   "devDependencies": {
-    "code-inspector-plugin": "https://npm.cloudsmith.io/mark/code-inspector/code-inspector-plugin/-/code-inspector-plugin-1.2.12.tgz"
+    "lovinsp": "https://npm.cloudsmith.io/mark/code-inspector/lovinsp/-/lovinsp-1.2.12.tgz"
   }
 }
 ```
@@ -92,7 +92,7 @@ Then in `package.json`:
 ```json
 {
   "devDependencies": {
-    "code-inspector-plugin": "1.2.12"
+    "lovinsp": "1.2.12"
   }
 }
 ```
@@ -110,14 +110,14 @@ For Next.js 16 projects, use CommonJS config to avoid ESM compatibility issues:
 
 ```javascript
 // next.config.js
-const { codeInspectorPlugin } = require('code-inspector-plugin');
+const { lovinspPlugin } = require('lovinsp');
 
 module.exports = {
   reactStrictMode: true,
   turbopack: {},
   webpack: (config, { dev }) => {
     if (dev) {
-      config.plugins.push(codeInspectorPlugin({ bundler: 'webpack' }));
+      config.plugins.push(lovinspPlugin({ bundler: 'webpack' }));
     }
     return config;
   },
@@ -170,7 +170,7 @@ gh release create vX.X.X \
   packages/esbuild/code-inspector-esbuild-*.tgz \
   packages/turbopack/code-inspector-turbopack-*.tgz \
   packages/mako/code-inspector-mako-*.tgz \
-  packages/code-inspector-plugin/code-inspector-plugin-*.tgz
+  packages/lovinsp/lovinsp-*.tgz
 ```
 
 ## 🧪 Testing
@@ -243,7 +243,7 @@ code-inspector/
 │   ├── esbuild/       # Esbuild plugin
 │   ├── turbopack/     # Turbopack rules
 │   ├── mako/          # Mako plugin
-│   └── code-inspector-plugin/  # Main entry point
+│   └── lovinsp/  # Main entry point
 ├── demos/             # Demo projects for testing
 ├── docs/              # Documentation site
 └── test/              # Test files
@@ -272,5 +272,5 @@ Follow conventional commits:
 ## 📧 Support
 
 For maintenance-related questions, contact the maintainers through:
-- GitHub Issues: https://github.com/zh-lx/code-inspector/issues
+- GitHub Issues: https://github.com/MarkShawn2020/lovinsp/issues
 - Twitter: [@zhulxing312147](https://twitter.com/zhulxing312147)

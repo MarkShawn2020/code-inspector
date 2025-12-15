@@ -1,4 +1,4 @@
-import { codeInspectorPlugin } from 'code-inspector-plugin';
+import { lovinspPlugin } from 'lovinsp';
 import type { NextConfig } from 'next';
 import createMDX from '@next/mdx';
 
@@ -9,7 +9,7 @@ const withMDX = createMDX({
 const nextConfig: NextConfig = {
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   turbopack: {
-    rules: codeInspectorPlugin({
+    rules: lovinspPlugin({
       bundler: 'turbopack',
     }),
   },

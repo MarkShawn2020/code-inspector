@@ -5,7 +5,7 @@ import {
   getCodeWithWebComponent,
   isDev,
   isNextjsProject,
-} from '@code-inspector/core';
+} from '@lovinsp/core';
 import path, { dirname } from 'path';
 import { getWebpackEntrys } from './entry';
 
@@ -118,7 +118,7 @@ async function replaceHtml({
   }
 }
 
-class WebpackCodeInspectorPlugin {
+class WebpackLovinspPlugin {
   options: Options;
 
   constructor(options: Options) {
@@ -157,7 +157,7 @@ class WebpackCodeInspectorPlugin {
         // 用来在 cache 情况下启动 node server
         getPureClientCodeString(this.options, record);
       } else {
-        compiler.options.cache.version = `code-inspector-${Date.now()}`;
+        compiler.options.cache.version = `lovinsp-${Date.now()}`;
       }
     }
     // rspack persistent cache
@@ -166,7 +166,7 @@ class WebpackCodeInspectorPlugin {
         // 用来在 cache 情况下启动 node server
         getPureClientCodeString(this.options, record);
       } else {
-        compiler.options.experiments.cache.version = `code-inspector-${Date.now()}`;
+        compiler.options.experiments.cache.version = `lovinsp-${Date.now()}`;
       }
     }
 
@@ -178,7 +178,7 @@ class WebpackCodeInspectorPlugin {
     ) {
       const options = this.options;
       compiler.hooks.emit.tapAsync(
-        'WebpackCodeInspectorPlugin',
+        'WebpackLovinspPlugin',
         async (compilation, cb) => {
           let assets = {};
           if (compilation.getAssets) {
@@ -198,4 +198,4 @@ class WebpackCodeInspectorPlugin {
   }
 }
 
-export default WebpackCodeInspectorPlugin;
+export default WebpackLovinspPlugin;

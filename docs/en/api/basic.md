@@ -1,11 +1,11 @@
 # Basic Configuration
 
-The detailed parameter configuration for `codeInspectorPlugin` is shown below:
+The detailed parameter configuration for `lovinspPlugin` is shown below:
 
 ```typescript
-import { codeInspectorPlugin } from 'code-inspector-plugin';
+import { lovinspPlugin } from 'lovinsp';
 
-codeInspectorPlugin({
+lovinspPlugin({
   bundler: 'vite',
   editor: 'cursor',
   // See below for other properties...
@@ -24,19 +24,19 @@ codeInspectorPlugin({
 - Optional
 - Type: `string`
 - Available values: `code / cursor / webstorm / appcode / atom / atom-beta / brackets / code-insiders / codium / colin / emacs / goland / hbuilder / idea / notepad / phpstorm / pycharm / rider / rubymine / sublime / vim / zed`
-- Description: By default, `code-inspector-plugin` automatically detects and opens your IDE based on the running processes in your system. When multiple IDEs are running simultaneously, the IDE opened by `code-inspector-plugin` might not be the one you want. In this case, you can specify which IDE to open by setting the `editor` parameter. For more details, refer to the [IDE](/guide/ide.html) section
+- Description: By default, `lovinsp` automatically detects and opens your IDE based on the running processes in your system. When multiple IDEs are running simultaneously, the IDE opened by `lovinsp` might not be the one you want. In this case, you can specify which IDE to open by setting the `editor` parameter. For more details, refer to the [IDE](/guide/ide.html) section
 
 ## dev <Badge type="tip" text="0.5.0+" vertical="middle" />
 
 - Optional
 - Type: `boolean | (() => boolean)`
-- Description: `code-inspector-plugin` automatically determines the current environment based on bundler information and only works in the `development` environment. In some cases, such as older versions of `webpack` or custom environment variables, the `development` environment detection might fail, causing `code-inspector-plugin` to not work. In such cases, you can manually add logic to determine if it's a `development` environment by setting the `dev` parameter to make `code-inspector-plugin` work.
+- Description: `lovinsp` automatically determines the current environment based on bundler information and only works in the `development` environment. In some cases, such as older versions of `webpack` or custom environment variables, the `development` environment detection might fail, causing `lovinsp` to not work. In such cases, you can manually add logic to determine if it's a `development` environment by setting the `dev` parameter to make `lovinsp` work.
 
 ## enforcePre <Badge type="tip" text="0.4.0+" vertical="middle" />
 
 - Optional. Default value is `true`
 - Type: `boolean`
-- Description: Whether to add `enforce: 'pre'` configuration for `code-inspector-plugin`. Some projects (especially those created by `vue-cli`) have built-in `eslint-loader`. If `code-inspector-plugin`'s compilation logic runs before `eslint-loader`'s validation logic, it might cause `eslint-loader` to throw errors. In this case, set this option to `false` to make `code-inspector-plugin`'s compilation logic run after `eslint-loader`'s validation logic.
+- Description: Whether to add `enforce: 'pre'` configuration for `lovinsp`. Some projects (especially those created by `vue-cli`) have built-in `eslint-loader`. If `lovinsp`'s compilation logic runs before `eslint-loader`'s validation logic, it might cause `eslint-loader` to throw errors. In this case, set this option to `false` to make `lovinsp`'s compilation logic run after `eslint-loader`'s validation logic.
 
 ## hotKeys
 

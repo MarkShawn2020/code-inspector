@@ -172,7 +172,7 @@ behavior: {
 打开浏览器控制台，查看 `layerPanelMode` 状态：
 
 ```javascript
-const inspector = document.querySelector('code-inspector-component');
+const inspector = document.querySelector('lovinsp-component');
 
 // 打开图层面板后，查看当前模式
 console.log('Current layer panel mode:', inspector.layerPanelMode);

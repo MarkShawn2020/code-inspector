@@ -1,11 +1,11 @@
-const { CodeInspectorPlugin } = require('code-inspector-plugin');
+const { LovinspPlugin } = require('lovinsp');
 
 module.exports = {
   // ...other code
   chainWebpack: (config) => {
     // add this configuration in the development environment
-    config.plugin('code-inspector-plugin').use(
-      CodeInspectorPlugin({
+    config.plugin('lovinsp').use(
+      LovinspPlugin({
         bundler: 'webpack',
       })
     );

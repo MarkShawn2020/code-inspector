@@ -1,10 +1,10 @@
 # IDE
 
-`code-inspector-plugin` scans currently running processes in the system and automatically recognizes the IDE being used, so in most cases, you don't need to manually specify the IDE.
+`lovinsp` scans currently running processes in the system and automatically recognizes the IDE being used, so in most cases, you don't need to manually specify the IDE.
 
 ## Specifying IDE
 
-If `code-inspector-plugin` fails to automatically recognize your IDE, or if you're running multiple IDEs and want to specify which one to open, you have two ways to specify the IDE: through the `.env.local` file or by adding the `editor` parameter in `codeInspectorPlugin`.
+If `lovinsp` fails to automatically recognize your IDE, or if you're running multiple IDEs and want to specify which one to open, you have two ways to specify the IDE: through the `.env.local` file or by adding the `editor` parameter in `lovinspPlugin`.
 
 :::tip
 
@@ -23,10 +23,10 @@ CODE_EDITOR=code
 
 ### Specifying via `editor` parameter
 
-You can also specify the IDE by adding the `editor` parameter in `codeInspectorPlugin`:
+You can also specify the IDE by adding the `editor` parameter in `lovinspPlugin`:
 
 ```ts
-codeInspectorPlugin({
+lovinspPlugin({
     bundler: 'vite',
     editor: 'code', // Specify IDE as vscode
 })
@@ -211,10 +211,10 @@ Taking VSCodium as an example (steps are the same for other IDEs), to get the ID
 1. Open the IDE program VSCodium
 2. Open MAC's Activity Monitor, find VSCodium in the processes and double-click:
 
-   ![Active_Monitor](https://github.com/zh-lx/code-inspector/assets/73059627/17d65dc1-82ff-439f-aeba-8e3056cd2a1b)
+   ![Active_Monitor](https://github.com/MarkShawn2020/lovinsp/assets/73059627/17d65dc1-82ff-439f-aeba-8e3056cd2a1b)
 3. After double-clicking, in the "Open Files and Ports" tab of the window, find the path corresponding to the first txt, which is the IDE executable path:
 
-   ![Open_Files](https://github.com/zh-lx/code-inspector/assets/73059627/f27a61f4-1c57-4687-83c7-6078533d62b4)
+   ![Open_Files](https://github.com/MarkShawn2020/lovinsp/assets/73059627/f27a61f4-1c57-4687-83c7-6078533d62b4)
 4. Copy the IDE executable path to the `.env.local` file:
 
 ```perl
@@ -228,10 +228,10 @@ Taking Webstorm as an example (steps are the same for other IDEs), to get the ID
 
 1. Find the IDE shortcut (create one if it doesn't exist), right-click the shortcut, select "Properties":
 
-   <img src="https://github.com/zh-lx/code-inspector/assets/73059627/6db6899f-fec5-474a-bffb-de8a394df777" style="max-width: 400px" />
+   <img src="https://github.com/MarkShawn2020/lovinsp/assets/73059627/6db6899f-fec5-474a-bffb-de8a394df777" style="max-width: 400px" />
 2. After opening, in the "Shortcut" tab find "Target", remove the quotation marks from the "Target" to get the IDE executable path:
 
-   <img src="https://github.com/zh-lx/code-inspector/assets/73059627/f5067697-a246-4566-a530-ca83f9803bf5" style="max-width: 400px" />
+   <img src="https://github.com/MarkShawn2020/lovinsp/assets/73059627/f5067697-a246-4566-a530-ca83f9803bf5" style="max-width: 400px" />
 3. Copy the IDE executable path to the `.env.local` file:
 
 ```perl

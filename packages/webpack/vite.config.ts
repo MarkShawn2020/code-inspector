@@ -7,12 +7,12 @@ export default defineConfig({
       entry: ['src/index.ts'],
       formats: ['umd', 'es'],
       fileName: '[name]',
-      name: 'WebpackCodeInspectorPlugin',
+      name: 'WebpackLovinspPlugin',
     },
     minify: true,
     emptyOutDir: false,
     rollupOptions: {
-      external: ['@code-inspector/core', '@vue/compiler-sfc', 'path'],
+      external: ['@lovinsp/core', '@vue/compiler-sfc', 'path'],
       output: {
         exports: 'default', // 设置默认导出
       },

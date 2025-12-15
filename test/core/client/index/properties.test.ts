@@ -1,13 +1,13 @@
-import { CodeInspectorComponent } from '@/core/src/client';
+import { LovinspComponent } from '@/core/src/client';
 import { DefaultPort } from '@/core/src/shared';
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 describe('properties', () => {
-  let component: CodeInspectorComponent;
+  let component: LovinspComponent;
   
   beforeEach(() => {
     // 创建组件实例
-    component = new CodeInspectorComponent();
+    component = new LovinspComponent();
     document.body.appendChild(component);
   });
 

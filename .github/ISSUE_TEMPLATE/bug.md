@@ -7,7 +7,7 @@ about: 这是一个 bug
 
 ## 插件版本
 
-_请提供使用的 code-inspector-plugin 版本号……_
+_请提供使用的 lovinsp 版本号……_
 
 ## Bug 类型
 
@@ -52,7 +52,7 @@ _请描述一下你的 bug，最好附上一张报错截图……_
 
 - [ ] 你的浏览器、IDE、代码是否在一台机器上(非远程开发机或者云开发机情况)
 - [ ] 浏览器控制台是否有打印组合按键提示信息<br />
-      <img src="https://github.com/zh-lx/code-inspector/assets/73059627/77bcef30-88a5-4f58-b306-a92e01ecef8f" width="500" />
+      <img src="https://github.com/MarkShawn2020/lovinsp/assets/73059627/77bcef30-88a5-4f58-b306-a92e01ecef8f" width="500" />
 
 - [ ] 页面 DOM 是否有注入 `data-insp-path` 属性<br />
-      <img src="https://github.com/zh-lx/code-inspector/assets/73059627/0523f9fb-e755-4561-9284-8970e4081bcc" width="600" />
+      <img src="https://github.com/MarkShawn2020/lovinsp/assets/73059627/0523f9fb-e755-4561-9284-8970e4081bcc" width="600" />

@@ -1,11 +1,11 @@
 import { defineConfig } from 'astro/config';
-import { codeInspectorPlugin } from 'code-inspector-plugin'
+import { lovinspPlugin } from 'lovinsp'
 
 // https://astro.build/config
 export default defineConfig({
   vite: {
     plugins: [
-      codeInspectorPlugin({
+      lovinspPlugin({
         bundler: 'vite'
       })
     ]

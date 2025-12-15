@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import * as esbuild from 'esbuild';
-import { codeInspectorPlugin } from 'code-inspector-plugin'
+import { lovinspPlugin } from 'lovinsp'
 
 const args = process.argv;
 console.log('Args', args);
@@ -62,7 +62,7 @@ const start = async (port) => {
 		bundle: true,
 		minify: false,
 		sourcemap: true,
-		plugins: [codeInspectorPlugin({ bundler: 'esbuild', dev: true }), copyPublicPlugin],
+		plugins: [lovinspPlugin({ bundler: 'esbuild', dev: true }), copyPublicPlugin],
 		define: {
 			LIVE_RELOAD: 'true',
 		},

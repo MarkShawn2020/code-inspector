@@ -1,15 +1,15 @@
 // @vitest-environment jsdom
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { CodeInspectorComponent } from '@/core/src/client';
+import { LovinspComponent } from '@/core/src/client';
 
 describe('sendXHR', () => {
-  let component: CodeInspectorComponent;
+  let component: LovinspComponent;
   let xhrMock: any;
 
   beforeEach(() => {
     // 创建组件实例
-    component = new CodeInspectorComponent();
+    component = new LovinspComponent();
     
     // 设置初始状态
     component.ip = 'localhost';

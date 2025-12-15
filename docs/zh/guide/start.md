@@ -1,25 +1,25 @@
 # 快速开始
 
-`code-inspector-plugin` 支持在以 `webpack/vite/rspack/rsbuild/esbuild/farm/mako` 作为打包器的项目中使用，支持 `vue/react/preact/solid/qwik/svelte/astro/nextjs/nuxt/umijs` 等框架，请参考如下的接入教程。
+`lovinsp` 支持在以 `webpack/vite/rspack/rsbuild/esbuild/farm/mako` 作为打包器的项目中使用，支持 `vue/react/preact/solid/qwik/svelte/astro/nextjs/nuxt/umijs` 等框架，请参考如下的接入教程。
 
 ## 安装
 
 - 使用 npm 安装：
 
 ```shell
-npm install code-inspector-plugin -D
+npm install lovinsp -D
 ```
 
 - 使用 yarn 安装：
 
 ```shell
-yarn add code-inspector-plugin -D
+yarn add lovinsp -D
 ```
 
 - 使用 pnpm 安装：
 
 ```shell
-pnpm add code-inspector-plugin -D
+pnpm add lovinsp -D
 ```
 
 ## 配置
@@ -30,11 +30,11 @@ pnpm add code-inspector-plugin -D
 
 ```js
 // webpack.config.js
-const { codeInspectorPlugin } = require('code-inspector-plugin');
+const { lovinspPlugin } = require('lovinsp');
 
 module.exports = () => ({
   plugins: [
-    codeInspectorPlugin({
+    lovinspPlugin({
       bundler: 'webpack',
     }),
   ],
@@ -48,11 +48,11 @@ module.exports = () => ({
 ```js
 // vite.config.js
 import { defineConfig } from 'vite';
-import { codeInspectorPlugin } from 'code-inspector-plugin';
+import { lovinspPlugin } from 'lovinsp';
 
 export default defineConfig({
   plugins: [
-    codeInspectorPlugin({
+    lovinspPlugin({
       bundler: 'vite',
     }),
   ],
@@ -65,12 +65,12 @@ export default defineConfig({
 
 ```js
 // rspack.config.js
-const { codeInspectorPlugin } = require('code-inspector-plugin');
+const { lovinspPlugin } = require('lovinsp');
 
 module.exports = {
   // other config...
   plugins: [
-    codeInspectorPlugin({
+    lovinspPlugin({
       bundler: 'rspack',
     }),
     // other plugins...
@@ -85,14 +85,14 @@ module.exports = {
 ```js
 // rsbuild.config.js
 import { defineConfig } from '@rsbuild/core';
-const { codeInspectorPlugin } = require('code-inspector-plugin');
+const { lovinspPlugin } = require('lovinsp');
 
 export default defineConfig({
   // ...other config
   tools: {
     rspack: {
       plugins: [
-        codeInspectorPlugin({
+        lovinspPlugin({
           bundler: 'rspack',
         }),
       ],
@@ -108,13 +108,13 @@ export default defineConfig({
 ```js
 // esbuild.config.js
 const esbuild = require('esbuild');
-const { codeInspectorPlugin } = require('code-inspector-plugin');
+const { lovinspPlugin } = require('lovinsp');
 
 esbuild.build({
   // other configs...
 
   // [注意] esbuild 中使用时，dev 函数的返回值需自己根据环境判断，本地开发的环境返回 true，线上打包返回 false
-  plugins: [codeInspectorPlugin({ bundler: 'esbuild', dev: () => true })],
+  plugins: [lovinspPlugin({ bundler: 'esbuild', dev: () => true })],
 });
 ```
 
@@ -125,11 +125,11 @@ esbuild.build({
 ```js
 // farm.config.js
 import { defineConfig } from '@farmfe/core';
-import { codeInspectorPlugin } from 'code-inspector-plugin';
+import { lovinspPlugin } from 'lovinsp';
 
 export default defineConfig({
   vitePlugins: [
-    codeInspectorPlugin({
+    lovinspPlugin({
       bundler: 'vite',
     }),
     // ...other code
@@ -143,13 +143,13 @@ export default defineConfig({
 
 ```js
 // vue.config.js
-const { codeInspectorPlugin } = require('code-inspector-plugin');
+const { lovinspPlugin } = require('lovinsp');
 
 module.exports = {
   // ...other code
   chainWebpack: (config) => {
-    config.plugin('code-inspector-plugin').use(
-      codeInspectorPlugin({
+    config.plugin('lovinsp').use(
+      lovinspPlugin({
         bundler: 'webpack',
       })
     );
@@ -165,12 +165,12 @@ module.exports = {
 
   ```js
   // nuxt.config.js
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   // https://nuxt.com/docs/api/configuration/nuxt-config
   export default defineNuxtConfig({
     vite: {
-      plugins: [codeInspectorPlugin({ bundler: 'vite' })],
+      plugins: [lovinspPlugin({ bundler: 'vite' })],
     },
   });
   ```
@@ -179,12 +179,12 @@ module.exports = {
 
   ```js
   // nuxt.config.js
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   export default {
     build: {
       extend(config) {
-        config.plugins.push(codeInspectorPlugin({ bundler: 'webpack' }));
+        config.plugins.push(lovinspPlugin({ bundler: 'webpack' }));
         return config;
       },
     },
@@ -199,11 +199,11 @@ module.exports = {
 
   ```js
   // next.config.js
-  const { codeInspectorPlugin } = require('code-inspector-plugin');
+  const { lovinspPlugin } = require('lovinsp');
 
   const nextConfig = {
     webpack: (config, { dev, isServer }) => {
-      config.plugins.push(codeInspectorPlugin({ bundler: 'webpack' }));
+      config.plugins.push(lovinspPlugin({ bundler: 'webpack' }));
       return config;
     },
   };
@@ -216,12 +216,12 @@ module.exports = {
   ```js
   // next.config.js
   import type { NextConfig } from 'next';
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   const nextConfig: NextConfig = {
     experimental: {
       turbo: {
-        rules: codeInspectorPlugin({
+        rules: lovinspPlugin({
           bundler: 'turbopack',
         }),
       },
@@ -236,11 +236,11 @@ module.exports = {
   ```js
   // next.config.js
   import type { NextConfig } from 'next';
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   const nextConfig: NextConfig = {
     turbopack: {
-      rules: codeInspectorPlugin({
+      rules: lovinspPlugin({
         bundler: 'turbopack',
       }),
     },
@@ -258,12 +258,12 @@ module.exports = {
   ```js
   // umi.config.js or umirc.js
   import { defineConfig } from '@umijs/max';
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   export default defineConfig({
     chainWebpack(memo) {
-      memo.plugin('code-inspector-plugin').use(
-        codeInspectorPlugin({
+      memo.plugin('lovinsp').use(
+        lovinspPlugin({
           bundler: 'webpack',
         })
       );
@@ -277,13 +277,13 @@ module.exports = {
   ```ts
   // .umirc.ts
   import { defineConfig } from 'umi';
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   export default defineConfig({
     // other config...
     mako: {
       plugins: [
-        codeInspectorPlugin({
+        lovinspPlugin({
           bundler: 'mako',
         }),
       ],
@@ -298,11 +298,11 @@ module.exports = {
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import { codeInspectorPlugin } from 'code-inspector-plugin';
+import { lovinspPlugin } from 'lovinsp';
 
 export default defineConfig({
   vite: {
-    plugins: [codeInspectorPlugin({ bundler: 'vite' })],
+    plugins: [lovinspPlugin({ bundler: 'vite' })],
   },
 });
 ```
@@ -320,6 +320,6 @@ export default defineConfig({
 
 ### 方式二(移动端推荐)
 
-当插件参数中配置了 `showSwitch: true` 时，会在页面显示一个`代码审查开关按钮`，点击可切换`代码审查模式`开启/关闭，`代码审查模式`开启后使用方式同方式一中按住组合键。当开关的颜色为彩色时，表示`代码审查模式`开启 <img src="https://github.com/zh-lx/code-inspector/assets/73059627/842c3e88-dca7-4743-854c-d61093d3d34f" width="20" style="display: inline-block;" />；当开关颜色为黑白时，表示`代码审查模式`关闭 <img src="https://user-images.githubusercontent.com/73059627/230129864-e2813188-8d49-4a8e-a6bc-dda19c79b491.png" width="20" style="display: inline-block;" />。
+当插件参数中配置了 `showSwitch: true` 时，会在页面显示一个`代码审查开关按钮`，点击可切换`代码审查模式`开启/关闭，`代码审查模式`开启后使用方式同方式一中按住组合键。当开关的颜色为彩色时，表示`代码审查模式`开启 <img src="https://github.com/MarkShawn2020/lovinsp/assets/73059627/842c3e88-dca7-4743-854c-d61093d3d34f" width="20" style="display: inline-block;" />；当开关颜色为黑白时，表示`代码审查模式`关闭 <img src="https://user-images.githubusercontent.com/73059627/230129864-e2813188-8d49-4a8e-a6bc-dda19c79b491.png" width="20" style="display: inline-block;" />。
 
 ![code-inspector](https://cdn.jsdelivr.net/gh/zh-lx/static-img/code-inspector/demo.gif)

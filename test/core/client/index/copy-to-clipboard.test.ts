@@ -1,14 +1,14 @@
 // @vitest-environment jsdom
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { CodeInspectorComponent } from '@/core/src/client';
+import { LovinspComponent } from '@/core/src/client';
 
-describe('CodeInspectorComponent - copyToClipboard method', () => {
-  let component: CodeInspectorComponent;
+describe('LovinspComponent - copyToClipboard method', () => {
+  let component: LovinspComponent;
   const testText = 'test text to copy';
 
   beforeEach(() => {
-    component = new CodeInspectorComponent();
+    component = new LovinspComponent();
     // 清理 body
     document.body.innerHTML = '';
   });

@@ -1,7 +1,7 @@
 /**
  * https://webpack.js.org/configuration/entry-context/#entry
  */
-import { normalizePath } from '@code-inspector/core';
+import { normalizePath } from '@lovinsp/core';
 import path from 'path';
 
 type EntryItem = string | string[];

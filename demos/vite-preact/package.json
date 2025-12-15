@@ -15,6 +15,6 @@
     "@preact/preset-vite": "^2.6.0",
     "typescript": "^5.2.2",
     "vite": "^5.0.0",
-    "code-inspector-plugin": "workspace:*"
+    "lovinsp": "workspace:*"
   }
 }

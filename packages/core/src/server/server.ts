@@ -118,7 +118,7 @@ export async function startServer(options: CodeOptions, record: RecordInfo) {
           resolve(port);
           if (options.printServer) {
             const info = [
-              chalk.blue('[code-inspector-plugin]'),
+              chalk.blue('[lovinsp]'),
               'Server is running on:',
               chalk.green(
                 `http://${getIP(options.ip || 'localhost')}:${

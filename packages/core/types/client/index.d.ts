@@ -41,7 +41,7 @@ interface ActiveNode {
 }
 type InspectorAction = 'copy' | 'locate' | 'target' | 'all';
 type TrackAction = InspectorAction | 'default';
-export declare class CodeInspectorComponent extends LitElement {
+export declare class LovinspComponent extends LitElement {
     hotKeys: string;
     copyKeys: string;
     locateKeys: string;

@@ -1,12 +1,12 @@
 import { defineConfig } from 'vite';
 import preact from '@preact/preset-vite';
-import { CodeInspectorPlugin } from 'code-inspector-plugin';
+import { LovinspPlugin } from 'lovinsp';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    // code-inspector-plugin need to be used before @preact/preset-vite
-    CodeInspectorPlugin({
+    // lovinsp need to be used before @preact/preset-vite
+    LovinspPlugin({
       bundler: 'vite',
     }),
     preact(),

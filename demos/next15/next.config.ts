@@ -1,10 +1,10 @@
 import type { NextConfig } from 'next';
-import { codeInspectorPlugin } from 'code-inspector-plugin';
+import { lovinspPlugin } from 'lovinsp';
 
 const nextConfig: NextConfig = {
   experimental: {
     turbo: {
-      rules: codeInspectorPlugin({
+      rules: lovinspPlugin({
         bundler: 'turbopack',
       }),
     },

@@ -7,8 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **code-inspector** is a developer productivity tool that enables click-to-code workflow: developers click any DOM element in a running web app and automatically open their IDE at the exact source code location. Current version: 1.4.4.
 
 **Core Architecture:**
-- **Monorepo Structure:** pnpm workspace with multiple packages (`core`, `vite`, `webpack`, `esbuild`, `turbopack`, `mako`, `code-inspector-plugin`)
-- **Adapter Pattern:** Platform-agnostic core logic (`@code-inspector/core`) + bundler-specific adapters
+- **Monorepo Structure:** pnpm workspace with multiple packages (`core`, `vite`, `webpack`, `esbuild`, `turbopack`, `mako`, `lovinsp`)
+- **Adapter Pattern:** Platform-agnostic core logic (`@lovinsp/core`) + bundler-specific adapters
 - **Dual-Layer System:** Build-time AST transformation + runtime web component overlay
 
 ## Development Commands
@@ -73,13 +73,13 @@ packages/
 ├── esbuild/                 # Esbuild plugin adapter
 ├── turbopack/               # Turbopack rule adapter
 ├── mako/                    # Mako plugin adapter
-└── code-inspector-plugin/   # Main entry point (aggregates all adapters)
+└── lovinsp/   # Main entry point (aggregates all adapters)
 ```
 
 ### Data Flow
 
 **Build Time:**
-1. User configures `codeInspectorPlugin({ bundler: 'vite' })` in build config
+1. User configures `lovinspPlugin({ bundler: 'vite' })` in build config
 2. Plugin identifies bundler type and activates corresponding adapter
 3. For each source file (Vue/JSX/Svelte):
    - Parse AST using appropriate parser (`@vue/compiler-dom`, `@babel`, custom Svelte)

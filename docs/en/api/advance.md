@@ -27,7 +27,7 @@ Below are configurations for some non-standard scenarios.
   ```
 - Description: In some scenarios, if you don't need to locate code when clicking elements and only need to copy the source code location information, you can set `locate: false` and `copy: true`. In this case, clicking elements will only copy the source code location information.
 
-In addition to the above behaviors, `code-inspector-plugin` will trigger a `code-inspector:trackCode` custom event when clicking elements. You can use this event to customize the desired functionality(This feature is supported in version `1.2.0+`). For example, if you want to log when clicking elements, you can implement it as follows:
+In addition to the above behaviors, `lovinsp` will trigger a `code-inspector:trackCode` custom event when clicking elements. You can use this event to customize the desired functionality(This feature is supported in version `1.2.0+`). For example, if you want to log when clicking elements, you can implement it as follows:
 
 ```ts
 window.addEventListener('code-inspector:trackCode', () => {
@@ -53,7 +53,7 @@ window.addEventListener('code-inspector:trackCode', () => {
 
 - Optional
 - Type: `string | RegExp | (string | RegExp)[]`
-- Description: By default, `code-inspector-plugin` won't compile files in `node_modules`. In some monorepo projects, your local packages referenced by the main project might be linked through `node_modules`. In this case, you need to declare these packages via `include` to allow their code to participate in location.
+- Description: By default, `lovinsp` won't compile files in `node_modules`. In some monorepo projects, your local packages referenced by the main project might be linked through `node_modules`. In this case, you need to declare these packages via `include` to allow their code to participate in location.
 - Example: Suppose you have the following directory structure:
   ```shell
   my-project
@@ -66,7 +66,7 @@ window.addEventListener('code-inspector:trackCode', () => {
   ```
   If you want the source code in `pkg-a` and `pkg-b` to be locatable, you can configure as follows:
   ```ts
-  codeInspectorPlugin({
+  lovinspPlugin({
     bundler: 'vite',
     include: ['pkg-a', 'pkg-b'],
   });
@@ -91,7 +91,7 @@ window.addEventListener('code-inspector:trackCode', () => {
   ```ts
   import path from 'path';
 
-  codeInspectorPlugin({
+  lovinspPlugin({
     bundler: 'vite',
     include: ['pkg-a', 'pkg-b'],
     mappings: {
@@ -121,7 +121,7 @@ window.addEventListener('code-inspector:trackCode', () => {
     ) => void;
   };
   // Example
-  codeInspectorPlugin({
+  lovinspPlugin({
     bundler: 'vite',
     hooks: {
       afterInspectRequest: (options, source) => {
@@ -130,19 +130,19 @@ window.addEventListener('code-inspector:trackCode', () => {
     },
   });
   ```
-- Description: Set callback hooks for certain lifecycles of `code-inspector-plugin`. For example, if you want to track how many times your team uses the code location feature, you can implement it through this configuration.
+- Description: Set callback hooks for certain lifecycles of `lovinsp`. For example, if you want to track how many times your team uses the code location feature, you can implement it through this configuration.
 
 ## match <Badge type="tip" text="0.5.0+" vertical="middle" />
 
 - Optional
 - Type: `RegExp`, default value is `/\.(vue|jsx|tsx|js|ts|mjs|mts)$/`
-- Description: `code-inspector-plugin` will only compile files that match the `match` regular expression for source code location. You can use this configuration to reduce unnecessary files from compilation and improve compilation performance.
+- Description: `lovinsp` will only compile files that match the `match` regular expression for source code location. You can use this configuration to reduce unnecessary files from compilation and improve compilation performance.
 
 ## injectTo <Badge type="tip" text="0.5.0+" vertical="middle" />
 
 - Optional
 - Type: `string | string[]` (only supports `string[]` type in version `0.17.5` and above)
-- Description: Specifies the file for injecting client-side code related to DOM filtering and clicking to jump to vscode (must be an absolute path ending with `.js/.ts/.mjs/.mts/.jsx/.tsx`). By default, `code-inspector-plugin` will inject client code into the first file matching the `match` regular expression. In some custom SSR framework projects, the first injected file might only run on the server side, causing client-side logic to fail. In this case, you can specify a client file through this configuration to ensure client-side logic works.
+- Description: Specifies the file for injecting client-side code related to DOM filtering and clicking to jump to vscode (must be an absolute path ending with `.js/.ts/.mjs/.mts/.jsx/.tsx`). By default, `lovinsp` will inject client code into the first file matching the `match` regular expression. In some custom SSR framework projects, the first injected file might only run on the server side, causing client-side logic to fail. In this case, you can specify a client file through this configuration to ensure client-side logic works.
 
 ## openIn <Badge type="tip" text="0.8.0+" vertical="middle" />
 
@@ -168,7 +168,7 @@ window.addEventListener('code-inspector:trackCode', () => {
 
 - Optional
 - Type: `boolean`, default value is `false`
-- Description: Whether to hide the keyboard shortcut hints about `code-inspector-plugin` in browser console
+- Description: Whether to hide the keyboard shortcut hints about `lovinsp` in browser console
 
 ## escapeTags <Badge type="tip" text="0.11.0+" vertical="middle" />
 
@@ -192,7 +192,7 @@ window.addEventListener('code-inspector:trackCode', () => {
 
 - Optional
 - Type: `number`, default value is `5678`
-- Description: Specifies the starting port for the server of `code-inspector-plugin` to find.
+- Description: Specifies the starting port for the server of `lovinsp` to find.
 
 ## printServer <Badge type="tip" text="0.19.0+" vertical="middle" />
 

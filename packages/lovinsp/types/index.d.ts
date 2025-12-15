@@ -1,10 +1,10 @@
-import { CodeOptions } from '@code-inspector/core';
-export interface CodeInspectorPluginOptions extends CodeOptions {
+import { CodeOptions } from '@lovinsp/core';
+export interface LovinspPluginOptions extends CodeOptions {
     /**
      * @zh 设置为 true 时，仅当 .env.local 文件存在且其包含 CODE_INSPECTOR=true 时插件生效；默认值为 false
      * @en When set the value to true, only if the .env.local file exists and it contains CODE_INSPECTOR=true, the plugin takes effect; The default value is false
      */
     needEnvInspector?: boolean;
 }
-export declare function CodeInspectorPlugin(options: CodeInspectorPluginOptions): any;
-export declare const codeInspectorPlugin: typeof CodeInspectorPlugin;
+export declare function LovinspPlugin(options: LovinspPluginOptions): any;
+export declare const lovinspPlugin: typeof LovinspPlugin;

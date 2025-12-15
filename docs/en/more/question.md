@@ -6,7 +6,7 @@ The plugin automatically detects whether it's in production or development envir
 
 ## Using in Micro-Frontend
 
-If you encounter issues where DOM selection and navigation don't work in micro-frontend child projects, you need to apply `code-inspector-plugin` in both the main project and child projects for normal operation.
+If you encounter issues where DOM selection and navigation don't work in micro-frontend child projects, you need to apply `lovinsp` in both the main project and child projects for normal operation.
 
 ## SSR Scenarios
 
@@ -14,7 +14,7 @@ Most conventional framework SSR projects are supported by default. For custom-re
 
 ## Eslint Plugin Errors
 
-If this plugin causes Eslint Plugin errors, please add `enforcePre: false` to your `code-inspector-plugin` configuration.
+If this plugin causes Eslint Plugin errors, please add `enforcePre: false` to your `lovinsp` configuration.
 
 ## Using in WSL or Dev Containers
 
@@ -32,4 +32,4 @@ CODE_EDITOR=/home/xxx/.vscode-server/bin/dc96b837cf6bb4af9cd736aa3af08cf8279f768
 
 ## Other Issues
 
-If you encounter any unresolvable issues, please [join our user group](/more/feedback) or submit an [issue](https://github.com/zh-lx/code-inspector/issues) on GitHub. Most problems can be resolved through group consultation.
+If you encounter any unresolvable issues, please [join our user group](/more/feedback) or submit an [issue](https://github.com/MarkShawn2020/lovinsp/issues) on GitHub. Most problems can be resolved through group consultation.

@@ -27,7 +27,7 @@
   ```
 - 说明：在某些场景下，如果你在点击元素时不需要定位代码，仅需要复制元素的源码位置信息，则可以设置 `locate: false` 和 `copy: true`，此时点击元素仅会复制源码位置信息。
 
-除了上述的行为之外，`code-inspector-plugin` 在点击元素时会触发一个 `code-inspector:trackCode` 的自定义事件，你可以通过此事件来自定义想要的功能（该功能在 `1.2.0+` 的版本中支持）。例如，在点击元素时，你想统计日志，则可以通过如下方式实现：
+除了上述的行为之外，`lovinsp` 在点击元素时会触发一个 `code-inspector:trackCode` 的自定义事件，你可以通过此事件来自定义想要的功能（该功能在 `1.2.0+` 的版本中支持）。例如，在点击元素时，你想统计日志，则可以通过如下方式实现：
 
 ```ts
 window.addEventListener('code-inspector:trackCode', () => {
@@ -51,7 +51,7 @@ window.addEventListener('code-inspector:trackCode', () => {
 
 - 可选项
 - 类型：`string | RegExp | (string | RegExp)[]`
-- 说明：`code-inspector-plugin` 默认不会去编译 `node_modules` 中文件，在某些 monorepo 架构的项目中，你主项目引用的本地的 pkg 可能也是通过 `node_modules` 中链接引入的，此时你需要通过 `include` 声明这些包以让其中的代码能够参与定位。
+- 说明：`lovinsp` 默认不会去编译 `node_modules` 中文件，在某些 monorepo 架构的项目中，你主项目引用的本地的 pkg 可能也是通过 `node_modules` 中链接引入的，此时你需要通过 `include` 声明这些包以让其中的代码能够参与定位。
 - 示例：假设你有下述的目录结构：
   ```shell
   my-project
@@ -64,7 +64,7 @@ window.addEventListener('code-inspector:trackCode', () => {
   ```
   如果你想让 `pkg-a` 和 `pkg-b` 中的源码能进行定位，则可以通过如下配置：
   ```ts
-  codeInspectorPlugin({
+  lovinspPlugin({
     bundler: 'vite',
     include: ['pkg-a', 'pkg-b'],
   });
@@ -89,7 +89,7 @@ window.addEventListener('code-inspector:trackCode', () => {
   ```ts
   import path from 'path';
 
-  codeInspectorPlugin({
+  lovinspPlugin({
     bundler: 'vite',
     include: ['pkg-a', 'pkg-b'],
     mappings: {
@@ -120,7 +120,7 @@ window.addEventListener('code-inspector:trackCode', () => {
     ) => void;
   };
   // 例如
-  codeInspectorPlugin({
+  lovinspPlugin({
     bundler: 'vite',
     hooks: {
       afterInspectRequest: (options, source) => {
@@ -129,19 +129,19 @@ window.addEventListener('code-inspector:trackCode', () => {
     },
   });
   ```
-- 说明：设置 `code-inspector-plugin` 某些生命周期的 hooks 回调，例如你想统计团队使用了多少次代码定位功能，则可以通过此配置实现。
+- 说明：设置 `lovinsp` 某些生命周期的 hooks 回调，例如你想统计团队使用了多少次代码定位功能，则可以通过此配置实现。
 
 ## match <Badge type="tip" text="0.5.0+" vertical="middle" />
 
 - 可选项
 - 类型：`RegExp`，默认值为 `/\.(vue|jsx|tsx|js|ts|mjs|mts)$/`
-- 说明：`code-inspector-plugin` 仅会对符合 `match` 正则表达式的文件会进行源码定位编译，你可以通过此项配置减少无效文件参与编译，提升编译性能。
+- 说明：`lovinsp` 仅会对符合 `match` 正则表达式的文件会进行源码定位编译，你可以通过此项配置减少无效文件参与编译，提升编译性能。
 
 ## injectTo <Badge type="tip" text="0.5.0+" vertical="middle" />
 
 - 可选项
 - 类型：`string | string[]` (仅在 `0.17.5` 及以上版本支持 `string[]` 类型)
-- 说明：用于注入 DOM 筛选和点击跳转 vscode 的相关的客户端代码的文件(必须为绝对路径且以 `.js/.ts/.mjs/.mts/.jsx/.tsx` 为结尾的文件)。`code-inspector-plugin` 默认会在首个符合 `match` 正则表达式的文件中注入客户端代码，在某些自研的 SSR 框架项目中，首个注入的文件可能只在 server 侧运行而导致客户端逻辑不生效，此时你可以通过此项配置指定一个客户端文件以保证客户端逻辑生效。
+- 说明：用于注入 DOM 筛选和点击跳转 vscode 的相关的客户端代码的文件(必须为绝对路径且以 `.js/.ts/.mjs/.mts/.jsx/.tsx` 为结尾的文件)。`lovinsp` 默认会在首个符合 `match` 正则表达式的文件中注入客户端代码，在某些自研的 SSR 框架项目中，首个注入的文件可能只在 server 侧运行而导致客户端逻辑不生效，此时你可以通过此项配置指定一个客户端文件以保证客户端逻辑生效。
 
 ## openIn <Badge type="tip" text="0.8.0+" vertical="middle" />
 
@@ -169,7 +169,7 @@ window.addEventListener('code-inspector:trackCode', () => {
 
 - 可选项
 - 类型：`boolean`，默认值为 `false`
-- 说明：是否隐藏在浏览器控制台打印的关于 `code-inspector-plugin` 组合键的提示
+- 说明：是否隐藏在浏览器控制台打印的关于 `lovinsp` 组合键的提示
 
 ## escapeTags <Badge type="tip" text="0.11.0+" vertical="middle" />
 
@@ -194,7 +194,7 @@ window.addEventListener('code-inspector:trackCode', () => {
 
 - 可选项
 - 类型：`number`，默认值为 `5678`
-- 说明：指定 `code-inspector-plugin` 的 server 开始寻找的启动端口。
+- 说明：指定 `lovinsp` 的 server 开始寻找的启动端口。
 
 ## printServer <Badge type="tip" text="0.19.0+" vertical="middle" />
 

@@ -34,11 +34,11 @@ Shift + Alt + Ctrl   → 在 IDE 中打开
 
 ```typescript
 // vite.config.ts
-import { codeInspectorPlugin } from 'code-inspector-plugin';
+import { lovinspPlugin } from 'lovinsp';
 
 export default {
   plugins: [
-    codeInspectorPlugin({
+    lovinspPlugin({
       bundler: 'vite',
       behavior: {
         copy: true,
@@ -78,7 +78,7 @@ behavior: {
 
 **旧版本：**
 ```typescript
-codeInspectorPlugin({
+lovinspPlugin({
   bundler: 'vite',
   behavior: {
     defaultAction: 'copy'
@@ -88,7 +88,7 @@ codeInspectorPlugin({
 
 **新版本：**
 ```typescript
-codeInspectorPlugin({
+lovinspPlugin({
   bundler: 'vite',
   // 不需要配置，默认行为已优化：
   // - Shift+Alt: copy
@@ -100,7 +100,7 @@ codeInspectorPlugin({
 
 **旧版本：**
 ```typescript
-codeInspectorPlugin({
+lovinspPlugin({
   bundler: 'vite',
   behavior: {
     locate: false,
@@ -112,7 +112,7 @@ codeInspectorPlugin({
 
 **新版本：**
 ```typescript
-codeInspectorPlugin({
+lovinspPlugin({
   bundler: 'vite',
   behavior: {
     locate: false,  // 禁用 IDE 打开
@@ -128,7 +128,7 @@ codeInspectorPlugin({
 
 **新版本独有功能：**
 ```typescript
-codeInspectorPlugin({
+lovinspPlugin({
   bundler: 'vite',
   behavior: {
     copy: true,
@@ -169,12 +169,12 @@ type Behavior = {
 
 **旧版：**
 ```
-[code-inspector-plugin] Press and hold Shift+Alt to enable. (Mode: Copy · Shift+Alt+C to switch)
+[lovinsp] Press and hold Shift+Alt to enable. (Mode: Copy · Shift+Alt+C to switch)
 ```
 
 **新版：**
 ```
-[code-inspector-plugin] Press and hold: Shift+Alt to copy path · Shift+Alt+Cmd to open in IDE
+[lovinsp] Press and hold: Shift+Alt to copy path · Shift+Alt+Cmd to open in IDE
 ```
 
 ### 元素信息弹窗
@@ -241,4 +241,4 @@ A: 技术上可以，但不推荐。建议至少使用 2 个修饰键的组合�
 
 ## 反馈
 
-如有问题请在 GitHub 提 Issue: https://github.com/zh-lx/code-inspector/issues
+如有问题请在 GitHub 提 Issue: https://github.com/MarkShawn2020/lovinsp/issues

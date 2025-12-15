@@ -1,4 +1,4 @@
-import { CodeOptions, RecordInfo, isDev } from '@code-inspector/core';
+import { CodeOptions, RecordInfo, isDev } from '@lovinsp/core';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -7,7 +7,7 @@ interface Options extends CodeOptions {
   output: string;
 }
 
-export function TurbopackCodeInspectorPlugin(
+export function TurbopackLovinspPlugin(
   options: Options
 ): Record<string, any> {
   if (
@@ -25,11 +25,11 @@ export function TurbopackCodeInspectorPlugin(
 
   let WebpackEntry = null;
   if (typeof require !== 'undefined' && typeof require.resolve === 'function') {
-    WebpackEntry = require.resolve('@code-inspector/webpack');
+    WebpackEntry = require.resolve('@lovinsp/webpack');
   }
   if (typeof import.meta.resolve === 'function') {
     const dir = import.meta.resolve(
-      '@code-inspector/webpack'
+      '@lovinsp/webpack'
     ) as unknown as string;
     WebpackEntry = fileURLToPath(dir);
   }

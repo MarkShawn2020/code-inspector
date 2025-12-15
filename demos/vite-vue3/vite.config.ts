@@ -1,13 +1,13 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import { CodeInspectorPlugin } from 'code-inspector-plugin';
+import { LovinspPlugin } from 'lovinsp';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
-    CodeInspectorPlugin({
+    LovinspPlugin({
       bundler: 'vite',
       behavior: {
         copy: '{file}',

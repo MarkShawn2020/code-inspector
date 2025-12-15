@@ -1,11 +1,11 @@
 import { defineConfig } from 'vite';
 import solid from 'vite-plugin-solid';
-import { CodeInspectorPlugin } from 'code-inspector-plugin';
+import { LovinspPlugin } from 'lovinsp';
 
 export default defineConfig({
   plugins: [
-    // code-inspector-plugin need to be used before vite-plugin-solid
-    CodeInspectorPlugin({
+    // lovinsp need to be used before vite-plugin-solid
+    LovinspPlugin({
       bundler: 'vite',
     }),
     solid(),

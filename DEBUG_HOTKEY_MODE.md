@@ -59,7 +59,7 @@ inspector.locateKeys = '' + ((/mac|iphone|ipad|ipod/i.test...
 打开浏览器控制台，运行：
 
 ```javascript
-const inspector = document.querySelector('code-inspector-component');
+const inspector = document.querySelector('lovinsp-component');
 console.log('copyKeys:', inspector.copyKeys);
 console.log('locateKeys:', inspector.locateKeys);
 console.log('targetKeys:', inspector.targetKeys);

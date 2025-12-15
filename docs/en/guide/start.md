@@ -1,25 +1,25 @@
 # Quick Start
 
-`code-inspector-plugin` supports projects using `webpack/vite/rspack/rsbuild/esbuild/farm/mako` as bundlers, and works with frameworks like `vue/react/preact/solid/qwik/svelte/astro/nextjs/nuxt/umijs`. Please refer to the following integration guide.
+`lovinsp` supports projects using `webpack/vite/rspack/rsbuild/esbuild/farm/mako` as bundlers, and works with frameworks like `vue/react/preact/solid/qwik/svelte/astro/nextjs/nuxt/umijs`. Please refer to the following integration guide.
 
 ## Installation
 
 - Install using npm:
 
 ```shell
-npm install code-inspector-plugin -D
+npm install lovinsp -D
 ```
 
 - Install using yarn:
 
 ```shell
-yarn add code-inspector-plugin -D
+yarn add lovinsp -D
 ```
 
 - Install using pnpm:
 
 ```shell
-pnpm add code-inspector-plugin -D
+pnpm add lovinsp -D
 ```
 
 ## Configuration
@@ -30,11 +30,11 @@ Complete the corresponding configuration based on your bundler.
 
 ```js
 // webpack.config.js
-const { codeInspectorPlugin } = require('code-inspector-plugin');
+const { lovinspPlugin } = require('lovinsp');
 
 module.exports = () => ({
   plugins: [
-    codeInspectorPlugin({
+    lovinspPlugin({
       bundler: 'webpack',
     }),
   ],
@@ -48,11 +48,11 @@ module.exports = () => ({
 ```js
 // vite.config.js
 import { defineConfig } from 'vite';
-import { codeInspectorPlugin } from 'code-inspector-plugin';
+import { lovinspPlugin } from 'lovinsp';
 
 export default defineConfig({
   plugins: [
-    codeInspectorPlugin({
+    lovinspPlugin({
       bundler: 'vite',
     }),
   ],
@@ -65,12 +65,12 @@ export default defineConfig({
 
 ```js
 // rspack.config.js
-const { codeInspectorPlugin } = require('code-inspector-plugin');
+const { lovinspPlugin } = require('lovinsp');
 
 module.exports = {
   // other config...
   plugins: [
-    codeInspectorPlugin({
+    lovinspPlugin({
       bundler: 'rspack',
     }),
     // other plugins...
@@ -85,14 +85,14 @@ module.exports = {
 ```js
 // rsbuild.config.js
 import { defineConfig } from '@rsbuild/core';
-const { codeInspectorPlugin } = require('code-inspector-plugin');
+const { lovinspPlugin } = require('lovinsp');
 
 export default defineConfig({
   // ...other config
   tools: {
     rspack: {
       plugins: [
-        codeInspectorPlugin({
+        lovinspPlugin({
           bundler: 'rspack',
         }),
       ],
@@ -108,14 +108,14 @@ export default defineConfig({
 ```js
 // esbuild.config.js
 const esbuild = require('esbuild');
-const { codeInspectorPlugin } = require('code-inspector-plugin');
+const { lovinspPlugin } = require('lovinsp');
 
 esbuild.build({
   // other configs...
 
   // [Note] When using in esbuild, the dev function's return value needs to be determined based on the environment
   // Return true for local development, false for production build
-  plugins: [codeInspectorPlugin({ bundler: 'esbuild', dev: () => true })],
+  plugins: [lovinspPlugin({ bundler: 'esbuild', dev: () => true })],
 });
 ```
 
@@ -126,11 +126,11 @@ esbuild.build({
 ```js
 // farm.config.js
 import { defineConfig } from '@farmfe/core';
-import { codeInspectorPlugin } from 'code-inspector-plugin';
+import { lovinspPlugin } from 'lovinsp';
 
 export default defineConfig({
   vitePlugins: [
-    codeInspectorPlugin({
+    lovinspPlugin({
       bundler: 'vite',
     }),
     // ...other code
@@ -144,13 +144,13 @@ export default defineConfig({
 
 ```js
 // vue.config.js
-const { codeInspectorPlugin } = require('code-inspector-plugin');
+const { lovinspPlugin } = require('lovinsp');
 
 module.exports = {
   // ...other code
   chainWebpack: (config) => {
-    config.plugin('code-inspector-plugin').use(
-      codeInspectorPlugin({
+    config.plugin('lovinsp').use(
+      lovinspPlugin({
         bundler: 'webpack',
       })
     );
@@ -166,12 +166,12 @@ module.exports = {
 
   ```js
   // nuxt.config.js
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   // https://nuxt.com/docs/api/configuration/nuxt-config
   export default defineNuxtConfig({
     vite: {
-      plugins: [codeInspectorPlugin({ bundler: 'vite' })],
+      plugins: [lovinspPlugin({ bundler: 'vite' })],
     },
   });
   ```
@@ -180,12 +180,12 @@ module.exports = {
 
   ```js
   // nuxt.config.js
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   export default {
     build: {
       extend(config) {
-        config.plugins.push(codeInspectorPlugin({ bundler: 'webpack' }));
+        config.plugins.push(lovinspPlugin({ bundler: 'webpack' }));
         return config;
       },
     },
@@ -200,11 +200,11 @@ module.exports = {
 
   ```js
   // next.config.js
-  const { codeInspectorPlugin } = require('code-inspector-plugin');
+  const { lovinspPlugin } = require('lovinsp');
 
   const nextConfig = {
     webpack: (config, { dev, isServer }) => {
-      config.plugins.push(codeInspectorPlugin({ bundler: 'webpack' }));
+      config.plugins.push(lovinspPlugin({ bundler: 'webpack' }));
       return config;
     },
   };
@@ -217,12 +217,12 @@ module.exports = {
   ```js
   // next.config.js
   import type { NextConfig } from 'next';
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   const nextConfig: NextConfig = {
     experimental: {
       turbo: {
-        rules: codeInspectorPlugin({
+        rules: lovinspPlugin({
           bundler: 'turbopack',
         }),
       },
@@ -237,11 +237,11 @@ module.exports = {
   ```js
   // next.config.js
   import type { NextConfig } from 'next';
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   const nextConfig: NextConfig = {
     turbopack: {
-      rules: codeInspectorPlugin({
+      rules: lovinspPlugin({
         bundler: 'turbopack',
       }),
     },
@@ -259,12 +259,12 @@ module.exports = {
   ```js
   // umi.config.js or umirc.js
   import { defineConfig } from '@umijs/max';
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   export default defineConfig({
     chainWebpack(memo) {
-      memo.plugin('code-inspector-plugin').use(
-        codeInspectorPlugin({
+      memo.plugin('lovinsp').use(
+        lovinspPlugin({
           bundler: 'webpack',
         })
       );
@@ -278,13 +278,13 @@ module.exports = {
   ```ts
   // .umirc.ts
   import { defineConfig } from 'umi';
-  import { codeInspectorPlugin } from 'code-inspector-plugin';
+  import { lovinspPlugin } from 'lovinsp';
 
   export default defineConfig({
     // other config...
     mako: {
       plugins: [
-        codeInspectorPlugin({
+        lovinspPlugin({
           bundler: 'mako',
         }),
       ],
@@ -305,6 +305,6 @@ Hold down the keyboard shortcut while moving the mouse over the page, and an ove
 
 ### Method 2 (Recommended for Mobile)
 
-When `showSwitch: true` is configured in the plugin parameters, a `Code Inspector Switch` button will be displayed on the page. Click to toggle the `Code Inspection Mode` on/off. When the mode is enabled, it works the same way as holding down the shortcut keys in Method 1. When the switch is colored, it indicates that `Code Inspection Mode` is enabled <img src="https://github.com/zh-lx/code-inspector/assets/73059627/842c3e88-dca7-4743-854c-d61093d3d34f" width="20" style="display: inline-block;" />; when the switch is black and white, it indicates that `Code Inspection Mode` is disabled <img src="https://user-images.githubusercontent.com/73059627/230129864-e2813188-8d49-4a8e-a6bc-dda19c79b491.png" width="20" style="display: inline-block;" />.
+When `showSwitch: true` is configured in the plugin parameters, a `Code Inspector Switch` button will be displayed on the page. Click to toggle the `Code Inspection Mode` on/off. When the mode is enabled, it works the same way as holding down the shortcut keys in Method 1. When the switch is colored, it indicates that `Code Inspection Mode` is enabled <img src="https://github.com/MarkShawn2020/lovinsp/assets/73059627/842c3e88-dca7-4743-854c-d61093d3d34f" width="20" style="display: inline-block;" />; when the switch is black and white, it indicates that `Code Inspection Mode` is disabled <img src="https://user-images.githubusercontent.com/73059627/230129864-e2813188-8d49-4a8e-a6bc-dda19c79b491.png" width="20" style="display: inline-block;" />.
 
 ![code-inspector](https://cdn.jsdelivr.net/gh/zh-lx/static-img/code-inspector/demo.gif)

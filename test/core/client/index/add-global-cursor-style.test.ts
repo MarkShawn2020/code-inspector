@@ -1,13 +1,13 @@
-import { CodeInspectorComponent } from '@/core/src/client';
+import { LovinspComponent } from '@/core/src/client';
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 describe('addGlobalCursorStyle', () => {
-  let component: CodeInspectorComponent;
+  let component: LovinspComponent;
   const styleId = '__code-inspector-unique-id';
   
   beforeEach(() => {
     // 创建组件实例
-    component = new CodeInspectorComponent();
+    component = new LovinspComponent();
     document.body.appendChild(component);
 
     // 确保每个测试前移除可能存在的样式元素

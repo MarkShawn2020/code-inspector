@@ -13,7 +13,7 @@
   "devDependencies": {
     "@rspack/cli": "^1.2.8",
     "@rspack/core": "^1.2.8",
-    "code-inspector-plugin": "workspace:*",
+    "lovinsp": "workspace:*",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3",
     "vue-loader": "^17.4.2"

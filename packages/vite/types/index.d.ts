@@ -1,9 +1,9 @@
-import { CodeOptions } from '@code-inspector/core';
+import { CodeOptions } from '@lovinsp/core';
 interface Options extends CodeOptions {
     close?: boolean;
     output: string;
 }
-export declare function ViteCodeInspectorPlugin(options: Options): {
+export declare function ViteLovinspPlugin(options: Options): {
     apply(_: any, { command }: {
         command: any;
     }): boolean;

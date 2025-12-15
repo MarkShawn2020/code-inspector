@@ -8,7 +8,7 @@ import {
   isJsTypeFile,
   normalizePath,
   transformCode,
-} from '@code-inspector/core';
+} from '@lovinsp/core';
 import path from 'path';
 
 interface Options extends CodeOptions {
@@ -16,7 +16,7 @@ interface Options extends CodeOptions {
   output: string;
 }
 
-export function MakoCodeInspectorPlugin(options: Options): Record<string, any> {
+export function MakoLovinspPlugin(options: Options): Record<string, any> {
   const record: RecordInfo = {
     port: 0,
     entry: '',
@@ -28,12 +28,12 @@ export function MakoCodeInspectorPlugin(options: Options): Record<string, any> {
     !isDev(options.dev, process.env.NODE_ENV === 'development')
   ) {
     return {
-      name: '@code-inspector/mako',
+      name: '@lovinsp/mako',
     };
   }
 
   return {
-    name: '@code-inspector/mako',
+    name: '@lovinsp/mako',
     enforce: options.enforcePre === false ? 'post' : 'pre',
     transform: async (
       content: string,

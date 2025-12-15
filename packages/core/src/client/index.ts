@@ -85,7 +85,7 @@ function nextTick() {
   });
 }
 
-export class CodeInspectorComponent extends LitElement {
+export class LovinspComponent extends LitElement {
   @property()
   hotKeys: string = 'shiftKey,altKey';
   @property({ attribute: 'copy-keys' })
@@ -690,7 +690,7 @@ export class CodeInspectorComponent extends LitElement {
       window.open(this.buildTargetUrl(), '_blank');
     }
     window.dispatchEvent(
-      new CustomEvent('code-inspector:trackCode', {
+      new CustomEvent('lovinsp:trackCode', {
         detail: this.element,
       })
     );
@@ -1067,7 +1067,7 @@ export class CodeInspectorComponent extends LitElement {
       }
 
       console.log(
-        `%c[code-inspector-plugin]%c Press and hold: %c${hints.join('%c · %c')}`,
+        `%c[lovinsp]%c Press and hold: %c${hints.join('%c · %c')}`,
         'color: #006aff; font-weight: bolder; font-size: 12px;',
         'color: #006aff; font-size: 12px;',
         ...hints.flatMap(() => [
@@ -1093,7 +1093,7 @@ export class CodeInspectorComponent extends LitElement {
       const replacement = '%c';
       const currentMode = this.getActionLabel(this.getDefaultAction());
       console.log(
-        `${replacement}[code-inspector-plugin]${replacement}Press and hold ${keys.join(
+        `${replacement}[lovinsp]${replacement}Press and hold ${keys.join(
           ` ${replacement}+ `
         )}${replacement} to enable the feature. (Current mode: ${currentMode})`,
         'color: #006aff; font-weight: bolder; font-size: 12px;',
@@ -1871,6 +1871,6 @@ if (!document.getElementById('code-inspector-notification-styles')) {
   document.head.appendChild(notificationStyles);
 }
 
-if (!customElements.get('code-inspector-component')) {
-  customElements.define('code-inspector-component', CodeInspectorComponent);
+if (!customElements.get('lovinsp-component')) {
+  customElements.define('lovinsp-component', LovinspComponent);
 }

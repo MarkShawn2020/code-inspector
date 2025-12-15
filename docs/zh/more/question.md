@@ -6,7 +6,7 @@
 
 ## 在微前端中使用
 
-如果遇到微前端子项目无法对 DOM 筛选跳转，需要在主项目和子项目中都应用 `code-inspector-plugin` 即可正常使用。
+如果遇到微前端子项目无法对 DOM 筛选跳转，需要在主项目和子项目中都应用 `lovinsp` 即可正常使用。
 
 ## SSR 场景
 
@@ -14,7 +14,7 @@
 
 ## Eslint Plugin 报错
 
-如果本插件引起了 Eslint Plugin 报错问题，请在 `code-inspector-plugin` 配置中添加 `enforcePre: false`。
+如果本插件引起了 Eslint Plugin 报错问题，请在 `lovinsp` 配置中添加 `enforcePre: false`。
 
 ## 在 WSL 和 Dev Containers 中使用
 
@@ -32,4 +32,4 @@ CODE_EDITOR=/home/xxx/.vscode-server/bin/dc96b837cf6bb4af9cd736aa3af08cf8279f768
 
 ## 其他问题
 
-如果遇到无法解决的问题，请 [加入用户群](/more/feedback) 或到 github 提 [issue](https://github.com/zh-lx/code-inspector/issues)，加群咨询能够解决绝大部分问题。
+如果遇到无法解决的问题，请 [加入用户群](/more/feedback) 或到 github 提 [issue](https://github.com/MarkShawn2020/lovinsp/issues)，加群咨询能够解决绝大部分问题。

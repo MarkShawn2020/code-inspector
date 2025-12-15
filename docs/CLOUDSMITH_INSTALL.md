@@ -11,7 +11,7 @@
 然后安装主包（使用 tarball URL）：
 
 ```bash
-pnpm add https://npm.cloudsmith.io/mark/code-inspector/code-inspector-plugin/-/code-inspector-plugin-1.2.11.tgz -D
+pnpm add https://npm.cloudsmith.io/mark/code-inspector/lovinsp/-/lovinsp-1.2.11.tgz -D
 ```
 
 **说明：** pnpm 不支持为无 scope 的单个包配置 registry，所以主包需要用 tarball URL 安装。依赖的 `@code-inspector/*` 包会自动从 Cloudsmith 拉取。
@@ -20,7 +20,7 @@ pnpm add https://npm.cloudsmith.io/mark/code-inspector/code-inspector-plugin/-/c
 
 ```bash
 # 安装主包
-pnpm add https://npm.cloudsmith.io/mark/code-inspector/code-inspector-plugin/-/code-inspector-plugin-1.2.11.tgz -D
+pnpm add https://npm.cloudsmith.io/mark/code-inspector/lovinsp/-/lovinsp-1.2.11.tgz -D
 
 # 手动安装依赖包
 pnpm add https://npm.cloudsmith.io/mark/code-inspector/code-inspector-core/-/code-inspector-core-1.2.11.tgz -D
@@ -37,13 +37,13 @@ pnpm add https://npm.cloudsmith.io/mark/code-inspector/code-inspector-mako/-/cod
 
 ```ini
 @code-inspector:registry=https://npm.cloudsmith.io/mark/code-inspector/
-code-inspector-plugin:registry=https://npm.cloudsmith.io/mark/code-inspector/
+lovinsp:registry=https://npm.cloudsmith.io/mark/code-inspector/
 ```
 
 ## 验证安装
 
 ```bash
-pnpm list code-inspector-plugin
+pnpm list lovinsp
 # 应该显示 1.2.11 版本
 ```
 
@@ -52,7 +52,7 @@ pnpm list code-inspector-plugin
 如果使用方法一或方法三，直接：
 
 ```bash
-pnpm update code-inspector-plugin
+pnpm update lovinsp
 ```
 
 如果使用方法二，需要重新安装所有 tarball。
@@ -71,13 +71,13 @@ export CLOUDSMITH_API_KEY=your-api-key
 
 ## 包列表（v1.2.11）
 
-- `code-inspector-plugin@1.2.11` - 主入口包
-- `@code-inspector/core@1.2.11` - 核心功能
-- `@code-inspector/vite@1.2.11` - Vite 适配器
-- `@code-inspector/webpack@1.2.11` - Webpack 适配器
-- `@code-inspector/esbuild@1.2.11` - Esbuild 适配器
-- `@code-inspector/turbopack@1.2.11` - Turbopack 适配器
-- `@code-inspector/mako@1.2.11` - Mako 适配器
+- `lovinsp@1.2.11` - 主入口包
+- `@lovinsp/core@1.2.11` - 核心功能
+- `@lovinsp/vite@1.2.11` - Vite 适配器
+- `@lovinsp/webpack@1.2.11` - Webpack 适配器
+- `@lovinsp/esbuild@1.2.11` - Esbuild 适配器
+- `@lovinsp/turbopack@1.2.11` - Turbopack 适配器
+- `@lovinsp/mako@1.2.11` - Mako 适配器
 
 ## v1.2.11 更新内容
 

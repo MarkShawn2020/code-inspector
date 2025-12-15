@@ -1,5 +1,5 @@
 {
-  "name": "@code-inspector/webpack",
+  "name": "@lovinsp/webpack",
   "version": "1.4.3",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.mjs",
@@ -31,7 +31,7 @@
     "./dist/loader.js": "./dist/loader.js",
     "./dist/inject-loader.js": "./dist/inject-loader.js"
   },
-  "repository": "git@github.com:zh-lx/code-inspector.git",
+  "repository": "git@github.com:MarkShawn2020/lovinsp.git",
   "author": "zh-lx <18366276315@163.com>",
   "license": "MIT",
   "homepage": "https://inspector.fe-dev.cn/en",
@@ -46,10 +46,10 @@
     "inspect"
   ],
   "bugs": {
-    "url": "https://github.com/zh-lx/code-inspector/issues"
+    "url": "https://github.com/MarkShawn2020/lovinsp/issues"
   },
   "dependencies": {
-    "@code-inspector/core": "workspace:*"
+    "@lovinsp/core": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.3.3",
