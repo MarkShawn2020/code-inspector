@@ -151,6 +151,7 @@ export declare class LovinspComponent extends LitElement {
     handleDrag: (e: MouseEvent | TouchEvent) => void;
     isSamePositionNode: (node1: HTMLElement, node2: HTMLElement) => boolean;
     handleMouseMove: (e: MouseEvent | TouchEvent) => Promise<void>;
+    handleMouseDown: (e: MouseEvent | TouchEvent) => void;
     handleMouseClick: (e: MouseEvent | TouchEvent) => void;
     handleContextMenu: (e: MouseEvent) => void;
     generateNodeTree: (nodePath: HTMLElement[]) => TreeNode;

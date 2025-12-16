@@ -941,15 +941,25 @@ export class LovinspComponent extends LitElement {
     }
   };
 
-  // 鼠标点击唤醒遮罩层
+  // 鼠标按下时阻止事件穿透到目标元素（如 select、checkbox 等）
+  // 注意：只要按住快捷键就阻止，不管 overlay 是否显示
+  // 因为 Portal 渲染的元素（如 Select 下拉选项）没有 data-insp-path，会导致 overlay 消失
+  handleMouseDown = (e: MouseEvent | TouchEvent) => {
+    if (this.isTracking(e)) {
+      // 必须在 mousedown 阶段就阻止，否则原生控件（select/checkbox）会响应
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }
+  };
+
+  // 鼠标点击执行 inspector 操作
   handleMouseClick = (e: MouseEvent | TouchEvent) => {
     if (this.isTracking(e)) {
-      if (this.show) {
-        // 阻止冒泡
-        e.stopPropagation();
-        // 阻止默认事件
-        e.preventDefault();
+      // 只要按住快捷键就阻止事件，防止穿透到 Portal 元素（如 Select 下拉选项）
+      e.preventDefault();
+      e.stopImmediatePropagation();
 
+      if (this.show) {
         // 使用全局共享的当前模式
         const actionToExecute = this.currentMode || this.getDefaultAction();
 
@@ -1007,7 +1017,7 @@ export class LovinspComponent extends LitElement {
     return root!;
   };
 
-  // disabled 的元素及其子元素无法触发 click 事件
+  // disabled 的元素及其子元素无法触发 click 事件，需要用 pointerdown 处理
   handlePointerDown = (e: PointerEvent) => {
     let disabled = false;
     let element = e.target as HTMLInputElement;
@@ -1023,10 +1033,9 @@ export class LovinspComponent extends LitElement {
     }
     if (this.isTracking(e)) {
       if (this.show) {
-        // 阻止冒泡
-        e.stopPropagation();
-        // 阻止默认事件
+        // 完全阻止事件传播和默认行为
         e.preventDefault();
+        e.stopImmediatePropagation();
         // 唤醒 vscode
         this.trackCode();
         // 清除遮罩层
@@ -1189,6 +1198,9 @@ export class LovinspComponent extends LitElement {
     window.addEventListener('touchmove', this.handleMouseMove, true);
     window.addEventListener('mousemove', this.handleDrag, true);
     window.addEventListener('touchmove', this.handleDrag, true);
+    // mousedown 必须在 click 之前阻止，防止事件穿透到原生控件
+    window.addEventListener('mousedown', this.handleMouseDown, true);
+    window.addEventListener('touchstart', this.handleMouseDown, true);
     window.addEventListener('click', this.handleMouseClick, true);
     window.addEventListener('pointerdown', this.handlePointerDown, true);
     window.addEventListener('keyup', this.handleKeyUp, true);
@@ -1206,6 +1218,8 @@ export class LovinspComponent extends LitElement {
     window.removeEventListener('touchmove', this.handleMouseMove, true);
     window.removeEventListener('mousemove', this.handleDrag, true);
     window.removeEventListener('touchmove', this.handleDrag, true);
+    window.removeEventListener('mousedown', this.handleMouseDown, true);
+    window.removeEventListener('touchstart', this.handleMouseDown, true);
     window.removeEventListener('click', this.handleMouseClick, true);
     window.removeEventListener('pointerdown', this.handlePointerDown, true);
     window.removeEventListener('keyup', this.handleKeyUp, true);
