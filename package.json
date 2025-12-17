@@ -30,6 +30,7 @@
     "version:patch": "node ./scripts/version patch",
     "version:prod": "node ./scripts/version prod",
     "version:beta": "node ./scripts/version beta",
+    "release": "pnpm build && pnpm pub",
     "postinstall": "pnpm build"
   },
   "private": true,
