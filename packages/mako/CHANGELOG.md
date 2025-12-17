@@ -1,5 +1,12 @@
 # @lovinsp/mako
 
+## 1.4.14
+
+### Patch Changes
+
+- Updated dependencies
+  - @lovinsp/core@1.4.14
+
 ## 1.4.13
 
 ### Patch Changes

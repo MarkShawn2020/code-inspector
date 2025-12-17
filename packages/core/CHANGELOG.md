@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.14
+
+### Patch Changes
+
+- 修复按住快捷键右键时事件透传导致文本被选中的问题
+
 ## 1.4.13
 
 ### Patch Changes
