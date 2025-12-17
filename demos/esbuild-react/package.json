@@ -17,5 +17,6 @@
     "lovinsp": "workspace:*",
     "esbuild": "^0.21.5",
     "typescript": "^5.5.3"
-  }
+  },
+  "private": true
 }

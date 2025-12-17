@@ -17,5 +17,6 @@
     "@vitejs/plugin-vue": "^5.0.4",
     "lovinsp": "workspace:*",
     "core-js": "^3.30.1"
-  }
+  },
+  "private": true
 }
