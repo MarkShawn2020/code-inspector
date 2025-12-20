@@ -46,6 +46,7 @@ interface SourceInfo {
 interface ElementInfo extends SourceInfo {
   width: number;
   height: number;
+  textContent?: string;
 }
 
 interface ElementTipStyle {
@@ -465,6 +466,7 @@ export class LovinspComponent extends LitElement {
     document.body.style.userSelect = 'none';
     const sourceInfo = this.getSourceInfo(target);
     const { width, height } = this.getElementSize(target, rect);
+    const textContent = this.getElementTextContent(target);
     this.element = {
       name: sourceInfo?.name || target.tagName.toLowerCase(),
       path: sourceInfo?.path || '',
@@ -472,6 +474,7 @@ export class LovinspComponent extends LitElement {
       column: sourceInfo?.column ?? NaN,
       width,
       height,
+      textContent,
     };
     this.show = true;
     if (!this.showNodeTree) {
@@ -493,6 +496,13 @@ export class LovinspComponent extends LitElement {
       )}:${target.tagName.toLowerCase()}`;
     }
     return '';
+  };
+
+  // 获取元素的文本内容（包括所有子元素）
+  getElementTextContent = (target: HTMLElement): string | undefined => {
+    const text = target.textContent?.trim();
+    if (!text) return undefined;
+    return text.length > 100 ? text.slice(0, 100) : text;
   };
 
   getSourceInfo = (target: HTMLElement): SourceInfo | null => {
@@ -1111,7 +1121,7 @@ export class LovinspComponent extends LitElement {
       }
 
       console.log(
-        `%c[lovinsp]%c Press and hold: %c${hints.join('%c · %c')}`,
+        `%c[lovinsp v${this.version}]%c Press and hold: %c${hints.join('%c · %c')}`,
         'color: #006aff; font-weight: bolder; font-size: 12px;',
         'color: #006aff; font-size: 12px;',
         ...hints.flatMap(() => [
@@ -1137,7 +1147,7 @@ export class LovinspComponent extends LitElement {
       const replacement = '%c';
       const currentMode = this.getActionLabel(this.getDefaultAction());
       console.log(
-        `${replacement}[lovinsp]${replacement}Press and hold ${keys.join(
+        `${replacement}[lovinsp v${this.version}]${replacement} Press and hold ${keys.join(
           ` ${replacement}+ `
         )}${replacement} to enable the feature. (Current mode: ${currentMode})`,
         'color: #006aff; font-weight: bolder; font-size: 12px;',
@@ -1432,6 +1442,7 @@ export class LovinspComponent extends LitElement {
             <div class="name-line">
               <div class="element-name">
                 <span class="element-title" style="color: ${modeColors.accent}">&lt;${this.element.name}&gt;</span>
+                ${this.element.textContent ? html`<span class="element-text">${this.element.textContent}</span>` : ''}
               </div>
             </div>
             <div class="size-line">
@@ -1688,9 +1699,25 @@ export class LovinspComponent extends LitElement {
       display: flex;
       justify-content: flex-end;
     }
+    .element-name {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      min-width: 0;
+    }
     .element-name .element-title {
       font-weight: bold;
       transition: color 0.2s ease-in-out;
+      flex-shrink: 0;
+    }
+    .element-name .element-text {
+      color: #87867F;
+      font-size: 11px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+      min-width: 0;
     }
     .element-name .element-tip {
       color: #006aff;

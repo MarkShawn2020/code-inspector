@@ -16,6 +16,7 @@ interface SourceInfo {
 interface ElementInfo extends SourceInfo {
     width: number;
     height: number;
+    textContent?: string;
 }
 interface ElementTipStyle {
     vertical: string;
@@ -126,6 +127,7 @@ export declare class LovinspComponent extends LitElement {
     }>;
     renderCover: (target: HTMLElement) => Promise<void>;
     getAstroFilePath: (target: HTMLElement) => string;
+    getElementTextContent: (target: HTMLElement) => string | undefined;
     getSourceInfo: (target: HTMLElement) => SourceInfo | null;
     removeCover: (force?: boolean | MouseEvent) => void;
     renderLayerPanel: (nodeTree: TreeNode, { x, y }: {
@@ -158,6 +160,7 @@ export declare class LovinspComponent extends LitElement {
     generateNodeTree: (nodePath: HTMLElement[]) => TreeNode;
     handlePointerDown: (e: PointerEvent) => void;
     handleKeyUp: (e: KeyboardEvent) => void;
+    handleSelectStart: (e: Event) => void;
     printTip: () => void;
     getMousePosition: (e: MouseEvent | TouchEvent) => {
         x: number;
