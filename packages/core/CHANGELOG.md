@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.16
+
+### Patch Changes
+
+- 99790b1: fix: 悬浮窗跟随鼠标位置，避免遮挡光标
+
 ## 1.4.15
 
 ### Patch Changes
