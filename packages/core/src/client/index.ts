@@ -77,6 +77,7 @@ type TrackAction = InspectorAction | 'default';
 type ResolvedAction = InspectorAction | 'none';
 
 const PopperWidth = 300;
+const MouseOffset = 20; // 悬浮窗与鼠标的偏移距离
 
 function nextTick() {
   return new Promise((resolve) => {
@@ -283,8 +284,7 @@ export class LovinspComponent extends LitElement {
 
     const { width, height } = this.elementInfoRef.getBoundingClientRect();
 
-    // 鼠标偏移量，确保悬浮窗不遮挡鼠标
-    const offset = 20;
+    const offset = MouseOffset;
 
     // 计算四个方向的可用空间
     const spaceRight = browserWidth - this.mouseX;
