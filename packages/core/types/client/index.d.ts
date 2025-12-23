@@ -101,6 +101,7 @@ export declare class LovinspComponent extends LitElement {
         startLine: number;
         targetLine: number;
     } | null;
+    locked: boolean;
     private sourceContextAbortController;
     private pendingClickAction;
     codeInspectorContainerRef: HTMLDivElement;
@@ -162,6 +163,7 @@ export declare class LovinspComponent extends LitElement {
     generateNodeTree: (nodePath: HTMLElement[]) => TreeNode;
     handlePointerDown: (e: PointerEvent) => void;
     handleKeyUp: (e: KeyboardEvent) => void;
+    handleLockToggle: (e: KeyboardEvent) => void;
     handleSelectStart: (e: Event) => void;
     printTip: () => void;
     getMousePosition: (e: MouseEvent | TouchEvent) => {

@@ -170,6 +170,8 @@ export class LovinspComponent extends LitElement {
   mouseY = 0; // 当前鼠标 Y 坐标
   @state()
   sourceContext: { lines: string[], startLine: number, targetLine: number } | null = null; // 源代码上下文
+  @state()
+  locked = false; // 锁定模式：悬浮窗始终显示，无需按住快捷键
 
   private sourceContextAbortController: AbortController | null = null;
 
@@ -245,6 +247,10 @@ export class LovinspComponent extends LitElement {
 
   // 兼容旧的 isTracking 方法
   isTracking = (e: any) => {
+    // 锁定模式下始终返回 true
+    if (this.locked) {
+      return true;
+    }
     if (this.hasModeSpecificKeys()) {
       return this.getTriggeredAction(e) !== null;
     }
@@ -431,7 +437,8 @@ export class LovinspComponent extends LitElement {
   };
 
   removeCover = (force?: boolean | MouseEvent) => {
-    if (force !== true && this.nodeTree) {
+    // 锁定模式下不移除遮罩层（除非强制）
+    if (force !== true && (this.nodeTree || this.locked)) {
       return;
     }
     this.show = false;
@@ -933,7 +940,10 @@ export class LovinspComponent extends LitElement {
           // 如果 contextmenu 触发，会清除 pendingClickAction
           this.pendingClickAction = () => {
             this.trackCode(actionToExecute as InspectorAction);
-            this.removeCover();
+            // 锁定模式下不移除遮罩层，继续跟踪
+            if (!this.locked) {
+              this.removeCover();
+            }
           };
           requestAnimationFrame(() => {
             if (this.pendingClickAction) {
@@ -1033,6 +1043,32 @@ export class LovinspComponent extends LitElement {
     }
   };
 
+  // 处理锁定模式切换 (Shift+Alt+T) 和 ESC 退出
+  handleLockToggle = (e: KeyboardEvent) => {
+    // ESC 退出锁定模式
+    if (e.key === 'Escape' && this.locked) {
+      this.locked = false;
+      this.removeCover(true);
+      this.removeLayerPanel();
+      this.showNotification('Inspector unlocked');
+      return;
+    }
+
+    // Shift+Alt+T 切换锁定模式
+    // 使用 e.code 检测物理按键，因为 macOS 上 Option+Shift 会产生特殊字符
+    if (e.code === 'KeyT' && e.shiftKey && e.altKey && !e.ctrlKey && !e.metaKey) {
+      e.preventDefault();
+      this.locked = !this.locked;
+      if (this.locked) {
+        this.showNotification('Inspector locked (ESC to exit)');
+      } else {
+        this.removeCover(true);
+        this.removeLayerPanel();
+        this.showNotification('Inspector unlocked');
+      }
+    }
+  };
+
   // 阻止文本选择（Shift+点击会触发浏览器的扩展选择行为）
   handleSelectStart = (e: Event) => {
     // selectstart 事件没有修饰键信息，需要用全局状态判断
@@ -1099,6 +1135,16 @@ export class LovinspComponent extends LitElement {
         ...colors
       );
     }
+    // 打印锁定模式提示
+    console.log(
+      '%c[lovinsp]%c Press %cShift+Alt+T%c to toggle lock mode (always show overlay), %cESC%c to exit.',
+      'color: #006aff; font-weight: bolder; font-size: 12px;',
+      'color: #006aff; font-size: 12px;',
+      'color: #00B42A; font-weight: bold; font-size: 12px;',
+      'color: #006aff; font-size: 12px;',
+      'color: #00B42A; font-weight: bold; font-size: 12px;',
+      'color: #006aff; font-size: 12px;'
+    );
   };
 
   // 获取鼠标位置
@@ -1197,6 +1243,8 @@ export class LovinspComponent extends LitElement {
     // Global keyboard listeners for unified mode state management
     window.addEventListener('keydown', this.handleGlobalKeyChange, true);
     window.addEventListener('keyup', this.handleGlobalKeyChange, true);
+    // Lock toggle listener (Shift+Alt+T and ESC)
+    window.addEventListener('keydown', this.handleLockToggle, true);
     window.addEventListener('mouseleave', this.removeCover, true);
     window.addEventListener('mouseup', this.handleMouseUp, true);
     window.addEventListener('touchend', this.handleMouseUp, true);
@@ -1218,6 +1266,8 @@ export class LovinspComponent extends LitElement {
     // Remove global keyboard listeners
     window.removeEventListener('keydown', this.handleGlobalKeyChange, true);
     window.removeEventListener('keyup', this.handleGlobalKeyChange, true);
+    // Remove lock toggle listener
+    window.removeEventListener('keydown', this.handleLockToggle, true);
     window.removeEventListener('mouseleave', this.removeCover, true);
     window.removeEventListener('mouseup', this.handleMouseUp, true);
     window.removeEventListener('touchend', this.handleMouseUp, true);
