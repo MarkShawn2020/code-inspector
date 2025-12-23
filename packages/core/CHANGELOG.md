@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.5.0
+
+### Minor Changes
+
+- eae6e48: feat(client): add lock mode toggle
+
+  - Press `Shift+Alt+T` to toggle lock mode (overlay always visible without holding hotkeys)
+  - Press `ESC` to exit lock mode
+  - In lock mode, clicking executes action but continues tracking
+
 ## 1.4.17
 
 ### Patch Changes
