@@ -102,6 +102,7 @@ export declare class LovinspComponent extends LitElement {
         targetLine: number;
     } | null;
     locked: boolean;
+    ancestorChain: string[];
     private sourceContextAbortController;
     private pendingClickAction;
     codeInspectorContainerRef: HTMLDivElement;
@@ -131,6 +132,7 @@ export declare class LovinspComponent extends LitElement {
     getAstroFilePath: (target: HTMLElement) => string;
     getElementTextContent: (target: HTMLElement) => string | undefined;
     getSourceInfo: (target: HTMLElement) => SourceInfo | null;
+    getAncestorChain: (target: HTMLElement) => string[];
     removeCover: (force?: boolean | MouseEvent) => void;
     renderLayerPanel: (nodeTree: TreeNode, { x, y }: {
         x: number;

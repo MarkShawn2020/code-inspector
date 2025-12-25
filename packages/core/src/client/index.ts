@@ -172,6 +172,8 @@ export class LovinspComponent extends LitElement {
   sourceContext: { lines: string[], startLine: number, targetLine: number } | null = null; // 源代码上下文
   @state()
   locked = false; // 锁定模式：悬浮窗始终显示，无需按住快捷键
+  @state()
+  ancestorChain: string[] = []; // 祖先组件名链（从根到当前）
 
   private sourceContextAbortController: AbortController | null = null;
 
@@ -387,6 +389,8 @@ export class LovinspComponent extends LitElement {
       height,
       textContent,
     };
+    // 计算祖先组件链（从根到当前）
+    this.ancestorChain = this.getAncestorChain(target);
     this.show = true;
     if (!this.showNodeTree) {
       const { vertical, horizon, additionStyle } =
@@ -434,6 +438,20 @@ export class LovinspComponent extends LitElement {
     const line = Number(segments[segments.length - 3]);
     const path = segments.slice(0, segments.length - 3).join(':');
     return { name, path, line, column };
+  };
+
+  // 获取祖先组件链（从根到当前）
+  getAncestorChain = (target: HTMLElement): string[] => {
+    const chain: string[] = [];
+    let el: HTMLElement | null = target;
+    while (el) {
+      const info = this.getSourceInfo(el);
+      if (info?.name) {
+        chain.unshift(info.name);
+      }
+      el = el.parentElement;
+    }
+    return chain;
   };
 
   removeCover = (force?: boolean | MouseEvent) => {
@@ -640,7 +658,11 @@ export class LovinspComponent extends LitElement {
         String(this.element.column),
         this.copy
       );
-      this.copyToClipboard(path[0]);
+      // 格式：file:line:col(祖先1>祖先2>当前)
+      const chainStr = this.ancestorChain.length > 0
+        ? `(${this.ancestorChain.join('>')})`
+        : '';
+      this.copyToClipboard(`${path[0]}${chainStr}`);
     }
     if (shouldTarget) {
       window.open(this.buildTargetUrl(), '_blank');
